@@ -617,6 +617,20 @@ body.background {
 	max-width:50%;
 }
 
+.register-header{
+  margin-top: 1px;
+}
+.register-header h1{
+  font-size: 32px;
+  color:#fff;
+}
+.register-header p,.last-part p{
+  color:#c9c5c7;
+}
+.register-header span{
+  color:#fff;
+  font-weight: 500;
+}
 
 
 
