@@ -306,7 +306,6 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-<<<<<<< .mine
     axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
     .then(response => {
         console.log(response.form3DiaryData);
@@ -314,15 +313,6 @@ function getFormI3DiaryDetails() {
     .catch(error => {
         console.log(error);
     })
-=======
-    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData)
-        .then(response => {
-            console.log(response.form3DiaryData);
-        })
-        .catch(error => {
-            console.log(error);
-        })
->>>>>>> .theirs
 
 }
 
