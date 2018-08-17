@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const register = require('../models/registerModel');
+const regForm = require('../models/registerModel');
 
 /* POST register data: Student */
 router.post('/info/student/:nic', function(req, res) {
@@ -17,7 +17,7 @@ router.post('/info/student/:nic', function(req, res) {
     }
 
     if (allParamsPresent) {
-        let register = register.registerModel({
+        let registerData = regForm.registerModel({
             FirstName: req.body.firstName,
             LastName: req.body.lastName,
             NIC: req.body.nic,
@@ -27,7 +27,7 @@ router.post('/info/student/:nic', function(req, res) {
             Email: req.body.email
         });
 
-        register.save(err => { console.log(err); });
+        registerData.save(err => { console.log(err); });
     }
     
     res.send({ success: allParamsPresent });
