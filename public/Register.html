@@ -1,80 +1,135 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="theme-color" content="#000000">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
-    <title>Register</title>
-</head>
-
-<body>
-    <!-- content: start -->
-    <main role="main">
-        <!-- navbar: start-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Internship Hub</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            
-        </nav>
-        <!-- navbar: end-->
-
-    </main>
-    <!-- content: end -->
-<!-- Content Body starts-->
-<br/>
-<div class="ui two column centered grid">
-        <div class="column">
-<form class="ui form">
-    <div class="field">
-        <label>First Name</label>
-        <input type="text" name="first-name" placeholder="First Name">
-    </div>
-    <div class="field">
-        <label>Last Name</label>
-        <input type="text" name="last-name" placeholder="Last Name">
-    </div>
-    <div class="field">
-        <label>NIC</label>
-        <input type="text" name="nic" placeholder="NIC">
-    </div>
-    <div class="field">
-        <label>Address</label>
-        <input type="text" name="address" placeholder="Address">
-    </div>
-    <div class="field">
-        <label>Internship Position</label>
-        <input type="text" name="position" placeholder="Internship Position">
-    </div>
-
-    <div class="field">
-      <div class="ui checkbox">
-        <input type="checkbox">
-        <label>I agree to the Terms and Conditions</label>
+      <link rel="shortcut icon" href="favicon.ico">
+      <!-- bootstrap v4.1.1 -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+      <!-- font awesome(for icons) -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+      <!-- lato font(from google fonts) -->
+      <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+      <link href="css/custom-style.css" rel="stylesheet">
+      <title>Internship Hub</title>
+   </head>
+   <body class="main-section">
+      <div class="container">
+      <div class="row">
+         <div class="col-lg-12 text-center register-header">
+            <h1>Create Your Own Account</h1>
+         </div>
       </div>
-    </div>
-    <button class="ui primary button" type="submit">Submit</button>
-  </form>
-</div>
-</div>
-  <!-- Content Body ends -->
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
-</body>
-
+      <div class="row justify-content-center register-header">
+         <div class="col-lg-12 pb-5">
+            <!--Form with header-->
+            <form action="index.html">
+               <div class="card border-primary rounded-0">
+                  <div class="card-header p-0">
+                     <div class="bg-info text-white text-center py-2">
+                        <h3><i class="fas fa-user-alt"></i> Register Form</h3>
+                        <p class="m-0">**************************************</p>
+                     </div>
+                  </div>
+                  <div class="card-body p-3">
+                     <div class="text-center">
+                        <div class="user-login-box">
+                           <!--Body-->
+                           <div class="form-group">
+                              <div class="form-row">
+                                <div class="col-md-6">
+                                  <div class="form-label-group">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" class="form-control" placeholder="First name" required="required" autofocus="autofocus">
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-label-group">
+                                      <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" class="form-control" placeholder="Last name" required="required">
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-row">
+                                  <div class="col-md-6">
+                                    <div class="form-label-group">
+                                      <label for="firstName">SLIIT Registration Number</label>
+                                      <input type="text" id="regno" class="form-control" placeholder="ITxxxxxxxx" required="required" autofocus="autofocus">
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <label for="lastName">Department</label>
+                                      <input type="text" id="department" class="form-control" placeholder="SE/IT/ISE/IM/CSN/CS" required="required">
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                              </div><div class="form-group">
+                                  <div class="form-row">
+                                    <div class="col-md-6">
+                                      <div class="form-label-group">
+                                        <label for="firstName">Current Academic Year</label>
+                                        <input type="number" id="year" class="form-control" placeholder="1/2/3/4" required="required" autofocus="autofocus">
+                                        <!-- <select>
+                                            <option value="volvo">Volvo</option>
+                                            <option value="saab">Saab</option>
+                                            <option value="mercedes">Mercedes</option>
+                                            <option value="audi">Audi</option>
+                                          </select> -->
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                      <div class="form-label-group">
+                                          <label for="lastName">NIC</label>
+                                        <input type="text" id="nic" class="form-control" placeholder="NIC" required="required">
+                                        
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-row">
+                                      <div class="col-md-6">
+                                        <div class="form-label-group">
+                                          <label for="firstName">Name of the Company</label>
+                                          <input type="text" id="company" class="form-control" placeholder="Company" required="required" autofocus="autofocus">
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-label-group">
+                                            <label for="lastName">Email</label>
+                                          <input type="text" id="email" class="form-control" placeholder="Email" required="required">
+                                          
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                 
+                           <div class="text-center">
+                              <input type="submit" value="Register" class="btn btn-info btn-block rounded-0 py-2">
+                           </div>
+                        </div>
+                        <div class="col-md-12 col-sm-10 col-xs-12 ">
+                           <p style="color:black">Registered User?<a style="color:rgb(248, 7, 196)" href="login.html"> Log in to the System</a></p>
+                        </div>
+                     </div>
+                  </div>
+            </form>
+            <!--Form with header-->
+            </div>
+         </div>
+      </div>
+      <!-- Bootstrap core JavaScript-->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+   </body>
 </html>
