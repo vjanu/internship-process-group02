@@ -2,14 +2,14 @@ const express = require('express');
 const router = express.Router();
 const forms = require('../models/formsModel');
 
-/* GET users listing. */
+/* POST Fomr I-1 data: Student */
 router.post('/form-i-1/student/:studentId', function(req, res) {
-    // checking if all parameters are present since all of them are needed,
-    // to complete the form I-1 from student's perspective.
     let studentId = req.params.studentId;
     let allParamsPresent = true;
     let paramKeys = Object.keys(req.body);
 
+    // checking if all parameters are present since all of them are needed,
+    // to complete the form I-1 from student's perspective.
     for (let i = 0; i < paramKeys.length; i++) {
         let key = paramKeys[i];
         let param = req.body[key];
@@ -29,13 +29,25 @@ router.post('/form-i-1/student/:studentId', function(req, res) {
             Semester: req.body.semester,
             CGPA: req.body.cgpa
         });
-        console.log(formI1Student);
-        formI1Student.save(err => {
-            console.log(err);
-        })
+
+        formI1Student.save(err => { console.log(err); });
     }
 
     res.send({ success: allParamsPresent });
 });
+
+/* POST Fomr I-1 data: Supervisor */
+router.post('/form-i-1/supervisor/:studentId', function(req, res) {
+    // we store data in the record that already exists under the student id.
+    let studentId = req.params.studentId;
+
+    // see if an entry actually exists.
+    forms.formI1Model.findOne({ studentId: studentId }, (err, record) => {
+        console.log(record);
+    });
+});
+
+
+
 
 module.exports = router;
