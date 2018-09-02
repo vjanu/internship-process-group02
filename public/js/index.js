@@ -32,7 +32,7 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post('http://localhost:3000/forms/form-i-1', data)
+    axios.post('http://localhost:3000/forms/form-i-1/student/'+data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
