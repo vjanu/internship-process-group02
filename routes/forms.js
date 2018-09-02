@@ -44,6 +44,10 @@ router.post('/form-i-1/supervisor/:studentId', function(req, res) {
     // see if an entry actually exists.
     forms.formI1Model.findOne({ studentId: studentId }, (err, record) => {
         console.log(record);
+
+        if (record) {
+            // insert supervisor's data into existing entry/record.
+        }
     });
 });
 
