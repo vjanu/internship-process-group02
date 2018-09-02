@@ -47,6 +47,7 @@ router.post('/form-i-1/supervisor/:studentId', function(req, res) {
 
         if (record) {
             // insert supervisor's data into existing entry/record.
+            // we save this record back to db, essentially replacing the existing record.
         }
     });
 });
