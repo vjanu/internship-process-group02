@@ -1,7 +1,14 @@
+/* * * * *     Global Variables     * * * * */
+let baseUrl = 'http://localhost:3000';
+
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
 $('#btn-form-i-1-student').on('click', function () {
     getFormI1StudentDetails();
+});
+// form submit for form I-1, supervisor perspective.
+$('#btn-form-i-1-supervisor').on('click', function () {
+    getFormI1SupervisorDetails();
 });
 
 
@@ -32,7 +39,7 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post('http://localhost:3000/forms/form-i-1/student/'+data.studentId, data)
+    axios.post(baseUrl+'/forms/form-i-1/student/'+data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
@@ -40,3 +47,32 @@ function getFormI1StudentDetails() {
             console.log(error);
         })
 }
+
+
+/*
+ * this will get the information filled by the supervisor,
+ * on Form I-1 and validate and prepare in order to be sent,
+ * to the backend.
+ */
+function getFormI1SupervisorDetails() {
+    let data = {
+        studentId: document.getElementById('id-student').value, // because supervisor data is stored within the student's record.
+        employerName: document.getElementById('name-employer').value,
+        employerAddress: document.getElementById('address-employer').value,
+        supervisorName: document.getElementById('name-supervisor').value,
+        supervisorTitle: document.getElementById('title-supervisor').value,
+        supervisorPhone: document.getElementById('phone-supervisor').value,
+        supervisorEmail: document.getElementById('email-supervisor').value,
+        //internshipStart: document.getElementById('').value,
+        //internshipEnd: document.getElementById('').value
+    };
+
+    axios.post(baseUrl+'/forms/form-i-1/supervisor/'+data.studentId, data)
+        .then(response => {
+            console.log(response.data);
+        })
+        .catch(error => {
+            console.log(error);
+        })
+}
+
