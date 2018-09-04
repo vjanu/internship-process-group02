@@ -151,6 +151,7 @@ $(document).ready(function() {
 //v
 
 function getFormI3StudentDetails() {
+    console.log('hel');
     let form3Data = {
         name: document.getElementById('name').value,
         studentId: document.getElementById('studentId').value,
