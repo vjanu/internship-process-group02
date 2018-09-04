@@ -40,13 +40,24 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post(baseUrlProd+'/forms/form-i-1/student/'+data.studentId, data)
+    axios.post(baseUrlProd + '/forms/form-i-1/student/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
+
+            if (response.data.success) {
+                // if the API call is successful, then data is stored in the db, thus we don't let the student,
+                // modify data again in the form.
+                let elems = $('#form-i-1-student').find(':input');
+                for (let i = 0; i < elems.length; i++) {
+                    elems[i].disabled = true;
+                }
+            }
         })
         .catch(error => {
             console.log(error);
         })
+
+
 }
 
 
@@ -68,7 +79,7 @@ function getFormI1SupervisorDetails() {
         //internshipEnd: document.getElementById('').value
     };
 
-    axios.post(baseUrl+'/forms/form-i-1/supervisor/'+data.studentId, data)
+    axios.post(baseUrl + '/forms/form-i-1/supervisor/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
