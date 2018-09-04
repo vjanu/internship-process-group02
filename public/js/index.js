@@ -2,7 +2,7 @@
 let baseUrlLocal = 'http://localhost:3000';
 let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
-/* * * * *     Headers for cross origin issues * * * * */
+/* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
