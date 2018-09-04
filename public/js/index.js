@@ -1,6 +1,7 @@
 /* * * * *     Global Variables     * * * * */
 let baseUrlLocal = 'http://localhost:3000';
 let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let baseUrl = baseUrlLocal;
 
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
@@ -40,7 +41,7 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post(baseUrlProd + '/forms/form-i-1/student/' + data.studentId, data)
+    axios.post(baseUrl + '/forms/form-i-1/student/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
 
