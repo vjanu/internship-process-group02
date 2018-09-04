@@ -18,6 +18,9 @@ $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
 });
 
+$('#btn-form-i-3-student').on('click', function () {
+    getFormI3StudentDetails();
+});
 
 /*
  * this will get the information filled by the student,
@@ -37,6 +40,7 @@ function getFormI1StudentDetails() {
         cgpa: document.getElementById('cgpa-student').value
     }
 
+     
     /* formatting input parameters. */
     // getting the multiple emails in an array.
     data.emailAddresses = data.emailAddresses.includes(',') ? data.emailAddresses.replace(' ', '').split(',') : data.emailAddresses;
@@ -144,4 +148,31 @@ $(document).ready(function() {
     }
 });
 
+//v
+
+function getFormI3StudentDetails() {
+    let form3Data = {
+        name: document.getElementById('name').value,
+        studentId: document.getElementById('studentId').value,
+        address: document.getElementById('address').value,
+        phone: document.getElementById('contactNumber').value,
+        emailAddresses: document.getElementById('email').value,   // may contain multiple values separated by comma ( , )
+        spec: document.getElementById('spec').value,
+        title: document.getElementById('internshipTitle').value,
+        from: document.getElementById('from').value,
+        to: document.getElementById('to').value
+    }   
+    form3Data.emailAddresses = form3Data.emailAddresses.includes(',') ? form3Data.emailAddresses.replace(' ', '').split(',') : form3Data.emailAddresses;
+
+    form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
+
+    axios.post(baseUrlLocal+'/form3/form-i-3/student/'+form3Data.studentId, form3Data)
+    .then(response => {
+        console.log(response.form3Data);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+
+}
 

@@ -8,6 +8,7 @@ const usersRouter = require('./routes/users');
 const formsRouter = require('./routes/forms');
 const studentRouter = require('./routes/student');
 const supervisorRouter = require('./routes/supervisor');
+const form3Router = require('./routes/forms');
 const cors = require('cors');
 
 const app = express();
@@ -24,5 +25,6 @@ app.use('/users', usersRouter);
 app.use('/forms', formsRouter);
 app.use('/student', studentRouter);
 app.use('/supervisor', supervisorRouter);
+app.use('/form3', form3Router);
 
 module.exports = app;
