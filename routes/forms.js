@@ -108,7 +108,7 @@ function saveFormI1SupervisorPerspective(req, res) {
 function getFormI1(studentId, req, res) {
     searchCondition = studentId ? { StudentId: studentId } : {};
 
-    forms.formI1Model.find(searchCondition, { _id: 0, _v: 0 }, (err, data) => {
+    forms.formI1Model.find(searchCondition, { _id: 0, __v: 0 }, (err, data) => {
         if (data) {
             res.send({ success: true, data: studentId ? data[0] : data });
             // if we provide a student id, we expect just one entry. But since we run find(),
