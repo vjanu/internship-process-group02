@@ -4,7 +4,7 @@ const forms = require('../models/formsModel');
 
 /* POST Fomr I-1 data: Student */
 router.post('/form-i-1/student/:studentId', (req, res) => {
-    getFormI1OfStudent(req, res);
+    saveFormI1StudentPersepective(req, res);
 });
 
 /* POST Fomr I-1 data: Supervisor */
@@ -14,8 +14,16 @@ router.post('/form-i-1/supervisor/:studentId', (req, res) => {
 
 /* GET all Form I-1 */
 router.get('/form-i-1', (req, res) => {
-    getAllFormI1(req, res);
+    getAllFormI1('',req, res);
 });
+
+/* GET Form I-1 of a specific student */
+router.get('/form-i-1/student/:studentId', (req, res) => {
+    let studentId = req.params.studentId;
+    console.log(studentId);
+    getAllFormI1(studentId, req, res);
+});
+
 
 
 /*
@@ -82,9 +90,13 @@ function saveFormI1SupervisorPerspective(req, res) {
 }
 
 /*
- * This will get all the records under FormI1 model in the DB.
+ * This will get all the records or a specific under FormI1 model in the DB.
+ * When the studentId is not present, this will find all the records.
  * We remove the _igid and __v attributes from the results since we don't really need them anyways.
  * 
+ * @param studentId"
+ *      student registration number of the student whose form we are looking for.
+ *      leave this as an empty string if all the entries are needed.
  * @param req:
  *      req object provided by Express's router which contains everything related to the,
  *      API request.
@@ -93,10 +105,16 @@ function saveFormI1SupervisorPerspective(req, res) {
  *      res object provided by Express's router which we use to send the response back,
  *      to the caller.
  */
-function getAllFormI1(req, res) {
-    forms.formI1Model.find({}, { _id: 0, _v: 0 }, (err, data) => {
+function getAllFormI1(studentId, req, res) {
+    searchCondition = studentId ? { StudentId: studentId } : {};
+
+    forms.formI1Model.find(searchCondition, { _id: 0, _v: 0 }, (err, data) => {
         if (data) {
-            res.send({ success: true, data: data });
+            res.send({ success: true, data: studentId ? data[0] : data });
+            // if we provide a student id, we expect just one entry. But since we run find(),
+            // method, we will get an array even if it's just one record, therefore we respond,
+            // with a non-array object if the function caller is expecting a single result by providing,
+            // a student id.
         }
         else {
             res.send({ success: false, data: err });
