@@ -14,14 +14,14 @@ router.post('/form-i-1/supervisor/:studentId', (req, res) => {
 
 /* GET all Form I-1 */
 router.get('/form-i-1', (req, res) => {
-    getAllFormI1('',req, res);
+    getFormI1('',req, res);
 });
 
 /* GET Form I-1 of a specific student */
 router.get('/form-i-1/student/:studentId', (req, res) => {
     let studentId = req.params.studentId;
     console.log(studentId);
-    getAllFormI1(studentId, req, res);
+    getFormI1(studentId, req, res);
 });
 
 
@@ -105,7 +105,7 @@ function saveFormI1SupervisorPerspective(req, res) {
  *      res object provided by Express's router which we use to send the response back,
  *      to the caller.
  */
-function getAllFormI1(studentId, req, res) {
+function getFormI1(studentId, req, res) {
     searchCondition = studentId ? { StudentId: studentId } : {};
 
     forms.formI1Model.find(searchCondition, { _id: 0, _v: 0 }, (err, data) => {
@@ -124,3 +124,6 @@ function getAllFormI1(studentId, req, res) {
 
 
 module.exports = router;
+
+// for unit testing.
+//module.exports = { getFormI1, saveFormI1StudentPersepective, saveFormI1SupervisorPerspective };
