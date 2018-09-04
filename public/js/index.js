@@ -131,7 +131,7 @@ function checkSupervisorExists() {
 
 $(document).ready(function() {
 	let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-
+    console.log("document  >>> On Ready");
 
     if($("#supervisor-dashboard-page").length > 0){
         if(!("user_info" in localStorage)){
@@ -139,6 +139,43 @@ $(document).ready(function() {
     	}else{
             $(document).ready(function(){
 
+            });
+        }
+    }else if($("#supervisor-student-list-page").length > 0){
+        if(!("user_info" in localStorage)){
+    		window.location.href = "index.html";
+    	}else{
+            $(document).ready(function(){
+                axios.get(baseUrlLocal+'/supervisor/get-student-list')
+                .then(function (response) {
+                  // handle success
+                    // console.log(response.data);
+
+                    $("#form-i-1-submitted-students tbody").empty();
+
+                    response.data.data.forEach(item => {
+                        console.log(item.StudentId);
+
+                        $('#form-i-1-submitted-students tbody').append('<tr>'
+                                +'<td class="nr-fid" scope="row">'+item.StudentMobilePhone+'</td>'
+                                +'<td >'+item.StudentId+'</td>'
+                                +'<td >'+item.StudentName+'</td>'
+                                +'<td>'+item.StudentMobilePhone+'</td>'
+                                +'<td>'
+                                    +'<button class="btn btn-success" type="button">'
+                                        +'<span class=" glyphicon glyphicon-plus"></span>'
+                                    +'</button>'
+                                +'</td>'
+                            +'</tr>');
+                    });
+
+
+
+                })
+                .catch(function (error) {
+                  // handle error
+                  console.log(error);
+                });
             });
         }
     }

@@ -3,7 +3,54 @@ const router = express.Router();
 const forms = require('../models/formsModel');
 
 /* POST Fomr I-1 data: Student */
-router.post('/form-i-1/student/:studentId', function(req, res) {
+router.post('/form-i-1/student/:studentId', (req, res) => {
+    saveFormI1StudentPersepective(req, res);
+});
+
+/* POST Fomr I-1 data: Supervisor */
+router.post('/form-i-1/supervisor/:studentId', (req, res) => {
+    saveFormI1SupervisorPerspective(req, res);
+});
+
+/* GET all Form I-1 */
+router.get('/form-i-1', (req, res) => {
+    getFormI1('',req, res);
+});
+
+/* GET Form I-1 of a specific student */
+router.get('/form-i-1/student/:studentId', (req, res) => {
+    let studentId = req.params.studentId;
+    console.log(studentId);
+    getFormI1(studentId, req, res);
+});
+
+
+
+/*
+ * This will create a new record in the DB under student's registration number and,
+ * insert the data filled by the student in the Form I-1.
+ * Note that this same record has to be modified when entering data of provided by,
+ * the supervisor for this student.
+ * 
+ * A new record must be created for the student only if all theh details are present.
+ * 
+ * The response(using res object) must be as follows:-
+ *      { success: true | false, data: data }
+ *      
+ *      success will indicate if necessary data was collected successfully or not.
+ *      
+ *      data will contain any data produced as a result of any execution in the function,
+ *      or may contain any error message as well.
+ * 
+ * @param req:
+ *      req object provided by Express's router which contains everything related to the,
+ *      API request.
+ * 
+ * @param res:
+ *      res object provided by Express's router which we use to send the response back,
+ *      to the caller.
+ */ 
+function saveFormI1StudentPersepective(req, res) {
     let studentId = req.params.studentId;
     let allParamsPresent = true;
     let paramKeys = Object.keys(req.body);
@@ -34,25 +81,49 @@ router.post('/form-i-1/student/:studentId', function(req, res) {
     }
 
     res.send({ success: allParamsPresent });
-});
+}
 
-/* POST Fomr I-1 data: Supervisor */
-router.post('/form-i-1/supervisor/:studentId', function(req, res) {
-    // we store data in the record that already exists under the student id.
-    let studentId = req.params.studentId;
+/*
+ * 
+ */
+function saveFormI1SupervisorPerspective(req, res) {
+}
 
-    // see if an entry actually exists.
-    forms.formI1Model.findOne({ studentId: studentId }, (err, record) => {
-        console.log(record);
+/*
+ * This will get all the records or a specific under FormI1 model in the DB.
+ * When the studentId is not present, this will find all the records.
+ * We remove the _igid and __v attributes from the results since we don't really need them anyways.
+ * 
+ * @param studentId"
+ *      student registration number of the student whose form we are looking for.
+ *      leave this as an empty string if all the entries are needed.
+ * @param req:
+ *      req object provided by Express's router which contains everything related to the,
+ *      API request.
+ * 
+ * @param res:
+ *      res object provided by Express's router which we use to send the response back,
+ *      to the caller.
+ */
+function getFormI1(studentId, req, res) {
+    searchCondition = studentId ? { StudentId: studentId } : {};
 
-        if (record) {
-            // insert supervisor's data into existing entry/record.
-            // we save this record back to db, essentially replacing the existing record.
+    forms.formI1Model.find(searchCondition, { _id: 0, __v: 0 }, (err, data) => {
+        if (data) {
+            res.send({ success: true, data: studentId ? data[0] : data });
+            // if we provide a student id, we expect just one entry. But since we run find(),
+            // method, we will get an array even if it's just one record, therefore we respond,
+            // with a non-array object if the function caller is expecting a single result by providing,
+            // a student id.
+        }
+        else {
+            res.send({ success: false, data: err });
         }
     });
-});
-
-
+}
 
 
 module.exports = router;
+
+// for unit testing.
+//module.exports = { getFormI1, saveFormI1StudentPersepective, saveFormI1SupervisorPerspective };
