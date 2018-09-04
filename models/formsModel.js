@@ -34,8 +34,8 @@ let formI3Schema = mongoose.Schema({
     StudentEmails: Array,
     Specialization: String,
     InternshipTitle: String,
-    From: Date,
-    To: Date
+    From: String,
+    To: String
 });
 
 
