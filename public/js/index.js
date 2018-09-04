@@ -1,5 +1,5 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrlLocal = 'http://localhost:3000';
+let baseUrl = 'http://localhost:3000';
 let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 /* * * * *     Event Triggers     * * * * */
@@ -12,6 +12,9 @@ $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
 });
 
+
+
+/* * * * * * * Forms * * * * * * */
 
 /*
  * this will get the information filled by the student,
@@ -40,7 +43,7 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post(baseUrlProd + '/forms/form-i-1/student/' + data.studentId, data)
+    axios.post(baseUrl + '/forms/form-i-1/student/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
 
@@ -88,3 +91,68 @@ function getFormI1SupervisorDetails() {
         })
 }
 
+
+
+/* * * * * * * Dashboards * * * * * * */
+
+function getAllInternships() {
+    let headerMap = new Map();
+
+    // setting headers and their corresponding json keys.
+    headerMap.set('Student ID', 'StudentId');
+    headerMap.set('Student Name', 'StudentName');
+    headerMap.set('Internship Start', '-');
+    headerMap.set('Internship End', '-');
+    headerMap.set('Forms', '-');
+
+    axios.get(baseUrl + '/forms/form-i-1')
+    .then(response => {
+        if (response.data.success) {
+            console.log(response.data.data);
+            let table = renderInternshipsTable(headerMap, response.data.data);
+            $('#internships-table').append(table);
+        }
+    })
+}
+
+/*
+ * this will render the internships manager's dashboard.
+ * 
+ * @param columnMap:
+ *      a map where the key is the column name and the value is the key of the json data,
+ *      that is relevant to the column.
+ *      
+ */
+function renderInternshipsTable(columnMap, jsonData) {
+    console.log(columnMap);
+
+    // create table and headers.
+    let table = document.createElement('table');
+    table.classList = 'table';
+
+    let thead = document.createElement('thead');
+    let headerTr = document.createElement('tr');
+
+    for (let [key, value] of columnMap.entries()) {
+        let th = document.createElement('th');
+        th.setAttribute('scope', 'col');
+        th.innerHTML = key;
+        headerTr.appendChild(th);
+    }
+    thead.appendChild(headerTr);
+
+    // create the body rows.
+    let tbody = document.createElement('tbody');
+    jsonData.forEach(entry => {
+        let tr = document.createElement('tr');
+
+        for (let [key, value] of columnMap.entries()) {
+            let td = document.createElement('td');
+            td.innerHTML = entry[value];
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    });
+    table.append(thead, tbody);
+    return table;
+}

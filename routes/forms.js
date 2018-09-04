@@ -3,7 +3,7 @@ const router = express.Router();
 const forms = require('../models/formsModel');
 
 /* POST Fomr I-1 data: Student */
-router.post('/form-i-1/student/:studentId', function(req, res) {
+router.post('/form-i-1/student/:studentId', (req, res) => {
     let studentId = req.params.studentId;
     let allParamsPresent = true;
     let paramKeys = Object.keys(req.body);
@@ -37,7 +37,7 @@ router.post('/form-i-1/student/:studentId', function(req, res) {
 });
 
 /* POST Fomr I-1 data: Supervisor */
-router.post('/form-i-1/supervisor/:studentId', function(req, res) {
+router.post('/form-i-1/supervisor/:studentId', (req, res) => {
     // we store data in the record that already exists under the student id.
     let studentId = req.params.studentId;
 
@@ -52,6 +52,17 @@ router.post('/form-i-1/supervisor/:studentId', function(req, res) {
     });
 });
 
+/* GET all Form I-1 */
+router.get('/form-i-1', (req, res) => {
+    forms.formI1Model.find({}, { _id: 0, _v: 0 }, (err, data) => {
+        if (data) {
+            res.send({ success: true, data: data });
+        }
+        else {
+            res.send({ success: false, data: err });
+        }
+    })
+});
 
 
 
