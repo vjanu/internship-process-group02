@@ -12,6 +12,7 @@ $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
 });
 // check if the loaded page is a form-i-1 page with a student id embeded in the url.
+// valid url: domain.com/form-i-1.html#<StudentId>
 let current_url = window.location.href;
 if (current_url.includes('#') && current_url.includes('form-i-1')) {
     studentId = current_url.substr(current_url.indexOf('#')+1, current_url.length);
