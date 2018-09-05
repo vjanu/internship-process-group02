@@ -38,8 +38,17 @@ let formI3Schema = mongoose.Schema({
     To: String
 });
 
+let formI3DiarySchema = mongoose.Schema({
+    // following are filled by student.
+    StudentId: String,
+    TrainingDescription: String,
+    TrainingParty: String,
+    From: String,
+    To: String
+});
 
 let formI1Model = mongoose.model('FormI1', formI1Schema);
 let formI3Model = mongoose.model('FormI3', formI3Schema);
+let formI3DiaryModel = mongoose.model('FormI3Diary', formI3DiarySchema);
 
-module.exports = { formI1Model, formI3Model };
+module.exports = { formI1Model, formI3Model, formI3DiaryModel };

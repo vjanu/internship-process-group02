@@ -22,6 +22,10 @@ $('#btn-form-i-3-student').on('click', function () {
     getFormI3StudentDetails();
 });
 
+$('#btn-form-submit').on('click', function () {
+    getFormI3DiaryDetails();
+});
+
 /*
  * this will get the information filled by the student,
  * on Form I-1 and validate and prepare in order to be sent,
@@ -148,26 +152,25 @@ $(document).ready(function() {
     }
 });
 
-//v
+/**** Vira *****/
 
 function getFormI3StudentDetails() {
-    console.log('hel');
     let form3Data = {
         name: document.getElementById('name').value,
         studentId: document.getElementById('studentId').value,
         address: document.getElementById('address').value,
-        phone: document.getElementById('contactNumber').value,
-        emailAddresses: document.getElementById('email').value,   // may contain multiple values separated by comma ( , )
+        contactNumber: document.getElementById('contactNumber').value,
+        email: document.getElementById('email').value,   // may contain multiple values separated by comma ( , )
         spec: document.getElementById('spec').value,
-        title: document.getElementById('internshipTitle').value,
+        internshipTitle: document.getElementById('internshipTitle').value,
         from: document.getElementById('from').value,
         to: document.getElementById('to').value
     }   
-    form3Data.emailAddresses = form3Data.emailAddresses.includes(',') ? form3Data.emailAddresses.replace(' ', '').split(',') : form3Data.emailAddresses;
+    form3Data.email = form3Data.email.includes(',') ? form3Data.email.replace(' ', '').split(',') : form3Data.email;
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrlLocal+'/form3/form-i-3/student/'+form3Data.studentId, form3Data)
+    axios.post(baseUrlLocal+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
     .then(response => {
         console.log(response.form3Data);
     })
@@ -177,3 +180,23 @@ function getFormI3StudentDetails() {
 
 }
 
+function getFormI3DiaryDetails() {
+    let form3DiaryData = {
+        studentId: document.getElementById('studentId').value,
+        desc: document.getElementById('desc').value,
+        party: document.getElementById('party').value,
+        from: document.getElementById('from').value,
+        to: document.getElementById('to').value
+    }   
+
+    form3DiaryData.studentId = form3DiaryData.studentId.includes(' ') ? form3DiaryData.studentId.split(' ').join('') : form3DiaryData.studentId;
+
+    axios.post(baseUrlLocal+'/daily/form-i-3/diary/'+form3DiaryData.studentId, form3DiaryData, {headers: headers})
+    .then(response => {
+        console.log(response.form3DiaryData);
+    })
+    .catch(error => {
+        console.log(error);
+    })
+
+}
