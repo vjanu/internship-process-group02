@@ -70,11 +70,12 @@ function getFormI1SupervisorDetails() {
         supervisorTitle: document.getElementById('title-supervisor').value,
         supervisorPhone: document.getElementById('phone-supervisor').value,
         supervisorEmail: document.getElementById('email-supervisor').value,
-        //internshipStart: document.getElementById('').value,
-        //internshipEnd: document.getElementById('').value
+        internshipStart: document.getElementById('internship-start-date').value,
+        internshipEnd: document.getElementById('internship-end-date').value,
+        workHoursPerWeek: document.getElementById('no-of-hours').value
     };
 
-    axios.post(baseUrl+'/forms/form-i-1/supervisor/'+data.studentId, data)
+    axios.post(baseUrlLocal+'/forms/form-i-1/supervisor/'+data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
@@ -91,12 +92,51 @@ $('#btn-login-supervisor').on('click', function () {
     checkSupervisorExists();
 });
 
-// 
+//
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
     localStorage.removeItem('login_info');
-	window.location.href = "index.html";
+    window.location.href = "index.html";
 });
+
+// check if the loaded page is a form-i-1 page with a student id embeded in the url.
+// valid url: domain.com/form-i-1.html#<StudentId>
+let current_url = window.location.href;
+if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
+    studentId = current_url.substr(current_url.indexOf('#')+1, current_url.length);
+    populateFormI1(studentId);
+}
+
+
+function populateFormI1(studentId) {
+    axios.get(baseUrlLocal + '/forms/form-i-1/student/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                let form_details = response.data.data;
+                console.log(form_details);
+
+                document.getElementById('name-student').value = form_details['StudentName'];
+                document.getElementById('id-student').value = form_details['StudentId'];
+                document.getElementById('address-student').value = form_details['StudentAddress'];
+                document.getElementById('home-phone-student').value = form_details['StudentHomePhone'];
+                document.getElementById('mobile-phone-student').value = form_details['StudentMobilePhone'];
+                document.getElementById('cgpa-student').value = form_details['CGPA'];
+                document.getElementById('emails-student').value = form_details['StudentEmails'].join(', ').replace('[').replace(']');
+                document.getElementById('year-student').value = form_details['Year'];
+                document.getElementById('semester-student').value = form_details['Semester'];
+
+                // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
+                let elems = $('#form-i-1-student').find(':input');
+                for (let i = 0; i < elems.length; i++) {
+                    elems[i].innerHTML
+                    elems[i].disabled = true;
+                }
+            }
+        })
+        .catch(reject => {
+            console.log(reject);
+        })
+}
 
 
 function checkSupervisorExists() {
@@ -146,7 +186,7 @@ $(document).ready(function() {
     		window.location.href = "index.html";
     	}else{
             $(document).ready(function(){
-                axios.get(baseUrlLocal+'/supervisor/get-student-list')
+                axios.get(baseUrlLocal+'/forms/form-i-1')
                 .then(function (response) {
                   // handle success
                     // console.log(response.data);
@@ -157,14 +197,14 @@ $(document).ready(function() {
                         console.log(item.StudentId);
 
                         $('#form-i-1-submitted-students tbody').append('<tr>'
-                                +'<td class="nr-fid" scope="row">'+item.StudentMobilePhone+'</td>'
-                                +'<td >'+item.StudentId+'</td>'
+                                +'<td class="nr-fid" scope="row">'+item.StudentId+'</td>'
                                 +'<td >'+item.StudentName+'</td>'
+                                +'<td >'+item.StudentAddress+'</td>'
                                 +'<td>'+item.StudentMobilePhone+'</td>'
                                 +'<td>'
-                                    +'<button class="btn btn-success" type="button">'
+                                    +'<a class="btn btn-success" type="button" href="supervisor-submission-form.html#'+item.StudentId+'">'
                                         +'<span class=" glyphicon glyphicon-plus"></span>'
-                                    +'</button>'
+                                    +'</a>'
                                 +'</td>'
                             +'</tr>');
                     });

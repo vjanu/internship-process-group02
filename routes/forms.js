@@ -9,6 +9,7 @@ router.post('/form-i-1/student/:studentId', (req, res) => {
 
 /* POST Fomr I-1 data: Supervisor */
 router.post('/form-i-1/supervisor/:studentId', (req, res) => {
+    console.log("Req.........")
     saveFormI1SupervisorPerspective(req, res);
 });
 
@@ -32,7 +33,7 @@ router.get('/form-i-1/student/:studentId', (req, res) => {
  * Note that this same record has to be modified when entering data of provided by,
  * the supervisor for this student.
  * 
- * A new record must be created for the student only if all theh details are present.
+ * A new record must be created for the student only if all their details are present.
  * 
  * The response(using res object) must be as follows:-
  *      { success: true | false, data: data }
@@ -84,9 +85,30 @@ function saveFormI1StudentPersepective(req, res) {
 }
 
 /*
- * 
+ * Update Employee details using _id
+ * PUT method is used to update details
  */
 function saveFormI1SupervisorPerspective(req, res) {
+    getStudentDetailsByStudentId(req.body.studentId).then((data) => {
+        forms.formI1Model.update({ StudentId: req.body.studentId }, {
+            EmployerName: req.body.employerName,
+            EmployerAddress: req.body.employerAddress,
+            SupervisorName: req.body.supervisorName,
+            SupervisorPhone: req.body.supervisorPhone,
+            SupervisorTitle: req.body.supervisorTitle,
+            SupervisorEmail: req.body.supervisorEmail,
+            InternshipStart: req.body.internshipStart,
+            InternshipEnd: req.body.internshipEnd,
+            WorkHoursPerWeek: req.body.workHoursPerWeek
+        }, (err) => {
+            if (err) {
+                res.send({ success: false, message: 'Internal error : ' + err });
+            }
+            res.send({ success: true, message: 'Supervisor details added successfully' });
+        });
+    }).catch((err) => {
+        res.send({ success: false, message: 'Invalid Student Id Provided' });
+    });
 }
 
 /*
@@ -119,6 +141,23 @@ function getFormI1(studentId, req, res) {
         else {
             res.send({ success: false, data: err });
         }
+    });
+}
+
+
+function getStudentDetailsByStudentId(studentId) {
+    return new Promise((resolve, reject) => {
+        forms.formI1Model.find({ StudentId: studentId }, { _id: 0, __: 0 }, (err, result) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (result.length === 0) {
+                    reject('invalid student Id');
+                } else {
+                    resolve(result);
+                }
+            }
+        });
     });
 }
 
