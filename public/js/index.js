@@ -182,16 +182,16 @@ function getFormI3StudentDetails() {
 
 function getFormI3DiaryDetails() {
     let form3DiaryData = {
-        studentId: document.getElementById('studentId').value,
+        studentIdDiary: document.getElementById('studentIdDiary').value,
         desc: document.getElementById('desc').value,
         party: document.getElementById('party').value,
-        from: document.getElementById('from').value,
-        to: document.getElementById('to').value
+        fromDiary: document.getElementById('fromDiary').value,
+        toDiary: document.getElementById('toDiary').value
     }   
 
-    form3DiaryData.studentId = form3DiaryData.studentId.includes(' ') ? form3DiaryData.studentId.split(' ').join('') : form3DiaryData.studentId;
+    form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrlLocal+'/daily/form-i-3/diary/'+form3DiaryData.studentId, form3DiaryData, {headers: headers})
+    axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
     .then(response => {
         console.log(response.form3DiaryData);
     })
