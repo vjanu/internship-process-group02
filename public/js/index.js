@@ -234,19 +234,34 @@ $(document).ready(function () {
                         $("#form-i-1-submitted-students tbody").empty();
 
                         response.data.data.forEach(item => {
-                            console.log(item.StudentId);
+                            if(item.hasOwnProperty('EmployerName')){
+                                var btnClassName = "btn btn-success btn-sm"
+                                var iconClassName = "fas fa-check"
+                                var altText = "Supervisor details submitted"
+
+
+                            }else{
+                                var btnClassName = "btn btn-danger btn-sm"
+                                var iconClassName = "fas fa-times"
+                                var altText = "Supervisor details not submitted"
+
+                            }
 
                             $('#form-i-1-submitted-students tbody').append('<tr>' +
-                                '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                                '<td >' + item.StudentName + '</td>' +
-                                '<td >' + item.StudentAddress + '</td>' +
-                                '<td>' + item.StudentMobilePhone + '</td>' +
-                                '<td>' +
-                                '<a class="btn btn-success" type="button" href="supervisor-submission-form.html#' + item.StudentId + '">' +
-                                '<span class=" glyphicon glyphicon-plus"></span>' +
-                                '</a>' +
-                                '</td>' +
-                                '</tr>');
+
+                            '<td><center><a class="'+btnClassName+'" title="'+altText+'"><span class="'+iconClassName+'" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
+
+                            '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
+                            '<td >' + item.StudentName + '</td>' +
+                            '<td >' + item.StudentAddress + '</td>' +
+                            '<td>' + item.StudentMobilePhone + '</td>' +
+                            '<td><center>' +
+                            '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View '+item.StudentId+'\'s Form I-1" class="btn btn-primary btn-sm">\n' +
+                            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
+                            '        <span><strong>View</strong></span></a>'+
+                            '</a></center>' +
+                            '</td>' +
+                            '</tr>');
                         });
 
 
