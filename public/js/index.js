@@ -359,7 +359,7 @@ function getRegisterDetails() {
         regno: document.getElementById('regno').value,
         department: document.getElementById('department').value,
         year: document.getElementById('year').value,
-        email: document.getElementById('email').value,
+        email: document.getElementById('email').value
         
     }   
 
