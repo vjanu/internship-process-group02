@@ -2,6 +2,9 @@
 let baseUrlLocal = 'http://localhost:3000';
 let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
+// change this to baseUrl = baseUrlLocal if you are developing.
+let baseUrl = baseUrlProd;  
+
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
@@ -54,7 +57,7 @@ function getFormI1StudentDetails() {
     data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
 
 
-    axios.post(baseUrlProd+'/forms/form-i-1/student/'+data.studentId, data)
+    axios.post(baseUrl+'/forms/form-i-1/student/'+data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
@@ -83,7 +86,7 @@ function getFormI1SupervisorDetails() {
         workHoursPerWeek: document.getElementById('no-of-hours').value
     };
 
-    axios.post(baseUrlLocal+'/forms/form-i-1/supervisor/'+data.studentId, data)
+    axios.post(baseUrl+'/forms/form-i-1/supervisor/'+data.studentId, data)
         .then(response => {
             console.log(response.data);
         })
@@ -117,7 +120,7 @@ if (current_url.includes('#') && current_url.includes('supervisor-submission-for
 
 
 function populateFormI1(studentId) {
-    axios.get(baseUrlLocal + '/forms/form-i-1/student/' + studentId)
+    axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
         .then(response => {
             if (response.data.success) {
                 let form_details = response.data.data;
@@ -154,7 +157,7 @@ function checkSupervisorExists() {
         SupervisorPassword: document.getElementById('password').value
     }
 
-    axios.post(baseUrlLocal+'/supervisor/login',data, {headers: headers})
+    axios.post(baseUrl+'/supervisor/login',data, {headers: headers})
         .then(response => {
             console.log(response.data);
             if(response.data.success){
@@ -247,7 +250,7 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrlLocal+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
+    axios.post(baseUrl+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
     .then(response => {
         console.log(response.form3Data);
     })
@@ -268,7 +271,7 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
+    axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
     .then(response => {
         console.log(response.form3DiaryData);
     })
