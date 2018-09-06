@@ -1,9 +1,9 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrl = 'http://localhost:3000';
-// let baseUrl = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let baseUrlLocal = 'http://localhost:3000';
+// let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlProd;  
+let baseUrl = baseUrlLocal;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
