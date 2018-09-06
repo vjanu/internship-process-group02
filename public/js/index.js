@@ -137,6 +137,8 @@ function populateFormI1(studentId) {
                 document.getElementById('year-student').value = form_details['Year'];
                 document.getElementById('semester-student').value = form_details['Semester'];
 
+                $("#header-studentId").text(form_details['StudentId']);
+
                 // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
                 let elems = $('#form-i-1-student').find(':input');
                 for (let i = 0; i < elems.length; i++) {
