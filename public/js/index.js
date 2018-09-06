@@ -89,6 +89,7 @@ function getFormI1SupervisorDetails() {
     axios.post(baseUrl + '/forms/form-i-1/supervisor/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
+            alert(response.data.message)
         })
         .catch(error => {
             console.log(error);
