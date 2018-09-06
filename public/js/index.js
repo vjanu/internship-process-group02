@@ -2,6 +2,9 @@
 let baseUrl = 'http://localhost:3000';
 // let baseUrl = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
+// change this to baseUrl = baseUrlLocal if you are developing.
+let baseUrl = baseUrlProd;  
+
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
@@ -179,9 +182,7 @@ function checkSupervisorExists() {
         SupervisorPassword: document.getElementById('password').value
     }
 
-    axios.post(baseUrl + '/supervisor/login', data, {
-            headers: headers
-        })
+    axios.post(baseUrl + '/supervisor/login', data)
         .then(response => {
             console.log(response.data);
             if (response.data.success) {
@@ -275,9 +276,7 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data, {
-            headers: headers
-        })
+    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data)
         .then(response => {
             console.log(response.form3Data);
         })
@@ -298,9 +297,7 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData, {
-            headers: headers
-        })
+    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData)
         .then(response => {
             console.log(response.form3DiaryData);
         })
