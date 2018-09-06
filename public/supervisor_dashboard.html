@@ -34,67 +34,32 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-
                 <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link nav-link-collapse" href="Student_dashboard.html">
-                        <i class="fa fa-fw fa-user"></i>
+                    <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                        <i class="fa fa-fw fa-info-circle"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
-
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Upload CV ">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseGeneral" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-info-circle"></i>
-                        <span class="nav-link-text">Upload CV </span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseGeneral">
-                        <li>
-                            <a href="/general">Sub Action 01</a>
-                        </li>
-                        <li>
-                            <a href="/add-general">Sub Action 02</a>
-                        </li>
-                    </ul>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title=form-i-1 "">
-                    <a class="nav-link nav-link-collapse" href="form-i-1.html">
-                        <i class="fa fa-fw fa-address-book"></i>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-1">
+                    <a class="nav-link nav-link-collapse" href="supervisor-student-list.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
                         <span class="nav-link-text">Form I-1</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="form-i-3">
-                    <a class="nav-link nav-link-collapse" href="form3.html">
-                        <i class="fa fa-fw fa-address-book"></i>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fab fa-fw fa-wpforms"></i>
                         <span class="nav-link-text">Form I-3</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Supervisor Action">
-                    <a class="nav-link nav-link-collapse" href="Supervisor_dashboard.html">
-                        <i class="fa fa-fw fa-user"></i>
-                        <span class="nav-link-text">Supervisor Dashboard</span>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-5">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-5</span>
                     </a>
-
-                </li>
-
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Employee">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDepartments" data-parent="#exampleAccordion">
-                        <i class="fas fa-hospital-alt"></i>
-                        <span class="nav-link-text">Title</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseDepartments">
-                        <li>
-                            <a href="/departments">subTitle 01</a>
-                        </li>
-                        <li>
-                            <a href="/add-department">subTitle 02</a>
-                        </li>
-                        <li>
-                            <a href="/edit-department">subTitle 03</a>
-                        </li>
-                    </ul>
                 </li>
             </ul>
 
@@ -103,12 +68,7 @@
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
                 </li>
-                <li class="nav-item">
-                    <a href="register.html" class="nav-link">
-                        <i class="fas fa-user-circle"></i>Register</a>
-                </li>
             </ul>
-
         </div>
     </nav>
     <div class="content-wrapper">
@@ -155,7 +115,7 @@
                     <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                        <a class="btn btn-primary" href="login.html">Logout</a>
+                        <a class="btn btn-primary" id="btn-logout">Logout</a>
                     </div>
                 </div>
             </div>
