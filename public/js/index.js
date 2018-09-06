@@ -115,7 +115,7 @@ $('#btn-login-supervisor').on('click', function () {
 //
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
-    localStorage.removeItem('login_info');
+    localStorage.removeItem('user_info');
     window.location.href = "index.html";
 });
 
