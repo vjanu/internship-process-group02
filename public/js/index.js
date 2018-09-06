@@ -1,6 +1,9 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrl = 'http://localhost:3000';
+let baseUrlLocal = 'http://localhost:3000';
 let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+// we assign one of the above to the base url.
+let baseUrl = baseUrlLocal;
+
 
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
