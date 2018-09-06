@@ -1,0 +1,43 @@
+const express = require('express');
+const router = express.Router();
+const register = require('../models/registerModel');
+
+/* POST register data: Student */
+router.post('/info/student/:nic', function(req, res) {
+    let nic = req.params.nic;
+    let allParamsPresent = true;
+    let paramKeys = Object.keys(req.body);
+
+   
+    for (let i = 0; i < paramKeys.length; i++) {
+        let key = paramKeys[i];
+        let param = req.body[key];
+
+        if (param == '' || param == undefined) { allParamsPresent = false; break; }
+    }
+
+    if (allParamsPresent) {
+        let register = register.registerModel({
+            FirstName: req.body.firstName,
+            LastName: req.body.lastName,
+            NIC: req.body.nic,
+            RegistrationNo: req.body.regno,
+            Department: req.body.department,
+            AcademicYear: req.body.year,
+            Email: req.body.email
+        });
+
+        register.save(err => { console.log(err); });
+    }
+    
+    res.send({ success: allParamsPresent });
+});
+
+
+
+
+
+
+
+
+module.exports = router;

@@ -29,6 +29,14 @@ $('#btn-form-submit').on('click', function () {
     getFormI3DiaryDetails();
 });
 
+$('#btn-form-refresh').on('click', function () {
+    populateFormI3();
+});
+
+$('#btn-register').on('click', function () {
+    getRegisterDetails();
+});
+
 /*
  * this will get the information filled by the student,
  * on Form I-1 and validate and prepare in order to be sent,
@@ -294,7 +302,7 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data)
+    axios.post(baseUrlLocal+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
         .then(response => {
             console.log(response.form3Data);
         })
@@ -315,12 +323,53 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData)
+    axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
         })
         .catch(error => {
             console.log(error);
         })
+
+}
+
+function populateFormI3() {
+    console.log("sssss");
+    axios.get(baseUrlLocal+'/daily/data/')
+    .then(response => {
+        if (response.data.success) {
+            let form_details = response.data.data;
+            console.log(form_details);
+        }
+    })
+    .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(JSON.stringify(error));
+          console.log(error.response.headers);
+        }
+    });
+}
+
+function getRegisterDetails() {
+    let registerData = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        nic: document.getElementById('nic').value,
+        regno: document.getElementById('regno').value,
+        department: document.getElementById('department').value,
+        year: document.getElementById('year').value,
+        email: document.getElementById('email').value,
+        
+    }   
+
+
+    axios.post(baseUrlLocal+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
+    .then(response => {
+        console.log(response.registerData);
+    })
+    .catch(error => {
+        console.log(error);
+    })
 
 }
