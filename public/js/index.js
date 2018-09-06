@@ -141,8 +141,16 @@ function populateFormI1(studentId) {
                 }
 
 
-                if(form_details['StudentName']){
-
+                if(form_details.hasOwnProperty('EmployerName')){
+                    $('#name-employer').val(form_details['EmployerName']);
+                    $('#address-employer').val(form_details['EmployerAddress']);
+                    $('#name-supervisor').val(form_details['SupervisorName']);
+                    $('#title-supervisor').val(form_details['SupervisorTitle']);
+                    $('#phone-supervisor').val(form_details['SupervisorPhone']);
+                    $('#email-supervisor').val(form_details['SupervisorEmail']);
+                    $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
+                    $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
+                    $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
                 }
 
             }
@@ -152,6 +160,17 @@ function populateFormI1(studentId) {
         })
 }
 
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
 function checkSupervisorExists() {
     console.log("Function called");
