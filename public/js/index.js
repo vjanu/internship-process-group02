@@ -101,15 +101,15 @@ function getAllInternships() {
     // setting headers and their corresponding json keys.
     headerMap.set('Student ID', 'StudentId');
     headerMap.set('Student Name', 'StudentName');
-    headerMap.set('Internship Start', '-');
-    headerMap.set('Internship End', '-');
+    headerMap.set('Internship Start', 'InternshipStart');
+    headerMap.set('Internship End', 'InternshipEnd');
     headerMap.set('Forms', '-');
 
     axios.get(baseUrl + '/forms/form-i-1')
     .then(response => {
         if (response.data.success) {
             console.log(response.data.data);
-            let table = renderInternshipsTable(headerMap, response.data.data);
+            let table = renderInternshipsTable(response.data.data);
             $('#internships-table').append(table);
         }
     })
@@ -123,36 +123,36 @@ function getAllInternships() {
  *      that is relevant to the column.
  *      
  */
-function renderInternshipsTable(columnMap, jsonData) {
-    console.log(columnMap);
+function renderInternshipsTable(jsonData) {
 
-    // create table and headers.
-    let table = document.createElement('table');
-    table.classList = 'table';
-
-    let thead = document.createElement('thead');
-    let headerTr = document.createElement('tr');
-
-    for (let [key, value] of columnMap.entries()) {
-        let th = document.createElement('th');
-        th.setAttribute('scope', 'col');
-        th.innerHTML = key;
-        headerTr.appendChild(th);
-    }
-    thead.appendChild(headerTr);
-
-    // create the body rows.
-    let tbody = document.createElement('tbody');
-    jsonData.forEach(entry => {
-        let tr = document.createElement('tr');
-
-        for (let [key, value] of columnMap.entries()) {
-            let td = document.createElement('td');
-            td.innerHTML = entry[value];
-            tr.appendChild(td);
-        }
-        tbody.appendChild(tr);
+    let table = '<table class="table">' +
+                    '<thead>' +
+                        '<tr>' +
+                            '<th> Student ID </th>' +  
+                            '<th> Student Name </th>' +  
+                            '<th> Internship Start </th>' +  
+                            '<th> Internship End </th>' +  
+                            '<th> Forms </th>' +
+                        '<tr>' +
+                    '<thead>' +
+                    '<tbody>';
+    
+    // iterate through each student's form i-1.
+    jsonData.forEach(form => {
+        table += '<tr>' +
+                    '<td>' + form.StudentId + '</td>' +
+                    '<td>' + form.StudentName + '</td>' +
+                    '<td>' + (form.InternshipStart == undefined ? '<span class="badge badge-danger">Pending Form I-1 | Supervisor</span>' : form.InternshipStart.split('T')[0]) + '</td>' +
+                    '<td>' + (form.InternshipEnd == undefined ? '<span class="badge badge-danger">Pending Form I-1 | Supervisor</span>' : form.InternshipEnd.split('T')[0]) + '</td>' +
+                    // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
+                    '<td>' +
+                        '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
+                        '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+                        '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
+                    '</td>' +
+                '<tr>';
     });
-    table.append(thead, tbody);
+    table += '</tbody></table>';
+
     return table;
 }
