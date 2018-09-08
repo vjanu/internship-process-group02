@@ -4,6 +4,7 @@ const forms = require('../models/formsModel');
 
 /* POST Form I-1 data: Student */
 router.post('/form-i-1/student/:studentId', (req, res) => {
+    console.log(req.body);
     saveFormI1StudentPersepective(req, res);
 });
 
@@ -21,9 +22,14 @@ router.get('/form-i-1', (req, res) => {
 /* GET Form I-1 of a specific student */
 router.get('/form-i-1/student/:studentId', (req, res) => {
     let studentId = req.params.studentId;
-    console.log(studentId);
     getFormI1(studentId, req, res);
 });
+
+/* GET Form I-1s under specific supervisor */
+router.get('/form-i-1/supervisor/:supervisorEmail', (req, res) => {
+    let supervisorEmail = req.params.supervisorEmail;
+    getAllFormI1UnderSupervisor(supervisorEmail, req, res);
+})
 
 
 
@@ -52,6 +58,7 @@ router.get('/form-i-1/student/:studentId', (req, res) => {
  *      to the caller.
  */ 
 function saveFormI1StudentPersepective(req, res) {
+    console.log(req.body);
     let studentId = req.params.studentId;
     let allParamsPresent = true;
     let paramKeys = Object.keys(req.body);
@@ -120,6 +127,7 @@ function saveFormI1SupervisorPerspective(req, res) {
  * @param studentId"
  *      student registration number of the student whose form we are looking for.
  *      leave this as an empty string if all the entries are needed.
+ * 
  * @param req:
  *      req object provided by Express's router which contains everything related to the,
  *      API request.
@@ -143,6 +151,33 @@ function getFormI1(studentId, req, res) {
             res.status(400).send({ success: false, data: err });
         }
     });
+}
+
+/*
+ * A supervisor may have more than one student under him/her,
+ * thus we provide his/her email and get all the forms which contains that email,
+ * as SupervisorEmail.
+ * 
+ * @param supervisorEmail:
+ *      email of the supervisor.
+ *
+ * @param req:
+ *      req object provided by Express's router which contains everything related to the,
+ *      API request.
+ * 
+ * @param res:
+ *      res object provided by Express's router which we use to send the response back,
+ *      to the caller.
+ */
+function getAllFormI1UnderSupervisor(supervisorEmail, req, res) {
+    forms.formI1Model.find({ SupervisorEmail: supervisorEmail}, { _id: 0, __v: 0}, (err, data) => {
+        if (err) {
+            res.status(400).send({ success: false, data: err });
+        }
+        else {
+            res.status(200).send({ success: true, data: data });
+        }
+    })
 }
 
 
