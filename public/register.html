@@ -66,27 +66,33 @@
                                 <div class="form-row">
                                   <div class="col-md-4">
                                     <div class="form-label-group">
-                                      <label for="firstName">SLIIT Registration Number</label>
+                                      <label for="regNo">SLIIT Registration Number</label>
                                       <input type="text" id="regno" class="form-control" placeholder="ITxxxxxxxx" required="required" autofocus="autofocus">
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-label-group">
-                                        <label for="lastName">Department</label>
-                                      <input type="text" id="department" class="form-control" placeholder="SE/IT/ISE/IM/CSN/CS" required="required">
-                                      
+                                        <label for="dept">Department</label>
+                                        <select id="dept" class="form-control">
+                                          <option selected>SE</option>
+                                          <option>IT</option>
+                                          <option>IS</option>
+                                          <option>CS</option>
+                                          <option>IM</option>
+                                          <option>CSN</option>
+                                        </select>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-label-group">
-                                      <label for="firstName">Current Academic Year</label>
-                                      <input type="number" id="year" class="form-control" placeholder="1/2/3/4" required="required" autofocus="autofocus">
-                                      <!-- <select>
-                                          <option value="volvo">Volvo</option>
-                                          <option value="saab">Saab</option>
-                                          <option value="mercedes">Mercedes</option>
-                                          <option value="audi">Audi</option>
-                                        </select> -->
+                                      <label for="year">Current Academic Year</label>
+                                      <select id="year" class="form-control">
+                                      <option selected>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                    </select>
+
                                     </div>
                                   </div>
                                 </div>
@@ -96,17 +102,23 @@
                                      
                                       <div class="col-md-4">
                                         <div class="form-label-group">
-                                            <label for="lastName">Email</label>
-                                          <input type="text" id="email" class="form-control" placeholder="Email" required="required">
+                                            <label for="email">Email</label>
+                                          <input type="email" id="email" class="form-control" placeholder="Email" required="required">
                                           
                                         </div>
                                       </div>
-                                      
-                                      <div class="col-md-8">
+                                      <div class="col-md-4">
+                                        <div class="form-label-group">
+                                            <label for="password">Password</label>
+                                          <input type="password" id="password" class="form-control" placeholder="Password" required="required">
+                                          
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
                                         <div class="form-label-group">
                                             <label for="lastName"><b>Upload Your CV</b></label><br/>
                                           <input type="file" name="pic" accept="pdf/*">
-                                          <input type="button" value="Upload" class="btn btn-secondary ">
+                                          <input type="button" onclick="getUpload()" value="Upload" class="btn btn-success ">
                                           
                                         </div>
                                       </div>
@@ -114,11 +126,11 @@
                                   </div>
                                 
                            <div class="text-center">
-                              <input type="submit" value="Register" class="btn btn-primary btn-block rounded-0 py-2">
+                              <input type="button" id="btn-register" value="Register" class="btn btn-primary btn-block rounded-0 py-2">
                            </div>
                         </div>
                         <div class="col-md-12 col-sm-10 col-xs-12 ">
-                           <p style="color:black">Registered User?<a style="color:rgb(248, 7, 196)" href="login.html"> Log in to the System</a></p>
+                           <p style="color:black">Registered User?<a style="color:rgb(248, 7, 196)" href="index.html"> Log in to the System</a></p>
                         </div>
                      </div>
                   </div>
@@ -127,10 +139,22 @@
             </div>
          </div>
       </div>
-      <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+     
+      
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/index.js"></script>
+
    </body>
 </html>
