@@ -194,6 +194,9 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
+/***
+ * This function validate user
+ */
 function validateUserSignedIn() {
     let data = {
         userEmail: document.getElementById('email').value,
