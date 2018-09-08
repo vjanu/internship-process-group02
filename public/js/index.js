@@ -113,7 +113,7 @@ function getFormI1SupervisorDetails() {
 
 //
 $('#btn-login-supervisor').on('click', function () {
-    checkSupervisorExists();
+    validateUserSignedIn();
 });
 
 //
@@ -190,7 +190,7 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-function checkSupervisorExists() {
+function validateUserSignedIn() {
     let data = {
         userEmail: document.getElementById('email').value,
         userPassword: document.getElementById('password').value
