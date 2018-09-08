@@ -3,7 +3,7 @@ let baseUrlLocal = 'http://localhost:3000';
  let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlLocal;
+let baseUrl = baseUrlProd;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -16,10 +16,6 @@ let headers = {
 $('#btn-form-i-1-student').on('click', function () {
     getFormI1StudentDetails();
 });
-
-
-
-
 // form submit for form I-1, supervisor perspective.
 $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
@@ -40,14 +36,6 @@ $('#btn-form-refresh').on('click', function () {
 $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
-
-$('#btn-form-view').on('click', function () {
-    getFormI3dailydirayDetails();
-});
-
-
-
-
 
 /*
  * this will get the information filled by the student,
@@ -385,45 +373,3 @@ function getRegisterDetails() {
     })
 
 }
-
-
-
-
-
-function getFormI3dailydirayDetails() {
-    let formI3DiaryData = {
-        studentIdDiary: document.getElementById('studentIdDiary').value,
-        desc: document.getElementById('desc').value,
-        party: document.getElementById('party').value,
-        fromDiary: document.getElementById('fromDiary').value,
-        toDiary: document.getElementById('toDiary').value
-    }
-
-     formI3DiaryData .studentIdDiary =  formI3DiaryData .studentIdDiary.includes(' ') ? formI3DiaryData .studentIdDiary.split(' ').join('') :  formI3DiaryData .studentIdDiary;
-
-    axios.get(baseUrl+'/form-i-3',  formI3DiaryData , {headers: headers})
-        .then(response => {
-            console.log(response. formI3DiaryData );
-        })
-        .catch(error => {
-            console.log(error);
-        })
-
-}
-
-
-
-
-/***
- * 
- * 
- * 
- * Athrie
- */
-
-
-if (current_url.includes('Student_dashboard')) {
-    let studentId = "";
-}
-
-
