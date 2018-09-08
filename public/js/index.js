@@ -330,7 +330,7 @@ function getFormI3DiaryDetails() {
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
     
-    axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
+    axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
         })
@@ -341,23 +341,25 @@ function getFormI3DiaryDetails() {
 }
 
 function populateFormI3() {
-    console.log("sssss");
-        studentIdDiary: document.getElementById('studentIdDiary').value,
+    let current_url = window.location.href;
+    console.log(current_url);
+    // console.log("sssss");
+    //     studentIdDiary: document.getElementById('studentIdDiary').value,
      
-    axios.get(baseUrlLocal+'/daily/data/'+studentIdDiary)
-    .then(response => {
-        if (response.data.success) {
-            let form_details = response.data.data;
-            console.log(form_details);
-        }
-    })
-    .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(JSON.stringify(error));
-          console.log(error.response.headers);
-        }
-    });
+    // axios.get(baseUrl+'/daily/data/'+studentIdDiary)
+    // .then(response => {
+    //     if (response.data.success) {
+    //         let form_details = response.data.data;
+    //         console.log(form_details);
+    //     }
+    // })
+    // .catch(function (error) {
+    //     if (error.response) {
+    //       console.log(error.response.data);
+    //       console.log(JSON.stringify(error));
+    //       console.log(error.response.headers);
+    //     }
+    // });
 }
 
 function getRegisterDetails() {
@@ -366,9 +368,10 @@ function getRegisterDetails() {
         lastName: document.getElementById('lastName').value,
         nic: document.getElementById('nic').value,
         regno: document.getElementById('regno').value,
-        department: document.getElementById('department').value,
+        dept: document.getElementById('dept').value,
         year: document.getElementById('year').value,
-        email: document.getElementById('email').value
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
         
     }   
 
@@ -380,9 +383,17 @@ function getRegisterDetails() {
     .then(response => {
         console.log(response);
         if(response.data.success){
-            alert("Successfully registered")
+            alert("Successfully Registered!");
+            document.getElementById('firstName').value = "";
+            document.getElementById('lastName').value = "";
+            document.getElementById('nic').value = "";
+            document.getElementById('regno').value = "";
+            document.getElementById('dept').value = "";
+            document.getElementById('year').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
         }else{
-            alert("User not registered")
+            alert("User Not Registered!")
         }
     })
     .catch(error => {
