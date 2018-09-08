@@ -67,14 +67,28 @@ router.post('/form-i-3/diary/', function(req, res) {
 });
 
 
-router.get('/data', function(req, res, next) {
-    forms.formI3DiaryModel.find({}, { _id: 0, __v: 0 }, (err, data) => {
+router.get('/data/:id', function (req, res, next) {
+    forms.formI1Model.find({
+        StudentId: req.params.id,
+    }, {
+        _id: 0,
+        __v: 0
+    }, (err, data) => {
         if (err) {
-          res.status(500).send({ success: false, message: 'error.'  });
-        }
-        else {
-          res.status(200).send({ success: true, data: data });
-          console.log('hello');
+            res.status(500).send({
+                success: false,
+                message: 'Something went wrong.'
+            });
+        } else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Invalid Student ID provided.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
         }
     });
 });

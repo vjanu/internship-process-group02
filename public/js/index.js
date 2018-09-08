@@ -323,7 +323,7 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
+    axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
         })
@@ -335,7 +335,9 @@ function getFormI3DiaryDetails() {
 
 function populateFormI3() {
     console.log("sssss");
-    axios.get(baseUrl+'/daily/data/')
+        studentIdDiary: document.getElementById('studentIdDiary').value,
+     
+    axios.get(baseUrlLocal+'/daily/data/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
@@ -364,7 +366,7 @@ function getRegisterDetails() {
     }   
 
 
-    axios.post(baseUrl+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
+    axios.post(baseUrlLocal+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
     .then(response => {
         console.log(response.registerData);
     })
