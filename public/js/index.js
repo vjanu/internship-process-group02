@@ -3,7 +3,7 @@ let baseUrlLocal = 'http://localhost:3000';
  let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlProd;
+let baseUrl = baseUrlLocal;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -219,6 +219,7 @@ function checkSupervisorExists() {
 
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    console.log(userInfo)
     console.log("document  >>> On Ready");
 
     if ($("#supervisor-dashboard-page").length > 0) {
@@ -366,7 +367,12 @@ function getRegisterDetails() {
 
     axios.post(baseUrl+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
     .then(response => {
-        console.log(response.registerData);
+        console.log(response);
+        if(response.data.success){
+            alert("Successfully registered")
+        }else{
+            alert("User not registered")
+        }
     })
     .catch(error => {
         console.log(error);
