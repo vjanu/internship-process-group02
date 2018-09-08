@@ -11,6 +11,7 @@ let headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
+
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
 $('#btn-form-i-1-student').on('click', function () {
@@ -109,7 +110,7 @@ function getFormI1SupervisorDetails() {
 
 /**** Tharindu TCJ *****/
 
-// 
+//
 $('#btn-login-supervisor').on('click', function () {
     checkSupervisorExists();
 });
@@ -156,7 +157,6 @@ let current_url = window.location.href;
                     elems[i].disabled = true;
                 }
 
-
                 if(form_details.hasOwnProperty('EmployerName')){
                     $('#name-employer').val(form_details['EmployerName']);
                     $('#address-employer').val(form_details['EmployerAddress']);
@@ -174,8 +174,7 @@ let current_url = window.location.href;
         .catch(reject => {
             console.log(reject);
         })
-}
-
+    }
 }
 
 function formatDate(date) {
@@ -191,31 +190,36 @@ function formatDate(date) {
 }
 
 function checkSupervisorExists() {
-    console.log("Function called");
     let data = {
-        SupervisorEmail: document.getElementById('email').value,
-        SupervisorPassword: document.getElementById('password').value
+        userEmail: document.getElementById('email').value,
+        userPassword: document.getElementById('password').value
     }
 
-    axios.post(baseUrl + '/supervisor/login', data)
+    axios.post(baseUrl + '/login', data)
         .then(response => {
             console.log(response.data);
             if (response.data.success) {
                 let user_info = {
-                    UserType: "Supervisor",
-                    SupervisorId: response.data.SupervisorId,
-                    SupervisorName: response.data.SupervisorName,
-                    SupervisorEmail: response.data.SupervisorEmail
+                    UserType: response.data.userType,
+                    userData: response.data.info[0]
                 }
                 localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
+                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
+                if(user_info.UserType == 'Student'){
+                    window.location.href = "Student_dashboard.html";
+                }else if(user_info.UserType == 'Supervisor'){
+                    window.location.href = "supervisor_dashboard.html";
+                }else if(user_info.UserType == 'InternshipManager'){
 
-                window.location.href = "supervisor_dashboard.html";
+                }else{
+                    alert("Invalid login credentials")
+                }
             } else {
-                alert("Invalid login credencials");
+                alert("Invalid login credentials");
             }
         })
         .catch(error => {
-            alert("Invalid login credencials")
+            alert("Invalid login credentials")
             console.log(error);
         })
 }
@@ -224,7 +228,6 @@ function checkSupervisorExists() {
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     console.log(userInfo)
-    console.log("document  >>> On Ready");
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!("user_info" in localStorage)) {
@@ -257,7 +260,6 @@ $(document).ready(function () {
                                 var btnClassName = "btn btn-danger btn-sm"
                                 var iconClassName = "fas fa-times"
                                 var altText = "Supervisor details not submitted"
-
                             }
 
                             $('#form-i-1-submitted-students tbody').append('<tr>' +
@@ -276,9 +278,6 @@ $(document).ready(function () {
                             '</td>' +
                             '</tr>');
                         });
-
-
-
                     })
                     .catch(function (error) {
                         // handle error
@@ -387,5 +386,4 @@ function getRegisterDetails() {
     .catch(error => {
         console.log(error);
     })
-
 }
