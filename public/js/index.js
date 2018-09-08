@@ -1,6 +1,8 @@
 /* * * * *     Global Variables     * * * * */
+
 let BASE_URL_LOCAL = 'http://localhost:3000';
 let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+
 
 // change this to baseUrl = baseUrlLocal if you are developing.
 let baseUrl = BASE_URL_LOCAL;
@@ -37,6 +39,7 @@ $('#btn-form-refresh').on('click', function () {
 $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
+
 
 
 /**** Liyanage A.Y.K. *****/
@@ -311,9 +314,20 @@ function getFormI3StudentDetails() {
         })
         .then(response => {
             console.log(response.form3Data);
+            alert("Successfully Added Your Data!");           
+            document.getElementById('name').value = "";
+            document.getElementById('studentId').value = "";
+            document.getElementById('address').value = "";
+            document.getElementById('contactNumber').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('spec').value = "";
+            document.getElementById('internshipTitle').value = "";
+            document.getElementById('from').value = "";
+            document.getElementById('to').value = "";
         })
         .catch(error => {
             console.log(error);
+            alert("One or More fields are empty!");            
         })
 
 }
@@ -333,34 +347,73 @@ function getFormI3DiaryDetails() {
     axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
+            alert("Successfully Added Your Data!");
+            document.getElementById('studentIdDiary').value = "";
+            document.getElementById('desc').value = "";
+            document.getElementById('party').value = "";
+            document.getElementById('fromDiary').value = "";
+            document.getElementById('toDiary').value = "";
         })
         .catch(error => {
             console.log(error);
+            alert("One or More fields are empty!");
+            
         })
 
 }
 
-function populateFormI3() {
-    let current_url = window.location.href;
-    console.log(current_url);
-    // console.log("sssss");
-    //     studentIdDiary: document.getElementById('studentIdDiary').value,
-     
-    // axios.get(baseUrl+'/daily/data/'+studentIdDiary)
-    // .then(response => {
-    //     if (response.data.success) {
-    //         let form_details = response.data.data;
-    //         console.log(form_details);
-    //     }
-    // })
-    // .catch(function (error) {
-    //     if (error.response) {
-    //       console.log(error.response.data);
-    //       console.log(JSON.stringify(error));
-    //       console.log(error.response.headers);
-    //     }
-    // });
+function getUpload() {
+    alert('Successfully Uploaded');
 }
+function populateFormI3() {
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let studentIdDiary = userInfo.userData.RegistrationNo;
+    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
+    .then(response => {
+        if (response.data.success) {
+            let form_details = response.data.data;
+            console.log(form_details);
+            console.log(form_details.length);
+            $(document).ready(function () {
+                
+                var html = "<table  align='center' style='width:1108px' border='1|1' class='table-bordered table-hover'>";
+                html+="<head>";
+                html+="<tr>";
+                html+="<td width='25%'align='center'> "+'<b>'+'Training Party'+'</b>'+" </td>";
+                html+="<td width='46%' style='max-width: 20px;' align='center'> "+'<b>'+'Training Description'+'</b>'+" </td>";
+                html+="<td width='15%' align='center'> "+'<b>'+ 'From'+'</b>'+" </td>";
+                html+="<td width='25%' align='center'> "+'<b>'+'To'+'</b>'+" </td>";
+                html+="</tr>";
+                html+="</head>";
+                for (var i = 0; i < form_details.length; i++) {
+                    html+="<tr>";
+                    html+="<td width='25%'align='center'> "+form_details[i].TrainingParty+" </td>";
+                    html+="<td width='46%' style='max-width: 20px;' align='center'> "+form_details[i].TrainingDescription+" </td>";
+                    html+="<td width='20%' align='center'> "+form_details[i].From+" </td>";
+                    html+="<td width='20%' align='center'> "+form_details[i].To+" </td>";
+            
+                    html+="</tr>";
+            
+                }
+                html+="</table>";
+                $("#form-i-3-daily-diary-desc").html(html);
+            })
+            console.log("hel");
+        }
+    })
+
+    
+    .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(JSON.stringify(error));
+          console.log(error.response.headers);
+        }
+    });
+}
+
+
+
 
 function getRegisterDetails() {
     let registerData = {

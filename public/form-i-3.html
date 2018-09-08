@@ -16,7 +16,7 @@
       <link href="css/custom-style.css" rel="stylesheet">
       <title>Internship Hub</title>
    </head>
-   <body class="fixed-nav" id="page-top">
+   <body class="fixed-nav" id="page-top" onload="populateFormI3();">
       <!-- Navigation-->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
           <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
@@ -176,7 +176,7 @@
                                             </div>
                       </div>
                       <div class="form-row">
-                          <button type="button" id ="btn-form-submit" class="btn btn-primary">Submit Days Work</button>                        
+                          <button type="button" onclick="populateFormI3()" id ="btn-form-submit" class="btn btn-primary">Submit Days Work</button>                        
                         </div>
                                           
                                       
@@ -194,13 +194,12 @@
                <!-- Daily Diary Information -->
                 <div class="card">
                     <div align="center" class="card-header"><h4><b>Daily Diary Information</b></h4>
-                     <div align="right"><button  type="button" id ="btn-form-refresh" class="btn btn-primary">Refresh</button>                        
-                     </div>
-
+                      <!-- <input type="text" class="form-control" id="idno" disabled> -->
+                      
                     </div>
-                    <div class="card-body">
+                   <div id ="form-i-3-daily-diary-desc">
 
-                        <table class="table table-bordered table-hover" id="form-i-3-daily-diary-desc">
+                        <!-- <table class="table table-bordered table-hover" id="form-i-3-daily-diary-desc">
                             <thead>
                                 <tr>
                                     <th scope="col">Training Party</th>
@@ -209,31 +208,18 @@
                                     <th scope="col">To</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id = "dailt-data">
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>xxx</td>
-                                    <td>xxx</td>
-                                    <td>2018-07-23</td>
+                                   
                                     
                                 </tr>                              
                             </tbody>
-                        </table>
+                        </table> -->
 
-                    </div>
+                    </div> 
                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
+               
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
