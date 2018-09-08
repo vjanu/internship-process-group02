@@ -125,9 +125,9 @@ $('#btn-logout').on('click', function (e) {
 function populateFormI1() {
     // get student id from the url.
     let current_url = window.location.href;
-    
-    if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
-        studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
+    console.log(current_url);
+    if (current_url.includes('#')) {
+        let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
     
         console.log('Fetching student details of ' + studentId + ' for form I-1');
 
