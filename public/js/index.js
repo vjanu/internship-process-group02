@@ -37,6 +37,8 @@ $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
 
+
+/**** Liyanage A.Y.K. *****/
 /*
  * this will get the information filled by the student,
  * on Form I-1 and validate and prepare in order to be sent,
