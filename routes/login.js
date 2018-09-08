@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const supervisor = require('../models/supervisorModel');
+const internshipManager = require('../models/intershipManagerModel');
 const student = require('../models/registerModel');
 const randomize = require('randomatic');
 const forms = require('../models/formsModel');
@@ -69,10 +70,33 @@ function checkSupervisorExists(req, res) {
 }
 
 function checkInternshipManagerExists(req, res) {
-    res.status(404).send({
-        success: false,
-        info: "Not Found"
+    internshipManager.InternshipManagerModel.find({
+        InternshipManagerEmail: req.body.userEmail,
+        InternshipManagerPassword: req.body.userPassword
+    }, {
+        _id: 0,
+        __v: 0,
+        InternshipManagerPassword: 0
+    }, (err, data) => {
+        if (err) {
+            res.status(404).send({
+                success: false,
+                info: "Not Found"
+            });
+        } else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                info: "Not Found"
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                info: data,
+                userType: "InternshipManager"
+            });
+        }
     });
+
 }
 
 module.exports = router;

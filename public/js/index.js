@@ -5,7 +5,7 @@ let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = BASE_URL_PROD;
+let baseUrl = BASE_URL_LOCAL;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -218,7 +218,7 @@ function validateUserSignedIn() {
                 }else if(user_info.UserType == 'Supervisor'){
                     window.location.href = "supervisor_dashboard.html";
                 }else if(user_info.UserType == 'InternshipManager'){
-
+                    window.location.href = "internship-manager.html";
                 }else{
                     alert("Invalid login credentials")
                 }

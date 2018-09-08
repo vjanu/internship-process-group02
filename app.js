@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const iManagerRouter = require('./routes/internshipManager');
 const formsRouter = require('./routes/forms');
 const studentRouter = require('./routes/student');
 const supervisorRouter = require('./routes/supervisor');
@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/internship-manager', iManagerRouter);
 app.use('/forms', formsRouter);
 app.use('/student', studentRouter);
 app.use('/supervisor', supervisorRouter);
