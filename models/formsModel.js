@@ -6,18 +6,18 @@ let formI1Schema = mongoose.Schema({
     StudentId: String,
     StudentName: String,
     StudentAddress: String,
-    StudentHomePhone: Number,
-    StudentMobilePhone: Number,
+    StudentHomePhone: String,
+    StudentMobilePhone: String,
     StudentEmails: Array,
     Year: Number,
     Semester: Number,
-    CGPA: Number,
+    CGPA: String,
 
     // following are filled by supervisor.
     EmployerName: String,
     EmployerAddress: String,
     SupervisorName: String,
-    SupervisorPhone: Number,
+    SupervisorPhone: String,
     SupervisorTitle: String,
     SupervisorEmail: String,
     InternshipStart: Date,
@@ -25,6 +25,30 @@ let formI1Schema = mongoose.Schema({
     WorkHoursPerWeek: Number
 });
 
-let formI1Model = mongoose.model('FormI1', formI1Schema);
+let formI3Schema = mongoose.Schema({
+    // following are filled by student.
+    StudentName: String,
+    StudentId: String,
+    StudentAddress: String,
+    StudentPhone: Number,
+    StudentEmails: Array,
+    Specialization: String,
+    InternshipTitle: String,
+    From: String,
+    To: String
+});
 
-module.exports = { formI1Model };
+let formI3DiarySchema = mongoose.Schema({
+    // following are filled by student.
+    StudentId: String,
+    TrainingDescription: String,
+    TrainingParty: String,
+    From: String,
+    To: String
+});
+
+let formI1Model = mongoose.model('FormI1', formI1Schema);
+let formI3Model = mongoose.model('FormI3', formI3Schema);
+let formI3DiaryModel = mongoose.model('FormI3Diary', formI3DiarySchema);
+
+module.exports = { formI1Model, formI3Model, formI3DiaryModel };
