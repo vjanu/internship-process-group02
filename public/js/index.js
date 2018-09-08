@@ -1,15 +1,16 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrlLocal = 'http://localhost:3000';
- let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let BASE_URL_LOCAL = 'http://localhost:3000';
+let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlProd;
+let baseUrl = BASE_URL_LOCAL;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
 };
+
 
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
@@ -37,6 +38,8 @@ $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
 
+
+/**** Liyanage A.Y.K. *****/
 /*
  * this will get the information filled by the student,
  * on Form I-1 and validate and prepare in order to be sent,
@@ -107,7 +110,7 @@ function getFormI1SupervisorDetails() {
 
 /**** Tharindu TCJ *****/
 
-// 
+//
 $('#btn-login-supervisor').on('click', function () {
     checkSupervisorExists();
 });
@@ -119,16 +122,16 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
-// check if the loaded page is a form-i-1 page with a student id embeded in the url.
-// valid url: domain.com/form-i-1.html#<StudentId>
+
+function populateFormI1() {
+    // get student id from the url.
 let current_url = window.location.href;
-if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
-    studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
-    populateFormI1(studentId);
-}
+    console.log(current_url);
+    if (current_url.includes('#')) {
+        let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
 
+        console.log('Fetching student details of ' + studentId + ' for form I-1');
 
-function populateFormI1(studentId) {
     axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
         .then(response => {
             if (response.data.success) {
@@ -154,7 +157,6 @@ function populateFormI1(studentId) {
                     elems[i].disabled = true;
                 }
 
-
                 if(form_details.hasOwnProperty('EmployerName')){
                     $('#name-employer').val(form_details['EmployerName']);
                     $('#address-employer').val(form_details['EmployerAddress']);
@@ -172,6 +174,7 @@ function populateFormI1(studentId) {
         .catch(reject => {
             console.log(reject);
         })
+    }
 }
 
 function formatDate(date) {
@@ -187,31 +190,36 @@ function formatDate(date) {
 }
 
 function checkSupervisorExists() {
-    console.log("Function called");
     let data = {
-        SupervisorEmail: document.getElementById('email').value,
-        SupervisorPassword: document.getElementById('password').value
+        userEmail: document.getElementById('email').value,
+        userPassword: document.getElementById('password').value
     }
 
-    axios.post(baseUrl + '/supervisor/login', data)
+    axios.post(baseUrl + '/login', data)
         .then(response => {
             console.log(response.data);
             if (response.data.success) {
                 let user_info = {
-                    UserType: "Supervisor",
-                    SupervisorId: response.data.SupervisorId,
-                    SupervisorName: response.data.SupervisorName,
-                    SupervisorEmail: response.data.SupervisorEmail
+                    UserType: response.data.userType,
+                    userData: response.data.info[0]
                 }
                 localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
+                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
+                if(user_info.UserType == 'Student'){
+                    window.location.href = "Student_dashboard.html";
+                }else if(user_info.UserType == 'Supervisor'){
+                    window.location.href = "supervisor_dashboard.html";
+                }else if(user_info.UserType == 'InternshipManager'){
 
-                window.location.href = "supervisor_dashboard.html";
+                }else{
+                    alert("Invalid login credentials")
+                }
             } else {
-                alert("Invalid login credencials");
+                alert("Invalid login credentials");
             }
         })
         .catch(error => {
-            alert("Invalid login credencials")
+            alert("Invalid login credentials")
             console.log(error);
         })
 }
@@ -219,7 +227,7 @@ function checkSupervisorExists() {
 
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    console.log("document  >>> On Ready");
+    console.log(userInfo)
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!("user_info" in localStorage)) {
@@ -252,7 +260,6 @@ $(document).ready(function () {
                                 var btnClassName = "btn btn-danger btn-sm"
                                 var iconClassName = "fas fa-times"
                                 var altText = "Supervisor details not submitted"
-
                             }
 
                             $('#form-i-1-submitted-students tbody').append('<tr>' +
@@ -271,9 +278,6 @@ $(document).ready(function () {
                             '</td>' +
                             '</tr>');
                         });
-
-
-
                     })
                     .catch(function (error) {
                         // handle error
@@ -302,7 +306,9 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrl+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
+    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data, {
+            headers: headers
+        })
         .then(response => {
             console.log(response.form3Data);
         })
@@ -323,6 +329,7 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
+    
     axios.post(baseUrlLocal+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
@@ -366,12 +373,19 @@ function getRegisterDetails() {
     }   
 
 
-    axios.post(baseUrlLocal+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
+
+    axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
+            headers: headers
+        })
     .then(response => {
-        console.log(response.registerData);
+        console.log(response);
+        if(response.data.success){
+            alert("Successfully registered")
+        }else{
+            alert("User not registered")
+        }
     })
     .catch(error => {
         console.log(error);
     })
-
 }

@@ -67,13 +67,7 @@ router.post('/form-i-3/diary/', function(req, res) {
 });
 
 
-router.get('/data/:id', function (req, res, next) {
-    forms.formI1Model.find({
-        StudentId: req.params.id,
-    }, {
-        _id: 0,
-        __v: 0
-    }, (err, data) => {
+    forms.formI3DiaryModel.find({StudentId:req.params.studentId}, { _id: 0, __v: 0 }, (err, data) => {
         if (err) {
             res.status(500).send({
                 success: false,
