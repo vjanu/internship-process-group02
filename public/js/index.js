@@ -5,7 +5,7 @@ let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = BASE_URL_LOCAL;
+let baseUrl = BASE_URL_PROD;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
