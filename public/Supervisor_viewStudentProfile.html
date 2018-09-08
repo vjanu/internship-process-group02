@@ -24,10 +24,10 @@
     <title>Internship Hub</title>
 </head>
 
-<body class="fixed-nav" id="page-top">
+<body class="fixed-nav" id="page-top" onload="populateStudentProfile();">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
+        <i class="fab fa-hubspot"></i><a class="navbar-brand" href="supervisor_dashboard.html">Internship Hub</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
             aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -43,8 +43,7 @@
 
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Upload CV ">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseGeneral"
-                        data-parent="#exampleAccordion">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseGeneral" data-parent="#exampleAccordion">
                         <i class="fa fa-fw fa-info-circle"></i>
                         <span class="nav-link-text">Upload CV </span>
                     </a>
@@ -81,8 +80,7 @@
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Employee">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDepartments"
-                        data-parent="#exampleAccordion">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDepartments" data-parent="#exampleAccordion">
                         <i class="fas fa-hospital-alt"></i>
                         <span class="nav-link-text">Title</span>
                     </a>
@@ -104,7 +102,7 @@
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
                         <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a href="register.html" class="nav-link">
                         <i class="fas fa-user-circle"></i>Register</a>
@@ -129,8 +127,7 @@
                                     <div class="form-group row">
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Student Number</label>
                                         <div class="col-sm-6">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                                value="IT 16 0519 80">
+                                            <input type="text" readonly class="form-control-plaintext" id="student-id">
                                         </div>
                                     </div>
                                 </li>
@@ -138,8 +135,7 @@
                                     <div class="form-group row">
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Name</label>
                                         <div class="col-sm-6">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                                value="Messie De Silva">
+                                            <input type="text" readonly class="form-control-plaintext" id="student-name">
                                         </div>
                                     </div>
                                 </li>
@@ -147,8 +143,7 @@
                                     <div class="form-group row">
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Job Title</label>
                                         <div class="col-sm-6">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                                value="Intern">
+                                            <input type="text" readonly class="form-control-plaintext" id="job-title">
                                         </div>
                                     </div>
                                 </li>
@@ -156,8 +151,7 @@
                                     <div class="form-group row">
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Internship Start Date</label>
                                         <div class="col-sm-6">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                                value="06-Aug-18">
+                                            <input type="text" readonly class="form-control-plaintext" id="start">
                                         </div>
                                     </div>
                                 </li>
@@ -165,14 +159,13 @@
                                     <div class="form-group row">
                                         <label for="staticEmail" class="col-sm-6 col-form-label">Internship End Date</label>
                                         <div class="col-sm-6">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticEmail"
-                                                value="06-Aug-19">
+                                            <input type="text" readonly class="form-control-plaintext" id="end">
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                             <div class="card-body">
-                                <button type="button" class="btn btn-primary col-sm-12">View next Intern</button>
+                                <button type="button" class="btn btn-primary col-sm-12">Back</button>
                             </div>
                         </div>
 
@@ -195,14 +188,16 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <div class="form-group row">
-                                        <a href="form-i-1.html" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-1"> Form I-1 </a>
-                                        <label for="staticEmail" class="col-sm-6 col-form-label">Done</label>
+                                        <a id="link-to-form-i-1" href="form-i-1.html" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-1">
+                                        Form I-1 </a>
+                                        <label id="status-of-form-i-1" for="staticEmail" class="col-sm-6 col-form-label">Due</label>
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     <div class="form-group row">
-                                        <a href="" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-3"> Form I-3 </a>
-                                        <label for="staticEmail" class="col-sm-6 col-form-label">Due</label>
+                                        <a id="link-to-form-i-3" href="" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-3"> Form
+                                            I-3 </a>
+                                        <label id="status-of-form-i-3" for="staticEmail" class="col-sm-6 col-form-label">Due</label>
                                     </div>
                                 </li>
                             </ul>
@@ -220,8 +215,9 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">
                                     <div class="form-group row">
-                                        <a href="" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-5"> Form I-5 </a>
-                                        <label for="staticEmail" class="col-sm-6 col-form-label">Done</label>
+                                        <a id="link-to-form-i-5" href="" class="nav-link col-sm-6" data-toggle="tooltip" data-placement="right" title="Click to fill up form i-5"> Form
+                                            I-5 </a>
+                                        <label id="status-of-form-i-5" for="staticEmail" class="col-sm-6 col-form-label">Due</label>
                                     </div>
                                 </li>
                             </ul>
@@ -244,8 +240,7 @@
         <i class="fa fa-angle-up"></i>
     </a>
     <!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -264,10 +259,17 @@
     </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    <!-- Bootstrap core JavaScript
+================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/index.js"></script>
 
 </body>
 
