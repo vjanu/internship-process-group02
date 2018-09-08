@@ -1,32 +1,41 @@
 'use strict'
 
 var chai = require('chai');
+var form3 = require('../../routes/form3');
+const response = require('./response');
 var expect = chai.expect;
-
+var assert = chai.assert;
+const nock = require('nock');
 chai.should();
 
 function returnName(name){
     return name;
 };
 
-function getUserStatus(id){
-    let status = true;
-    if(id == 'success'){
-        status = true;
-    } else if(id == 'fail'){
-        status = false;
-    }
-    return status;
-}
 
 describe('Sample Unit test', function(){
     it('returns same', function(){
-        returnName('vira').should.equal('vira');
+        returnName('form3').should.equal('form3');
     });
 });
 
 describe('Checking For Registered User', function(){
     it('returns status of registered user', function(){
-        getUserStatus('success').should.equal(true);
+        form3.getUserStatus('success').should.equal(true);
     });
 });
+
+describe('No of users who registered', function() {
+    it('User Count', function() {
+      var users = ['nimal','saman','vira'];
+      assert.equal(3, form3.getUserCount(users));
+    });
+  });
+
+  describe('Get User tests', () => {
+    beforeEach(() => {
+      nock('https://api.github.com')
+        .get('/users/octocat')
+        .reply(200, response);
+    });
+  });

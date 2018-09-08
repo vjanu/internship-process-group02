@@ -85,6 +85,24 @@ router.get('/data/:studentId', function(req, res, next) {
     });
 });
 
+function getUserStatus(id){
+    let status = true;
+    if(id == 'success'){
+        status = true;
+    } else if(id == 'fail'){
+        status = false;
+    }
+    return status;
+}
+
+function getUserCount(users){
+    let count = 0 ;
+   for(let i=0; i < users.length; i++){
+        count ++;
+   }
+    return count;
+}
 
 
-module.exports = router;
+
+module.exports = { router, getUserStatus, getUserCount};
