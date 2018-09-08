@@ -2,9 +2,13 @@
 
 var chai = require('chai');
 var form3 = require('../../routes/form3');
-const response = require('./response');
+var request = require("request");
+var base_url = "http://localhost:3000";
+
+const response1 = require('./response');
 var expect = chai.expect;
 var assert = chai.assert;
+
 const nock = require('nock');
 chai.should();
 
@@ -34,8 +38,34 @@ describe('No of users who registered', function() {
 
   describe('Get User tests', () => {
     beforeEach(() => {
-      nock('https://api.github.com')
+      nock('https://localhost:3000')
         .get('/users/octocat')
         .reply(200, response);
     });
   });
+
+
+describe("Register to the System", function() {
+    describe("POST /info/student", function() {
+        it("returns status code 200", function(done) {
+            var data = {
+            firstName : "sunil",
+            lastName: "perera",
+            nic: "950779828V",
+            regno: "IT16011111",
+            dept: "SE",
+            year: 2,
+            email: "sunil@gmil.com",
+            password : "123",
+            }
+            request.post(
+                base_url+'/info/student',
+                { json: data },
+                function (error, response, body) {
+                    assert.equal(200, response1.statusCode);
+                    done();
+                }
+            );
+        });
+    });
+});
