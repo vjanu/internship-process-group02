@@ -15,34 +15,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res) {
-    // supervisor.supervisorModel.find({
-    //     SupervisorEmail: req.body.userEmail,
-    //     SupervisorPassword: req.body.userPassword
-    // }, {
-    //     _id: 0,
-    //     __v: 0,
-    //     SupervisorPassword: 0
-    // }, (err, data) => {
-    //     if (err) {
-    //         res.status(500).send({
-    //             success: false,
-    //             message: 'Something went wrong.'
-    //         });
-    //     } else if (data.length === 0) {
-    //         res.status(404).send({
-    //             success: false,
-    //             message: 'Invalid login Credentials provided.'
-    //         });
-    //     } else {
-    //         res.status(200).send({
-    //             success: true,
-    //             data: data
-    //         });
-    //     }
-    // });
 
     checkStudentExists(req, res);
-
 
 });
 
