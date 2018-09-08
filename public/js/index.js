@@ -125,11 +125,8 @@ $('#btn-logout').on('click', function (e) {
 function populateFormI1() {
     // get student id from the url.
     let current_url = window.location.href;
-    console.log(current_url);
     if (current_url.includes('#')) {
         let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
-    
-        console.log('Fetching student details of ' + studentId + ' for form I-1');
 
         axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
             .then(response => {
@@ -381,5 +378,86 @@ function getRegisterDetails() {
         .catch(error => {
             console.log(error);
         })
+}
+
+
+/**** Tharushi  ****/
+/*
+ * Send request to backend in order to get all form i-1 s under a given supervisor.
+ */
+function getFormI1sUnderSupervisor(supervisorEmail) {
+    return new Promise((resolve, reject) => {
+        axios.get(baseUrl + '/forms/form-i-1/supervisor/' + supervisorEmail)
+        .then(response => {
+            if (response.data.success) {
+                if (response.data.data != undefined) {
+                    resolve(response.data.data);
+                }
+            }
+        })
+        .catch(error => {
+            reject(error);
+        })
+    }) 
+}
+
+
+function makeSupervisorDashboard() {
+    getFormI1sUnderSupervisor('a@a.a')
+    .then(resolve => {
+        // we render the table here.
+        let table = '<table class="table table-striped table-bordered" style="width:100%">' +
+                        '<thead>' +
+                            '<tr>' +
+                                '<th scope="col">Student Id number</th>' +
+                                '<th scope="col">Name</th>' +
+                                '<th scope="col">Job title</th>' +
+                            '</tr>' +
+                        '</thead>' +
+                        '<tbody>';
+        
+        resolve.forEach(form => {
+            table += 
+                '<tr>' + 
+                    '<td>' +
+                        '<a href="Supervisor_viewStudentProfile.html#' + form.StudentId + '" data-toggle="tooltip" data-placement="right" title="Click to view the interns profile">' +
+                            form.StudentId +
+                        '</a>' +
+                    '</td>' +
+                    '<td>' + form.StudentName + '</td>' +
+                    '<td>' + 'Intern' + '</td>' +
+                '</tr>'
+        });
+
+        table += '</tbody> </table>';
+
+        document.getElementById('SupervisorTableContainer').innerHTML = table;
+    })
+    .catch(reject => {
+        console.log(reject);
+    });
+}
+
+function populateStudentProfile() {
+    // student id is in the url.
+    let currentUrl = window.location.href;
+    let studentId = currentUrl.substr(currentUrl.indexOf('#') + 1, currentUrl.length);
+
+    axios.get('/forms/form-i-1/student/' + studentId)
+    .then(response => {
+        if (response.data.success) {
+            let form = response.data.data;
+            console.log(form);
+            document.getElementById('student-id').value = form.StudentId;
+            document.getElementById('student-name').value = form.StudentName;
+            document.getElementById('job-title').value = 'Intern';
+            document.getElementById('start').value = form.InternshipStart.split('T')[0];
+            document.getElementById('end').value = form.InternshipEnd.split('T')[0];
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    });
+
 
 }
