@@ -1,16 +1,3 @@
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/index.js"></script>
-
-    <body>
-
-=======
 <!doctype html>
 <html lang="en">
 
@@ -20,19 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 
     <title>Form I-1</title>
 </head>
 
-<body>
+<body onload="populateFormI1();">
 
 <!-- navbar: start -->
  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 </nav>
@@ -80,13 +67,11 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="home-phone-student">Home Phone</label>
-                            <input type="number" class="form-control" id="home-phone-student"
-                                   placeholder="011 123 45 67">
+                                <input type="number" class="form-control" id="home-phone-student" placeholder="011 123 45 67">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="mobile-phone-student">Mobile Phone</label>
-                            <input type="number" class="form-control" id="mobile-phone-student"
-                                   placeholder="071 123 45 67">
+                                <input type="number" class="form-control" id="mobile-phone-student" placeholder="071 123 45 67">
                         </div>
                     </div>
                     <!-- Phone numbers -->
@@ -94,8 +79,7 @@
                     <!-- Email -->
                     <div class="form-group">
                         <label for="emails-student">Email Address(s)</label>
-                        <input type="email" class="form-control" id="emails-student"
-                               placeholder="amal.perera@my.sliit.lk, amal445@gmail.com">
+                            <input type="email" class="form-control" id="emails-student" placeholder="amal.perera@my.sliit.lk, amal445@gmail.com">
                         <small class="text-danger">Use comma( , ) to separate multiple emails.</small>
 
                     </div>
@@ -126,6 +110,10 @@
                     </div>
                     <!-- Semester and grades -->
 
+                    <div class="form-group">
+                        <label for="assigned-supervisor">Assigned Supervisor Email</label>
+                        <input type="email" class="form-control" id="assigned-supervisor" placeholder="supervisor Email">
+                    </div>
 
                     <button type="button" class="btn btn-primary" id="btn-form-i-1-student">Submit Form I-1</button>
                 </form>
@@ -145,16 +133,14 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/index.js"></script>
-<body>
+</body>
+
 </html>

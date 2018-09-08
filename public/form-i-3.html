@@ -1,31 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8">
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <meta name="theme-color" content="#000000">
 
-      <link rel="shortcut icon" href="favicon.ico">
-      <!-- bootstrap v4.1.1 -->
-      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
-      <!-- font awesome(for icons) -->
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-      <!-- lato font(from google fonts) -->
-      <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
-      <link href="css/custom-style.css" rel="stylesheet">
-      <title>Internship Hub</title>
-   </head>
-   <body class="fixed-nav" id="page-top">
-      <!-- Navigation-->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-          <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
-          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-        </nav>  <br/>
-          <div class="container">
-              <div class="row">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- bootstrap v4.1.1 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <!-- lato font(from google fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+
+    <title>Internship Hub</title>
+</head>
+
+<body class="fixed-nav" id="page-top" onload="populateFormI3()">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-user"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="form-i-1.html">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-1</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="form-i-3.html">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-5</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-7</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <!-- everything we make goes inside this div -->
+
+
+
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="Student-dashboard.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Form I-3</li>
+            </ol>
+			
+			
+			
+            <div class="row">
               
                  <div class="col-lg-12 text-center register-header">
                     <h1 style="color:black">Form I-3</h1> 
@@ -121,7 +193,7 @@
 
                                         </div>
                                        <br/>
-                                        <button type="button" id ="btn-form-i-3-student" class="btn btn-primary">Submit Form I-3</button>
+                                        <button type="button" onclick = "populateFormI3()" id ="btn-form-i-3-student" class="btn btn-primary">Submit Form I-3</button>
                                 </div>
                             </div>
                                         
@@ -176,7 +248,7 @@
                                             </div>
                       </div>
                       <div class="form-row">
-                          <button type="button" id ="btn-form-submit" class="btn btn-primary">Submit Days Work</button>                        
+                          <button type="button" onclick="populateFormI3()" id ="btn-form-submit" class="btn btn-primary">Submit Days Work</button>                        
                         </div>
                                           
                                       
@@ -194,13 +266,12 @@
                <!-- Daily Diary Information -->
                 <div class="card">
                     <div align="center" class="card-header"><h4><b>Daily Diary Information</b></h4>
-                     <div align="right"><button  type="button" id ="btn-form-refresh" class="btn btn-primary">Refresh</button>                        
-                     </div>
-
+                      <!-- <input type="text" class="form-control" id="idno" disabled> -->
+                      
                     </div>
-                    <div class="card-body">
+                   <div id ="form-i-3-daily-diary-desc">
 
-                        <table class="table table-bordered table-hover" id="form-i-3-daily-diary-desc">
+                        <!-- <table class="table table-bordered table-hover" id="form-i-3-daily-diary-desc">
                             <thead>
                                 <tr>
                                     <th scope="col">Training Party</th>
@@ -209,24 +280,22 @@
                                     <th scope="col">To</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id = "dailt-data">
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>xxx</td>
-                                    <td>xxx</td>
-                                    <td>2018-07-23</td>
+                                   
                                     
                                 </tr>                              
                             </tbody>
-                        </table>
+                        </table> -->
 
-                    </div>
+                    </div> 
                 </div>
 
 
 
 
 
+        </div>
 
 
 
@@ -234,19 +303,65 @@
 
 
 
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Internship Hub 2018</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" id="btn-logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
         crossorigin="anonymous"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="js/index.js"></script>
-      </body>
+</body>
+
 </html>

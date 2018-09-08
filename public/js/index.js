@@ -1,15 +1,18 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrlLocal = 'http://localhost:3000';
- let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+
+let BASE_URL_LOCAL = 'http://localhost:3000';
+let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlProd;
+let baseUrl = BASE_URL_LOCAL;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*'
 };
+
 
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
@@ -37,6 +40,12 @@ $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
 
+
+
+
+/* * * * * * * Forms * * * * * * */
+
+/**** Liyanage A.Y.K. *****/
 /*
  * this will get the information filled by the student,
  * on Form I-1 and validate and prepare in order to be sent,
@@ -52,7 +61,8 @@ function getFormI1StudentDetails() {
         emailAddresses: document.getElementById('emails-student').value, // may contain multiple values separated by comma ( , )
         year: document.getElementById('year-student').value,
         semester: document.getElementById('semester-student').value,
-        cgpa: document.getElementById('cgpa-student').value
+        cgpa: document.getElementById('cgpa-student').value,
+        assignedSupervisor: document.getElementById('assigned-supervisor').value
     }
 
 
@@ -107,9 +117,9 @@ function getFormI1SupervisorDetails() {
 
 /**** Tharindu TCJ *****/
 
-// 
+//
 $('#btn-login-supervisor').on('click', function () {
-    checkSupervisorExists();
+    validateUserSignedIn();
 });
 
 //
@@ -119,16 +129,16 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
-// check if the loaded page is a form-i-1 page with a student id embeded in the url.
-// valid url: domain.com/form-i-1.html#<StudentId>
+
+function populateFormI1() {
+    // get student id from the url.
 let current_url = window.location.href;
-if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
-    studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
-    populateFormI1(studentId);
-}
+    console.log(current_url);
+    if (current_url.includes('#')) {
+        let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
 
+        console.log('Fetching student details of ' + studentId + ' for form I-1');
 
-function populateFormI1(studentId) {
     axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
         .then(response => {
             if (response.data.success) {
@@ -154,7 +164,6 @@ function populateFormI1(studentId) {
                     elems[i].disabled = true;
                 }
 
-
                 if(form_details.hasOwnProperty('EmployerName')){
                     $('#name-employer').val(form_details['EmployerName']);
                     $('#address-employer').val(form_details['EmployerAddress']);
@@ -172,6 +181,7 @@ function populateFormI1(studentId) {
         .catch(reject => {
             console.log(reject);
         })
+    }
 }
 
 function formatDate(date) {
@@ -186,40 +196,109 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-function checkSupervisorExists() {
-    console.log("Function called");
+function validateUserSignedIn() {
     let data = {
-        SupervisorEmail: document.getElementById('email').value,
-        SupervisorPassword: document.getElementById('password').value
+        userEmail: document.getElementById('email').value,
+        userPassword: document.getElementById('password').value
     }
 
-    axios.post(baseUrl + '/supervisor/login', data)
+    axios.post(baseUrl + '/login', data)
         .then(response => {
             console.log(response.data);
             if (response.data.success) {
                 let user_info = {
-                    UserType: "Supervisor",
-                    SupervisorId: response.data.SupervisorId,
-                    SupervisorName: response.data.SupervisorName,
-                    SupervisorEmail: response.data.SupervisorEmail
+                    UserType: response.data.userType,
+                    userData: response.data.info[0]
                 }
                 localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
+                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
+                if(user_info.UserType == 'Student'){
+                    window.location.href = "Student_dashboard.html";
+                }else if(user_info.UserType == 'Supervisor'){
+                    window.location.href = "supervisor_dashboard.html";
+                }else if(user_info.UserType == 'InternshipManager'){
 
-                window.location.href = "supervisor_dashboard.html";
+                }else{
+                    alert("Invalid login credentials")
+                }
             } else {
-                alert("Invalid login credencials");
+                alert("Invalid login credentials");
             }
         })
         .catch(error => {
-            alert("Invalid login credencials")
+            alert("Invalid login credentials")
             console.log(error);
         })
 }
 
 
+
+/* * * * * * * Dashboards * * * * * * */
+
+function getAllInternships() {
+    let headerMap = new Map();
+
+    // setting headers and their corresponding json keys.
+    headerMap.set('Student ID', 'StudentId');
+    headerMap.set('Student Name', 'StudentName');
+    headerMap.set('Internship Start', 'InternshipStart');
+    headerMap.set('Internship End', 'InternshipEnd');
+    headerMap.set('Forms', '-');
+
+    axios.get(baseUrl + '/forms/form-i-1')
+    .then(response => {
+        if (response.data.success) {
+            console.log(response.data.data);
+            let table = renderInternshipsTable(response.data.data);
+            $('#internships-table').append(table);
+        }
+    })
+}
+
+/*
+ * this will render the internships manager's dashboard.
+ * 
+ * @param columnMap:
+ *      a map where the key is the column name and the value is the key of the json data,
+ *      that is relevant to the column.
+ *      
+ */
+function renderInternshipsTable(jsonData) {
+
+    let table = '<table class="table">' +
+                    '<thead>' +
+                        '<tr>' +
+                            '<th> Student ID </th>' +  
+                            '<th> Student Name </th>' +  
+                            '<th> Internship Start </th>' +  
+                            '<th> Internship End </th>' +  
+                            '<th> Forms </th>' +
+                        '<tr>' +
+                    '<thead>' +
+                    '<tbody>';
+    
+    // iterate through each student's form i-1.
+    jsonData.forEach(form => {
+        table += '<tr>' +
+                    '<td>' + form.StudentId + '</td>' +
+                    '<td>' + form.StudentName + '</td>' +
+                    '<td>' + (form.InternshipStart == undefined ? '<span class="badge badge-danger">Pending Form I-1 | Supervisor</span>' : form.InternshipStart.split('T')[0]) + '</td>' +
+                    '<td>' + (form.InternshipEnd == undefined ? '<span class="badge badge-danger">Pending Form I-1 | Supervisor</span>' : form.InternshipEnd.split('T')[0]) + '</td>' +
+                    // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
+                    '<td>' +
+                        '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
+                        '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+                        '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
+                    '</td>' +
+                '<tr>';
+    });
+    table += '</tbody></table>';
+
+    return table;
+}
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    console.log("document  >>> On Ready");
+    console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!("user_info" in localStorage)) {
@@ -234,7 +313,7 @@ $(document).ready(function () {
             window.location.href = "index.html";
         } else {
             $(document).ready(function () {
-                axios.get(baseUrl + '/forms/form-i-1')
+                axios.get(baseUrl + '/supervisor/form-i-1/'+userInfo.userData.SupervisorEmail)
                     .then(function (response) {
                         // handle success
                         // console.log(response.data);
@@ -252,7 +331,6 @@ $(document).ready(function () {
                                 var btnClassName = "btn btn-danger btn-sm"
                                 var iconClassName = "fas fa-times"
                                 var altText = "Supervisor details not submitted"
-
                             }
 
                             $('#form-i-1-submitted-students tbody').append('<tr>' +
@@ -271,9 +349,6 @@ $(document).ready(function () {
                             '</td>' +
                             '</tr>');
                         });
-
-
-
                     })
                     .catch(function (error) {
                         // handle error
@@ -302,12 +377,25 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrl+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
+    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data, {
+            headers: headers
+        })
         .then(response => {
             console.log(response.form3Data);
+            alert("Successfully Added Your Data!");           
+            document.getElementById('name').value = "";
+            document.getElementById('studentId').value = "";
+            document.getElementById('address').value = "";
+            document.getElementById('contactNumber').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('spec').value = "";
+            document.getElementById('internshipTitle').value = "";
+            document.getElementById('from').value = "";
+            document.getElementById('to').value = "";
         })
         .catch(error => {
             console.log(error);
+            alert("One or More fields are empty!");            
         })
 
 }
@@ -323,25 +411,66 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
+    
     axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
         .then(response => {
             console.log(response.form3DiaryData);
+            alert("Successfully Added Your Data!");
+            document.getElementById('studentIdDiary').value = "";
+            document.getElementById('desc').value = "";
+            document.getElementById('party').value = "";
+            document.getElementById('fromDiary').value = "";
+            document.getElementById('toDiary').value = "";
         })
         .catch(error => {
             console.log(error);
+            alert("One or More fields are empty!");
+            
         })
 
 }
 
+function getUpload() {
+    alert('Successfully Uploaded');
+}
 function populateFormI3() {
-    console.log("sssss");
-    axios.get(baseUrl+'/daily/data/')
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let studentIdDiary = userInfo.userData.RegistrationNo;
+    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
             console.log(form_details);
+            console.log(form_details.length);
+            $(document).ready(function () {
+                
+                var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
+                html+="<head>";
+                html+="<tr>";
+                html+="<td width='25%'align='center'> "+'<b>'+'Training Party'+'</b>'+" </td>";
+                html+="<td width='46%' style='max-width: 20px;' align='center'> "+'<b>'+'Training Description'+'</b>'+" </td>";
+                html+="<td width='15%' align='center'> "+'<b>'+ 'From'+'</b>'+" </td>";
+                html+="<td width='25%' align='center'> "+'<b>'+'To'+'</b>'+" </td>";
+                html+="</tr>";
+                html+="</head>";
+                for (var i = 0; i < form_details.length; i++) {
+                    html+="<tr>";
+                    html+="<td width='20%'align='center'> "+form_details[i].TrainingParty+" </td>";
+                    html+="<td width='40%' style='max-width: 20px;' align='center'> "+form_details[i].TrainingDescription+" </td>";
+                    html+="<td width='15%' align='center'> "+form_details[i].From+" </td>";
+                    html+="<td width='15%' align='center'> "+form_details[i].To+" </td>";
+            
+                    html+="</tr>";
+            
+                }
+                html+="</table>";
+                $("#form-i-3-daily-diary-desc").html(html);
+            })
+            console.log("hel");
         }
     })
+
+    
     .catch(function (error) {
         if (error.response) {
           console.log(error.response.data);
@@ -351,25 +480,45 @@ function populateFormI3() {
     });
 }
 
+
+
+
 function getRegisterDetails() {
     let registerData = {
         firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         nic: document.getElementById('nic').value,
         regno: document.getElementById('regno').value,
-        department: document.getElementById('department').value,
+        dept: document.getElementById('dept').value,
         year: document.getElementById('year').value,
-        email: document.getElementById('email').value
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value
         
     }   
 
 
-    axios.post(baseUrl+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
+
+    axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
+            headers: headers
+        })
     .then(response => {
-        console.log(response.registerData);
+        console.log(response);
+        if(response.data.success){
+            alert("Successfully Registered!");
+            document.getElementById('firstName').value = "";
+            document.getElementById('lastName').value = "";
+            document.getElementById('nic').value = "";
+            document.getElementById('regno').value = "";
+            document.getElementById('dept').value = "";
+            document.getElementById('year').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('password').value = "";
+        }else{
+            alert("User Not Registered!")
+        }
     })
     .catch(error => {
         console.log(error);
     })
-
 }
+
