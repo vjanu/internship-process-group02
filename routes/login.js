@@ -49,13 +49,13 @@ router.post('/', function (req, res) {
 function checkStudentExists(req, res) {
         student.registerModel.find({
             Email: req.body.userEmail,
-            NIC: req.body.userPassword
+            Password: req.body.userPassword
         }, {
             NIC: 0,
             Department: 0,
             AcademicYear: 0,
-            __v: 0,
-            SupervisorPassword: 0
+            Password: 0,
+            __v: 0
         }, (err, data) => {
             if (err) {
                 checkSupervisorExists(req, res);

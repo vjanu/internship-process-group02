@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const forms = require('../models/formsModel');
 
-/* POST Fomr I-1 data: Student */
+/* POST Form I-1 data: Student */
 router.post('/form-i-1/student/:studentId', (req, res) => {
     saveFormI1StudentPersepective(req, res);
 });
 
-/* POST Fomr I-1 data: Supervisor */
+/* POST Form I-1 data: Supervisor */
 router.post('/form-i-1/supervisor/:studentId', (req, res) => {
     console.log("Req.........")
     saveFormI1SupervisorPerspective(req, res);
@@ -75,7 +75,8 @@ function saveFormI1StudentPersepective(req, res) {
             StudentEmails: req.body.emailAddresses,
             Year: req.body.year,
             Semester: req.body.semester,
-            CGPA: req.body.cgpa
+            CGPA: req.body.cgpa,
+            AssignedSupervisor: req.body.assignedSupervisor
         });
 
         formI1Student.save(err => { console.log(err); });
