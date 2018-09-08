@@ -81,7 +81,7 @@ function saveFormI1StudentPersepective(req, res) {
         formI1Student.save(err => { console.log(err); });
     }
 
-    res.send({ success: allParamsPresent });
+    res.status(200).send({ success: allParamsPresent });
 }
 
 /*
@@ -102,12 +102,12 @@ function saveFormI1SupervisorPerspective(req, res) {
             WorkHoursPerWeek: req.body.workHoursPerWeek
         }, (err) => {
             if (err) {
-                res.send({ success: false, message: 'Internal error : ' + err });
+                res.status(500).send({ success: false, message: 'Internal error : ' + err });
             }
-            res.send({ success: true, message: 'Supervisor details added successfully' });
+            res.status(200).send({ success: true, message: 'Supervisor details added successfully' });
         });
     }).catch((err) => {
-        res.send({ success: false, message: 'Invalid Student Id Provided' });
+        res.status(400).send({ success: false, message: 'Invalid Student Id Provided' });
     });
 }
 
@@ -132,14 +132,14 @@ function getFormI1(studentId, req, res) {
 
     forms.formI1Model.find(searchCondition, { _id: 0, __v: 0 }, (err, data) => {
         if (data) {
-            res.send({ success: true, data: studentId ? data[0] : data });
+            res.status(200).send({ success: true, data: studentId ? data[0] : data });
             // if we provide a student id, we expect just one entry. But since we run find(),
             // method, we will get an array even if it's just one record, therefore we respond,
             // with a non-array object if the function caller is expecting a single result by providing,
             // a student id.
         }
         else {
-            res.send({ success: false, data: err });
+            res.status(400).send({ success: false, data: err });
         }
     });
 }
