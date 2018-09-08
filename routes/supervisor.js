@@ -13,36 +13,8 @@ router.get('/', function (req, res, next) {
     })
 });
 
-router.post('/login', function (req, res, next) {
-    supervisor.supervisorModel.find({
-        SupervisorEmail: req.body.SupervisorEmail,
-        SupervisorPassword: req.body.SupervisorPassword
-    }, {
-        _id: 0,
-        __v: 0,
-        SupervisorPassword: 0
-    }, (err, data) => {
-        if (err) {
-            res.status(500).send({
-                success: false,
-                message: 'Something went wrong.'
-            });
-        } else if (data.length === 0) {
-            res.status(404).send({
-                success: false,
-                message: 'Invalid login Credentials provided.'
-            });
-        } else {
-            res.status(200).send({
-                success: true,
-                data: data
-            });
-        }
-    });
-});
 
-
-router.get('/get-student/:id', function (req, res, next) {
+router.get('/get-student/:id', function (req, res) {
     forms.formI1Model.find({
         StudentId: req.params.id,
     }, {
@@ -68,10 +40,31 @@ router.get('/get-student/:id', function (req, res, next) {
     });
 });
 
-/* GET users listing. */
+/* GET all assigned Form I-1 for specific supervisor */
+router.get('/form-i-1/:supervisorEmail', (req, res) => {
+    forms.formI1Model.find({AssignedSupervisor: req.params.supervisorEmail}, { _id: 0, __v: 0 }, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                success: false,
+                message: 'Something went wrong.'
+            });
+        } else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Invalid Supervisor ID provided.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
+        }
+    });
+});
+
+/* Add new supervisor. */
 router.post('/add-supervisor', function (req, res) {
     // checking if all parameters are present since all of them are needed,
-    // to complete the form I-1 from student's perspective.
 
     let allParamsPresent = true;
     let paramKeys = Object.keys(req.body);

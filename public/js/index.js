@@ -55,7 +55,8 @@ function getFormI1StudentDetails() {
         emailAddresses: document.getElementById('emails-student').value, // may contain multiple values separated by comma ( , )
         year: document.getElementById('year-student').value,
         semester: document.getElementById('semester-student').value,
-        cgpa: document.getElementById('cgpa-student').value
+        cgpa: document.getElementById('cgpa-student').value,
+        assignedSupervisor: document.getElementById('assigned-supervisor').value
     }
 
 
@@ -227,7 +228,7 @@ function checkSupervisorExists() {
 
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    console.log(userInfo)
+    console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!("user_info" in localStorage)) {
@@ -242,7 +243,7 @@ $(document).ready(function () {
             window.location.href = "index.html";
         } else {
             $(document).ready(function () {
-                axios.get(baseUrl + '/forms/form-i-1')
+                axios.get(baseUrl + '/supervisor/form-i-1/'+userInfo.userData.SupervisorEmail)
                     .then(function (response) {
                         // handle success
                         // console.log(response.data);

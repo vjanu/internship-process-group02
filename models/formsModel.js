@@ -12,6 +12,7 @@ let formI1Schema = mongoose.Schema({
     Year: Number,
     Semester: Number,
     CGPA: String,
+    AssignedSupervisor: String,
 
     // following are filled by supervisor.
     EmployerName: String,
