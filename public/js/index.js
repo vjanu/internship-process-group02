@@ -377,7 +377,7 @@ function populateFormI3() {
             console.log(form_details.length);
             $(document).ready(function () {
                 
-                var html = "<table  align='center' style='width:1108px' border='1|1' class='table-bordered table-hover'>";
+                var html = "<table  align='center' style='width:1068px' border='1|1' class='table-bordered table-hover'>";
                 html+="<head>";
                 html+="<tr>";
                 html+="<td width='25%'align='center'> "+'<b>'+'Training Party'+'</b>'+" </td>";
@@ -388,10 +388,10 @@ function populateFormI3() {
                 html+="</head>";
                 for (var i = 0; i < form_details.length; i++) {
                     html+="<tr>";
-                    html+="<td width='25%'align='center'> "+form_details[i].TrainingParty+" </td>";
-                    html+="<td width='46%' style='max-width: 20px;' align='center'> "+form_details[i].TrainingDescription+" </td>";
-                    html+="<td width='20%' align='center'> "+form_details[i].From+" </td>";
-                    html+="<td width='20%' align='center'> "+form_details[i].To+" </td>";
+                    html+="<td width='20%'align='center'> "+form_details[i].TrainingParty+" </td>";
+                    html+="<td width='40%' style='max-width: 20px;' align='center'> "+form_details[i].TrainingDescription+" </td>";
+                    html+="<td width='15%' align='center'> "+form_details[i].From+" </td>";
+                    html+="<td width='15%' align='center'> "+form_details[i].To+" </td>";
             
                     html+="</tr>";
             
@@ -454,3 +454,4 @@ function getRegisterDetails() {
         console.log(error);
     })
 }
+
