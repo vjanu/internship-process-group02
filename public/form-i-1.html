@@ -16,12 +16,50 @@
 <body onload="populateFormI1();">
 
 <!-- navbar: start -->
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="supervisor_dashboard.html">Internship Hub</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                    <i class="fa fa-fw fa-info-circle"></i>
+                    <span class="nav-link-text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Form I-1">
+                <a class="nav-link nav-link-collapse" href="supervisor-student-list.html">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span class="nav-link-text">Form I-1</span>
+                </a>
+            </li>
+            
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                <a class="nav-link nav-link-collapse" href="#">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span class="nav-link-text">Form I-3</span>
+                </a>
+            </li>
+            
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-5">
+                <a class="nav-link nav-link-collapse" href="#">
+                    <i class="fab fa-fw fa-wpforms"></i>
+                    <span class="nav-link-text">Form I-5</span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+            </li>
+        </ul>
+    </div>
 </nav>
 <!-- navbar: end -->
 
