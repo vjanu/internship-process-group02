@@ -5,7 +5,7 @@ let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = BASE_URL_LOCAL;
+let baseUrl = BASE_URL_PROD;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -39,6 +39,17 @@ $('#btn-form-refresh').on('click', function () {
 $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
+
+$('#btn-login-supervisor').on('click', function () {
+    validateUserSignedIn();
+});
+
+$('#btn-logout').on('click', function (e) {
+    e.preventDefault();
+    localStorage.removeItem('user_info');
+    window.location.href = "index.html";
+});
+
 
 
 
@@ -117,19 +128,6 @@ function getFormI1SupervisorDetails() {
 
 /**** Tharindu TCJ *****/
 
-//
-$('#btn-login-supervisor').on('click', function () {
-    validateUserSignedIn();
-});
-
-//
-$('#btn-logout').on('click', function (e) {
-    e.preventDefault();
-    localStorage.removeItem('user_info');
-    window.location.href = "index.html";
-});
-
-
 function populateFormI1() {
     // get student id from the url.
 let current_url = window.location.href;
@@ -196,6 +194,9 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
+/***
+ * This function validate user
+ */
 function validateUserSignedIn() {
     let data = {
         userEmail: document.getElementById('email').value,
@@ -378,8 +379,8 @@ function getFormI3StudentDetails() {
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
     axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data, {
-            headers: headers
-        })
+        headers: headers
+    })
         .then(response => {
             console.log(response.form3Data);
             alert("Successfully Added Your Data!");           
@@ -411,8 +412,9 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    
-    axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
+    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData, {
+        headers: headers
+    })
         .then(response => {
             console.log(response.form3DiaryData);
             alert("Successfully Added Your Data!");
@@ -433,6 +435,8 @@ function getFormI3DiaryDetails() {
 function getUpload() {
     alert('Successfully Uploaded');
 }
+
+
 function populateFormI3() {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
@@ -522,3 +526,122 @@ function getRegisterDetails() {
     })
 }
 
+
+/**** Tharushi  ****/
+/*
+ * Send request to backend in order to get all form i-1 s under a given supervisor.
+ */
+function getFormI1sUnderSupervisor(supervisorEmail) {
+    return new Promise((resolve, reject) => {
+        axios.get(baseUrl + '/forms/form-i-1/supervisor/' + supervisorEmail)
+            .then(response => {
+                if (response.data.success) {
+                    if (response.data.data != undefined) {
+                        resolve(response.data.data);
+                    }
+                }
+            })
+            .catch(error => {
+                reject(error);
+            })
+    })
+}
+
+
+function makeSupervisorDashboard() {
+    getFormI1sUnderSupervisor('a@a.a')
+        .then(resolve => {
+            // we render the table here.
+            let table = '<table class="table table-striped table-bordered" style="width:100%">' +
+                '<thead>' +
+                '<tr>' +
+                '<th scope="col">Student Id number</th>' +
+                '<th scope="col">Name</th>' +
+                '<th scope="col">Job title</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>';
+
+            resolve.forEach(form => {
+                table +=
+                    '<tr>' +
+                    '<td>' +
+                    '<a href="Supervisor_viewStudentProfile.html#' + form.StudentId + '" data-toggle="tooltip" data-placement="right" title="Click to view the interns profile">' +
+                    form.StudentId +
+                    '</a>' +
+                    '</td>' +
+                    '<td>' + form.StudentName + '</td>' +
+                    '<td>' + 'Intern' + '</td>' +
+                    '</tr>'
+            });
+
+            table += '</tbody> </table>';
+
+            document.getElementById('SupervisorTableContainer').innerHTML = table;
+        })
+        .catch(reject => {
+            console.log(reject);
+        });
+}
+
+function populateStudentProfile() {
+    // student id is in the url.
+    let currentUrl = window.location.href;
+    let studentId = currentUrl.substr(currentUrl.indexOf('#') + 1, currentUrl.length);
+
+    axios.get('/forms/form-i-1/student/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                let form = response.data.data;
+                console.log(form);
+                document.getElementById('student-id').value = form.StudentId;
+                document.getElementById('student-name').value = form.StudentName;
+                document.getElementById('job-title').value = 'Intern';
+                document.getElementById('start').value = form.InternshipStart.split('T')[0];
+                document.getElementById('end').value = form.InternshipEnd.split('T')[0];
+            }
+        })
+        .catch(error => {
+            console.log(error);
+        });
+
+    // check if form i-1, form i-3 and form i-5 are present or not.
+    // if present, hyperlink it!
+    // form i 1.
+    isFormAvailable(studentId, 'form-i-1')
+    .then(resolve => {
+        document.getElementById('status-of-form-i-1').innerHTML =  'Done';
+    });
+    document.getElementById('link-to-form-i-1').href = 'supervisor-submission-form.html#' + studentId;
+
+}
+
+// had to make this a promise since this involves an API call.
+function isFormAvailable(studentId, formName) {
+    // send a request to backend and see if any data returns.
+
+    return new Promise((resolve, reject) => {
+        if (formName.toLowerCase() === 'form-i-1') {
+            axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
+                .then(response => {
+                    if (response.data.success) {
+                        let supervisorEmail = response.data.data.SupervisorEmail;
+                        if (supervisorEmail != '') {
+                            console.log(supervisorEmail);
+                            resolve(true);
+                        }
+                        else {
+                            reject(false);
+                        }
+                    }
+                })
+        }
+        else if (formName.toLowerCase() === 'form-i-3') {
+
+
+        }
+        else if (formName.toLowerCase() === 'form-i-5') {
+
+        }
+    })
+}
