@@ -218,7 +218,7 @@ function validateUserSignedIn() {
                 }else if(user_info.UserType == 'Supervisor'){
                     window.location.href = "supervisor_dashboard.html";
                 }else if(user_info.UserType == 'InternshipManager'){
-
+                    window.location.href = "internship-manager.html";
                 }else{
                     alert("Invalid login credentials")
                 }
