@@ -1,9 +1,9 @@
 /* * * * *     Global Variables     * * * * */
-let baseUrlLocal = 'http://localhost:3000';
- let baseUrlProd = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let BASE_URL_LOCAL = 'http://localhost:3000';
+let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = baseUrlProd;
+let baseUrl = BASE_URL_LOCAL;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -36,6 +36,11 @@ $('#btn-form-refresh').on('click', function () {
 $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
+
+
+$(document).ready(function() {
+    populateFormI1();
+})
 
 /*
  * this will get the information filled by the student,
@@ -119,59 +124,61 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
-// check if the loaded page is a form-i-1 page with a student id embeded in the url.
-// valid url: domain.com/form-i-1.html#<StudentId>
-let current_url = window.location.href;
-if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
-    studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
-    populateFormI1(studentId);
-}
+
+function populateFormI1() {
+    // get student id from the url.
+    let current_url = window.location.href;
+    
+    if (current_url.includes('#') && current_url.includes('supervisor-submission-form')) {
+        studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
+    
+        console.log('Fetching student details of ' + studentId + ' for form I-1');
+
+        axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let form_details = response.data.data;
+                    console.log(form_details);
+
+                    document.getElementById('name-student').value = form_details['StudentName'];
+                    document.getElementById('id-student').value = form_details['StudentId'];
+                    document.getElementById('address-student').value = form_details['StudentAddress'];
+                    document.getElementById('home-phone-student').value = form_details['StudentHomePhone'];
+                    document.getElementById('mobile-phone-student').value = form_details['StudentMobilePhone'];
+                    document.getElementById('cgpa-student').value = form_details['CGPA'];
+                    document.getElementById('emails-student').value = form_details['StudentEmails'].join(', ').replace('[').replace(']');
+                    document.getElementById('year-student').value = form_details['Year'];
+                    document.getElementById('semester-student').value = form_details['Semester'];
+
+                    $("#header-studentId").text(form_details['StudentId']);
+
+                    // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
+                    let elems = $('#form-i-1-student').find(':input');
+                    for (let i = 0; i < elems.length; i++) {
+                        elems[i].innerHTML
+                        elems[i].disabled = true;
+                    }
 
 
-function populateFormI1(studentId) {
-    axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
-        .then(response => {
-            if (response.data.success) {
-                let form_details = response.data.data;
-                console.log(form_details);
+                    if (form_details.hasOwnProperty('EmployerName')) {
+                        $('#name-employer').val(form_details['EmployerName']);
+                        $('#address-employer').val(form_details['EmployerAddress']);
+                        $('#name-supervisor').val(form_details['SupervisorName']);
+                        $('#title-supervisor').val(form_details['SupervisorTitle']);
+                        $('#phone-supervisor').val(form_details['SupervisorPhone']);
+                        $('#email-supervisor').val(form_details['SupervisorEmail']);
+                        $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
+                        $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
+                        $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
+                    }
 
-                document.getElementById('name-student').value = form_details['StudentName'];
-                document.getElementById('id-student').value = form_details['StudentId'];
-                document.getElementById('address-student').value = form_details['StudentAddress'];
-                document.getElementById('home-phone-student').value = form_details['StudentHomePhone'];
-                document.getElementById('mobile-phone-student').value = form_details['StudentMobilePhone'];
-                document.getElementById('cgpa-student').value = form_details['CGPA'];
-                document.getElementById('emails-student').value = form_details['StudentEmails'].join(', ').replace('[').replace(']');
-                document.getElementById('year-student').value = form_details['Year'];
-                document.getElementById('semester-student').value = form_details['Semester'];
-
-                $("#header-studentId").text(form_details['StudentId']);
-
-                // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
-                let elems = $('#form-i-1-student').find(':input');
-                for (let i = 0; i < elems.length; i++) {
-                    elems[i].innerHTML
-                    elems[i].disabled = true;
                 }
+            })
+            .catch(reject => {
+                console.log(reject);
+            })
+    }
 
-
-                if(form_details.hasOwnProperty('EmployerName')){
-                    $('#name-employer').val(form_details['EmployerName']);
-                    $('#address-employer').val(form_details['EmployerAddress']);
-                    $('#name-supervisor').val(form_details['SupervisorName']);
-                    $('#title-supervisor').val(form_details['SupervisorTitle']);
-                    $('#phone-supervisor').val(form_details['SupervisorPhone']);
-                    $('#email-supervisor').val(form_details['SupervisorEmail']);
-                    $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
-                    $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
-                    $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
-                }
-
-            }
-        })
-        .catch(reject => {
-            console.log(reject);
-        })
 }
 
 function formatDate(date) {
@@ -242,13 +249,13 @@ $(document).ready(function () {
                         $("#form-i-1-submitted-students tbody").empty();
 
                         response.data.data.forEach(item => {
-                            if(item.hasOwnProperty('EmployerName')){
+                            if (item.hasOwnProperty('EmployerName')) {
                                 var btnClassName = "btn btn-success btn-sm"
                                 var iconClassName = "fas fa-check"
                                 var altText = "Supervisor details submitted"
 
 
-                            }else{
+                            } else {
                                 var btnClassName = "btn btn-danger btn-sm"
                                 var iconClassName = "fas fa-times"
                                 var altText = "Supervisor details not submitted"
@@ -257,19 +264,19 @@ $(document).ready(function () {
 
                             $('#form-i-1-submitted-students tbody').append('<tr>' +
 
-                            '<td><center><a class="'+btnClassName+'" title="'+altText+'"><span class="'+iconClassName+'" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
+                                '<td><center><a class="' + btnClassName + '" title="' + altText + '"><span class="' + iconClassName + '" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
 
-                            '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                            '<td >' + item.StudentName + '</td>' +
-                            '<td >' + item.StudentAddress + '</td>' +
-                            '<td>' + item.StudentMobilePhone + '</td>' +
-                            '<td><center>' +
-                            '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View '+item.StudentId+'\'s Form I-1" class="btn btn-primary btn-sm">\n' +
-                            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-                            '        <span><strong>View</strong></span></a>'+
-                            '</a></center>' +
-                            '</td>' +
-                            '</tr>');
+                                '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
+                                '<td >' + item.StudentName + '</td>' +
+                                '<td >' + item.StudentAddress + '</td>' +
+                                '<td>' + item.StudentMobilePhone + '</td>' +
+                                '<td><center>' +
+                                '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n' +
+                                '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
+                                '        <span><strong>View</strong></span></a>' +
+                                '</a></center>' +
+                                '</td>' +
+                                '</tr>');
                         });
 
 
@@ -302,7 +309,9 @@ function getFormI3StudentDetails() {
 
     form3Data.studentId = form3Data.studentId.includes(' ') ? form3Data.studentId.split(' ').join('') : form3Data.studentId;
 
-    axios.post(baseUrl+'/form3/form-i-3/student/'+form3Data.studentId, form3Data, {headers: headers})
+    axios.post(baseUrl + '/form3/form-i-3/student/' + form3Data.studentId, form3Data, {
+            headers: headers
+        })
         .then(response => {
             console.log(response.form3Data);
         })
@@ -323,7 +332,9 @@ function getFormI3DiaryDetails() {
 
     form3DiaryData.studentIdDiary = form3DiaryData.studentIdDiary.includes(' ') ? form3DiaryData.studentIdDiary.split(' ').join('') : form3DiaryData.studentIdDiary;
 
-    axios.post(baseUrl+'/daily/form-i-3/diary/', form3DiaryData, {headers: headers})
+    axios.post(baseUrl + '/daily/form-i-3/diary/', form3DiaryData, {
+            headers: headers
+        })
         .then(response => {
             console.log(response.form3DiaryData);
         })
@@ -335,20 +346,20 @@ function getFormI3DiaryDetails() {
 
 function populateFormI3() {
     console.log("sssss");
-    axios.get(baseUrl+'/daily/data/')
-    .then(response => {
-        if (response.data.success) {
-            let form_details = response.data.data;
-            console.log(form_details);
-        }
-    })
-    .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(JSON.stringify(error));
-          console.log(error.response.headers);
-        }
-    });
+    axios.get(baseUrl + '/daily/data/')
+        .then(response => {
+            if (response.data.success) {
+                let form_details = response.data.data;
+                console.log(form_details);
+            }
+        })
+        .catch(function (error) {
+            if (error.response) {
+                console.log(error.response.data);
+                console.log(JSON.stringify(error));
+                console.log(error.response.headers);
+            }
+        });
 }
 
 function getRegisterDetails() {
@@ -360,16 +371,18 @@ function getRegisterDetails() {
         department: document.getElementById('department').value,
         year: document.getElementById('year').value,
         email: document.getElementById('email').value
-        
-    }   
+
+    }
 
 
-    axios.post(baseUrl+'/register/info/student/'+registerData.nic, registerData, {headers: headers})
-    .then(response => {
-        console.log(response.registerData);
-    })
-    .catch(error => {
-        console.log(error);
-    })
+    axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
+            headers: headers
+        })
+        .then(response => {
+            console.log(response.registerData);
+        })
+        .catch(error => {
+            console.log(error);
+        })
 
 }
