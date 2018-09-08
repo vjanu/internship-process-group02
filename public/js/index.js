@@ -40,6 +40,17 @@ $('#btn-register').on('click', function () {
     getRegisterDetails();
 });
 
+$('#btn-login-supervisor').on('click', function () {
+    validateUserSignedIn();
+});
+
+$('#btn-logout').on('click', function (e) {
+    e.preventDefault();
+    localStorage.removeItem('user_info');
+    window.location.href = "index.html";
+});
+
+
 
 
 /**** Liyanage A.Y.K. *****/
@@ -113,19 +124,6 @@ function getFormI1SupervisorDetails() {
 
 
 /**** Tharindu TCJ *****/
-
-//
-$('#btn-login-supervisor').on('click', function () {
-    validateUserSignedIn();
-});
-
-//
-$('#btn-logout').on('click', function (e) {
-    e.preventDefault();
-    localStorage.removeItem('user_info');
-    window.location.href = "index.html";
-});
-
 
 function populateFormI1() {
     // get student id from the url.
@@ -366,6 +364,8 @@ function getFormI3DiaryDetails() {
 function getUpload() {
     alert('Successfully Uploaded');
 }
+
+
 function populateFormI3() {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
