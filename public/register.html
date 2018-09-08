@@ -73,20 +73,26 @@
                                   <div class="col-md-4">
                                     <div class="form-label-group">
                                         <label for="dept">Department</label>
-                                      <input type="text" id="department" class="form-control" placeholder="SE/IT/ISE/IM/CSN/CS" required="required">
-                                      
+                                        <select id="dept" class="form-control">
+                                          <option selected>SE</option>
+                                          <option>IT</option>
+                                          <option>IS</option>
+                                          <option>CS</option>
+                                          <option>IM</option>
+                                          <option>CSN</option>
+                                        </select>
                                     </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-label-group">
                                       <label for="year">Current Academic Year</label>
-                                      <input type="number" id="year" class="form-control" placeholder="1/2/3/4" required="required" autofocus="autofocus">
-                                      <!-- <select>
-                                          <option value="volvo">Volvo</option>
-                                          <option value="saab">Saab</option>
-                                          <option value="mercedes">Mercedes</option>
-                                          <option value="audi">Audi</option>
-                                        </select> -->
+                                      <select id="year" class="form-control">
+                                      <option selected>1</option>
+                                      <option>2</option>
+                                      <option>3</option>
+                                      <option>4</option>
+                                    </select>
+
                                     </div>
                                   </div>
                                 </div>
@@ -101,12 +107,18 @@
                                           
                                         </div>
                                       </div>
-                                      
-                                      <div class="col-md-8">
+                                      <div class="col-md-4">
+                                        <div class="form-label-group">
+                                            <label for="password">Password</label>
+                                          <input type="password" id="password" class="form-control" placeholder="Password" required="required">
+                                          
+                                        </div>
+                                      </div>
+                                      <div class="col-md-4">
                                         <div class="form-label-group">
                                             <label for="lastName"><b>Upload Your CV</b></label><br/>
                                           <input type="file" name="pic" accept="pdf/*">
-                                          <input type="button" value="Upload" class="btn btn-secondary ">
+                                          <input type="button" value="Upload" class="btn btn-success ">
                                           
                                         </div>
                                       </div>

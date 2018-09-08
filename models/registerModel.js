@@ -9,7 +9,8 @@ let registerSchema = mongoose.Schema({
     RegistrationNo: String,
     Department: String,
     AcademicYear: Number,
-    Email: String
+    Email: String,
+    Password: String
   
 });
 

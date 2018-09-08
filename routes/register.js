@@ -22,12 +22,15 @@ router.post('/info/student/:nic', function(req, res) {
             LastName: req.body.lastName,
             NIC: req.body.nic,
             RegistrationNo: req.body.regno,
-            Department: req.body.department,
+            Department: req.body.dept,
             AcademicYear: req.body.year,
-            Email: req.body.email
+            Email: req.body.email,
+            Password: req.body.password
         });
 
-        registerData.save(err => { console.log(err); });
+        registerData.save(err => { 
+            console.log(err); 
+        });
     }
     
     res.send({ success: allParamsPresent });
