@@ -549,7 +549,9 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    getFormI1sUnderSupervisor('a@a.a')
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    console.log(userInfo.userData.SupervisorEmail)
+    getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
             // we render the table here.
             let table = '<table class="table table-striped table-bordered" style="width:100%">' +
