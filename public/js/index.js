@@ -5,7 +5,7 @@ let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 
 
 // change this to baseUrl = baseUrlLocal if you are developing.
-let baseUrl = BASE_URL_PROD;
+let baseUrl = BASE_URL_LOCAL;
 
 /* * * * *     Headers for cross origin issues   * * * * */
 let headers = {
@@ -139,7 +139,7 @@ let current_url = window.location.href;
     if (current_url.includes('#')) {
         let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
 
-        console.log('Fetching student details of ' + studentId + ' for form I-1');
+    console.log('Fetching student details of ' + studentId + ' for form I-1');
 
     axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
         .then(response => {
@@ -218,7 +218,7 @@ function validateUserSignedIn() {
                 localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
                 // localStorage.setItem('user_info', (JSON.stringify(user_info)));
                 if(user_info.UserType == 'Student'){
-                    window.location.href = "Student_dashboard.html";
+                    window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
                     window.location.href = "supervisor_dashboard.html";
                 }else if(user_info.UserType == 'InternshipManager'){
@@ -650,4 +650,59 @@ function isFormAvailable(studentId, formName) {
 
         }
     })
+}
+
+
+/***
+ *
+ * Athrie
+ *
+ */
+
+
+let pageUrl = window.location.href;
+
+if (pageUrl.includes('student-dashboard')) {
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    // let studentId = "IT16000000";
+    let studentId = userInfo.userData.RegistrationNo;
+    axios.get(baseUrl + '/student/form-i-1/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                console.log(response);
+                if (response.data.data != undefined) {
+                    if(response.data.data[0].EmployerName != undefined) {
+                        $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '                        100% Complete (success)</div>');
+
+                    }else{
+                        $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '                        50% Complete (Half)</div>');
+                    }
+
+                    if(response.data.data[0].EmployerName != undefined) {
+                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-company-name').text(response.data.data[0].EmployerName);
+                    }else{
+                        $('#internship-start-date').text("Not Submitted");
+                        $('#internship-end-date').text("Not Submitted");
+                        $('#internship-company-name').text("Not Submitted");
+                    }
+                    console.log(response.data.data);
+                }
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            $('#internship-start-date').text("Not Submitted");
+            $('#internship-end-date').text("Not Submitted");
+            $('#internship-company-name').text("Not Submitted");
+
+            $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"' +
+                '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
+                '                        0% Not Submitted</div>');
+        })
 }
