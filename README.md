@@ -1,2 +1,2 @@
-# internship-process-group2
+# internship-process-group02
 Fully Automated
