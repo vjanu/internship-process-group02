@@ -83,7 +83,8 @@ function saveFormI1StudentPersepective(req, res) {
             Year: req.body.year,
             Semester: req.body.semester,
             CGPA: req.body.cgpa,
-            AssignedSupervisor: req.body.assignedSupervisor
+            AssignedSupervisor: req.body.assignedSupervisor,
+            SupervisorEmail: req.body.assignedSupervisor
         });
 
         formI1Student.save(err => { console.log(err); });
