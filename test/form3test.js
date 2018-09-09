@@ -1,7 +1,7 @@
 'use strict'
 
 var chai = require('chai');
-var form3 = require('../../routes/form3');
+// var form3 = require('../../routes/form3');
 var request = require("request");
 var base_url = "http://localhost:3000";
 
@@ -16,6 +16,24 @@ function returnName(name){
     return name;
 };
 
+function getUserStatus(id){
+    let status = true;
+    if(id == 'success'){
+        status = true;
+    } else if(id == 'fail'){
+        status = false;
+    }
+    return status;
+}
+
+function getUserCount(users){
+    let count = 0 ;
+   for(let i=0; i < users.length; i++){
+        count ++;
+   }
+    return count;
+}
+
 
 describe('Sample Unit test', function(){
     it('returns same', function(){
@@ -25,14 +43,14 @@ describe('Sample Unit test', function(){
 
 describe('Checking For Registered User', function(){
     it('returns status of registered user', function(){
-        form3.getUserStatus('success').should.equal(true);
+        getUserStatus('success').should.equal(true);
     });
 });
 
 describe('No of users who registered', function() {
     it('User Count', function() {
       var users = ['nimal','saman','vira'];
-      assert.equal(3, form3.getUserCount(users));
+      assert.equal(3, getUserCount(users));
     });
   });
 
