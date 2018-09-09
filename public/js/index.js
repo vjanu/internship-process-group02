@@ -89,9 +89,13 @@ function getFormI1StudentDetails() {
     axios.post(baseUrl + '/forms/form-i-1/student/' + data.studentId, data)
         .then(response => {
             console.log(response.data);
+            if (response.data.success) {
+                alert('Data enter to Form I-1 successfully.');
+            }
         })
         .catch(error => {
             console.log(error);
+            alert('Unsuccessful! Please check your data.');
         })
 }
 
