@@ -105,4 +105,4 @@ function getUserCount(users){
 
 
 
-module.exports = { router, getUserStatus, getUserCount};
+module.exports = router;
