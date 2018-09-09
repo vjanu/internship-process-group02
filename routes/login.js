@@ -6,8 +6,10 @@ const student = require('../models/registerModel');
 const randomize = require('randomatic');
 const forms = require('../models/formsModel');
 
-
-router.get('/', function (req, res, next) {
+/**
+ * Default GET Request
+ */
+router.get('/', function (req, res) {
     supervisor.supervisorModel.find().exec().then((data) => {
         res.send(data);
     }).catch((err) => {
@@ -15,12 +17,20 @@ router.get('/', function (req, res, next) {
     })
 });
 
+/**
+ * POST Request
+ * This route accept all routes come from /login/
+ */
 router.post('/', function (req, res) {
-
     checkStudentExists(req, res);
-
 });
 
+/**
+ * First we check given login credentials match with student table
+ * if not we check it in supervisor table
+ * @param req
+ * @param res
+ */
 function checkStudentExists(req, res) {
         student.registerModel.find({
             Email: req.body.userEmail,
@@ -46,6 +56,11 @@ function checkStudentExists(req, res) {
         });
 }
 
+/**
+ * This function check login credentials with supervisor table
+ * @param req
+ * @param res
+ */
 function checkSupervisorExists(req, res) {
         supervisor.supervisorModel.find({
             SupervisorEmail: req.body.userEmail,
@@ -69,6 +84,12 @@ function checkSupervisorExists(req, res) {
         });
 }
 
+/**
+ * Finally we check in internship manager table
+ * if no matches found we return as 404 not found
+ * @param req
+ * @param res
+ */
 function checkInternshipManagerExists(req, res) {
     internshipManager.InternshipManagerModel.find({
         InternshipManagerEmail: req.body.userEmail,
