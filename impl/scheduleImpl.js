@@ -6,11 +6,8 @@
  */
 
 const schedule = require('../models/scheduleModel');
-<<<<<<< HEAD
 const formI3 = require('../models/formsModel').formI3Model;
-=======
 const nodemailer = require('nodemailer');
->>>>>>> 2c2bb104fed426fb1e408f24acffd72a1949cf87
 
 /**
  * This method will find all the records for scheduled viva sessions from the database.
@@ -73,6 +70,7 @@ let findAllScheduledAndUnscheduledSessions = () => {
  *@Author Tharushi De Silva
  */
 let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
+    console.log(recepient);
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -91,8 +89,10 @@ let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
+          return false;
         } else {
           console.log('Email sent: ' + info.response);
+          return true;
         }
       });
     
