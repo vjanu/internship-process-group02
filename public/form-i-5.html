@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- bootstrap v4.1.1 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous"> 
+
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <!-- lato font(from google fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+
+    <title>Internship Hub | Supervisor</title>
+</head>
+
+<body class="fixed-nav">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-user"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="form-i-1.html">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-1</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="form-i-3.html">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-5</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Login">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fa fa-fw fa-address-book"></i>
+                        <span class="nav-link-text">Form I-7</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <!-- everything we make goes inside this div -->
+
+
+
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="Student-dashboard.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Form I-5</li>
+            </ol>
+			
+			
+			
+            <div class="row">
+              
+                 <div class="col-lg-12 text-center register-header">
+                    <h1 style="color:black">Form I-3</h1> 
+                     <h5 style="color:black">INTERN'S DAILY DIARY</h5>
+                 </div>
+              </div>          <br/>
+              <div class="row justify-content-center register-header">
+        
+                <!-- Student Information -->
+                 <div class="col-lg-7 pb-5">
+                    <form>
+                       <div class="card rounded-0">
+                          <div class="card-header p-0">
+                             <div class="text-white text-center py-2">
+                                <h4 style="color:black">Student Information</h4>
+                             </div>
+                          </div>
+                          <small align="center" class="text-danger">Please Fill this at the very first day of your internship and submit.</small>
+                          
+                          <div class="card-body p-3">
+                             <div class="text-center">
+                                <div class="user-login-box">
+                                   <!--Body-->
+
+                                   <div class="card">
+                                      <div class="card-header">
+                                        Intern's Information
+                                      </div>
+                                      <div class="card-body">
+                                          <div class="form-row">
+                                              <div class="form-group col-md-6">
+                                                    <label for="name">Intern's Name</label>
+                                                    <input type="text" class="form-control" id="name" placeholder="Sunil Perera">
+                                                  </div>
+                                                  <div class="form-group col-md-6">
+                                                    <label for="studentId">Student ID</label>
+                                                    <input type="text" class="form-control" id="studentId" placeholder="ITxxxxxxxx">
+                                                  </div>
+                                                </div>
+                                                <div class="form-group">
+                                                  <label for="address">Intern's Private Address</label>
+                                                  <input type="text" class="form-control" id="address" placeholder="1234 Main St">
+                                                </div>
+                                                <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                  <label for="contactNumber">Contact Number</label>
+                                                  <input type="number" class="form-control" id="contactNumber" placeholder="07xxxxxxxx">
+                                                </div>
+                                              
+                                                  <div class="form-group col-md-6">
+                                                    <label for="email">Email Address</label>
+                                                    <input type="email" class="form-control" id="email" placeholder="abc@gmail.com,Qwe@yahoo.com">
+                                                    <small class="text-danger">Use comma( , ) to separate multiple emails.</small>
+                                                  </div>
+                                                </div>
+                                      </div>
+                                    </div>
+                                    <br/>
+                                    <div class="card">
+                                        <div class="card-header">
+                                          Internship Information
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                  <label for="spec">Specialization</label>
+                                                  <select id="spec" class="form-control">
+                                                    <option selected>Choose...</option>
+                                                    <option>SE</option>
+                                                    <option>IT</option>
+                                                    <option>IS</option>
+                                                    <option>CS</option>
+                                                    <option>IM</option>
+                                                    <option>CSN</option>
+                                                  </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                  <label for="internshipTitle">Internship Title</label>
+                                                  <input type="text" class="form-control" id="internshipTitle">
+                                                </div>
+                                              </div>
+                                              <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                  <label for="from">From</label>
+                                                  <input type="date" class="form-control" id="from" placeholder="1234 Main St">
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                  <label for="to">To</label>
+                                                  <input type="date" class="form-control" id="to" placeholder="Apartment, studio, or floor">
+                                                </div>
+                                              </div>
+                                      </div>
+
+                                        </div>
+                                       <br/>
+                                        <button type="button" onclick = "populateFormI3()" id ="btn-form-i-3-student" class="btn btn-primary">Submit Form I-3</button>
+                                </div>
+                            </div>
+                                        
+              
+                          </div>
+                      </div>  
+                    </form>
+                  </div>
+                  
+                  <!-- Diary -->
+                 
+                 
+                  <div class="col-lg-5 pb-5">
+                      <!--Form with header-->
+                      <form>
+                         <div class="card rounded-0">
+                            <div class="card-header p-0">
+                               <div class="text-white text-center py-2">
+                                  <h4 style="color:black">Internal Training Information</h4>
+                               </div>
+                            </div>
+                            <small align="center" class="text-danger">Please Fill this Everyday.</small>
+                            
+                            <div class="card-body p-3">
+                               <div class="text-center">
+                                  <div class="user-login-box">
+                                      <div class="form-row">
+                                          <div class="form-group col-md-6">
+                                            <label for="party">Training Party</label>
+                                            <input type="text" class="form-control" id="party">
+                                          </div>
+                                          <div class="form-group col-md-6">
+                                              <label for="id">Student ID</label>
+                                              <input type="text" class="form-control" id="studentIdDiary">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                              <label for="from">From</label>
+                                              <input type="date" class="form-control" id="fromDiary">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="to">To</label>
+                                                <input type="date" class="form-control" id="toDiary">
+                                              </div>
+                                          </div>
+                                        </div>
+                                          <div class="form-row">
+                                          <div class="form-group col-md-12">
+                                              <label for="desc">Training Description</label>
+                                              <textarea id ="desc" rows="4" cols="50"></textarea>
+                                            </div>
+                      </div>
+                      <div class="form-row">
+                          <button type="button" onclick="populateFormI3()" id ="btn-form-submit" class="btn btn-primary">Submit Days Work</button>                        
+                        </div>
+                                          
+                                      
+                                   
+                                  </div>
+                              </div>
+                                          
+                
+                            </div>
+                        
+                        </form>
+                    </div>
+                  </div>
+              
+               <!-- Daily Diary Information -->
+                <div class="card">
+                    <div align="center" class="card-header"><h4><b>Daily Diary Information</b></h4>
+                      <!-- <input type="text" class="form-control" id="idno" disabled> -->
+                      
+                    </div>
+                   <div id ="form-i-3-daily-diary-desc">
+
+                        <!-- <table class="table table-bordered table-hover" id="form-i-3-daily-diary-desc">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Training Party</th>
+                                    <th scope="col">Training Description</th>
+                                    <th scope="col">From</th>
+                                    <th scope="col">To</th>
+                                </tr>
+                            </thead>
+                            <tbody id = "dailt-data">
+                                <tr>
+                                   
+                                    
+                                </tr>                              
+                            </tbody>
+                        </table> -->
+
+                    </div> 
+                </div>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    <footer class="sticky-footer">
+        <div class="container">
+            <div class="text-center">
+                <small>Copyright © Internship Hub 2018</small>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fa fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" id="btn-logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" 
+crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" 
+crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+crossorigin="anonymous"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</body>
+
+</html>
