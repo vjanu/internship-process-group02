@@ -51,6 +51,9 @@ $('#btn-logout').on('click', function (e) {
     window.location.href = "index.html";
 });
 
+$('#btn-form-submit-f5').on('click', function () {
+    getFormI5StudentInternshipDetails()
+});
 
 
 
@@ -707,3 +710,87 @@ if (pageUrl.includes('student-dashboard')) {
                 '                        0% Not Submitted</div>');
         })
 }
+
+
+// formi-5
+
+
+function getFormI5StudentInternshipDetails() {
+    let data = {
+        studentId : $('#id-student').val(),
+        sname : $('#name-student').val(),
+        ename : $('#ename').val(),
+        supname : $('#sname').val(),
+        contract : $('#diff').val(),
+
+        vow : $("[name='cv']:checked").val(),
+        ability : $("[name='aa']:checked").val(),
+        resolve : $("[name='nn']:checked").val(),
+        acc : $("[name='yy']:checked").val(),
+        press : $("[name='uu']:checked").val(),
+        oral : $("[name='oo']:checked").val(),
+        write : $("[name='mm']:checked").val(),
+        think : $("[name='xx']:checked").val(),
+        learn : $("[name='ll']:checked").val(),
+
+        effect : $("[name='12']:checked").val(),
+        init : $("[name='13']:checked").val(),
+        flex : $("[name='14']:checked").val(),
+        act : $("[name='15']:checked").val(),
+        att : $("[name='16']:checked").val(),
+        team : $("[name='17']:checked").val(),
+        deli : $("[name='10']:checked").val(),
+        resp : $("[name='18']:checked").val(),
+
+        posit : $('#tt').val(),
+        persona : $('#rr').val(),
+        need : $('#ee').val(),
+        sug : $('#ww').val(),
+        appro : $('#qq').val(),
+        oth : $('#aa1').val(),
+
+        ver : $("[name='7']:checked").val(),
+
+        extto : $('#sup-name').val(),
+        date : $('#date1').val(),
+    }
+
+    // replacing spaces of IT number since some students may type IT 16 1111 11 instead of IT16111111
+    // splitting by spaces and joining without a space will replace all the spaces since .replace() function only replace one occurrence
+    data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
+
+if(data.studentId !="" && data.sname !="" && data.ename !="" && data.supname !="" &&
+ data.contract !=""  && data.extto !=""){
+    axios.post(baseUrl + '/form5/form-i-5/student/' + data.studentId, data)
+        .then(response => {
+            console.log(response.data);
+            if (response.data.success) {
+                $.notify("Form I-5 Submitted Successfully", "success");
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            $.notify("Form I-5 Submission Failed", "error");
+        })
+    }
+    else{
+        $.notify("Fields cannot be empty", "warn");   
+    }
+}
+
+
+// rating
+
+function generateRatingStarts(rateValue) {
+	var html = '<div>';
+	for (i = 0; i < 5; i++) {
+		let isChecked = (rateValue < 1) ? "" : "checked";
+		console.log(isChecked + " | " + rateValue);
+		html += '<span class="fa fa-star ' + isChecked + '"></span>';
+		rateValue--;
+	}
+	html += '</div>';
+	return html;
+}
+
+//student view of form-I-5

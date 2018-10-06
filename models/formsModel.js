@@ -48,8 +48,45 @@ let formI3DiarySchema = mongoose.Schema({
     To: String
 });
 
+
+let formI5Schema = mongoose.Schema({
+    // following are filled by Supervisor.
+    StudentId: String,
+    StudentName: String,
+    EmployerName: String,
+    SupervisorName: String,
+    Contract: String,
+    VolumeOfWork: Number,
+    AnalyticalAbility: Number,
+    AbilityToResolve: Number,
+    Accuracy: Number,
+    Pressure: Number,
+    Oral: Number,
+    Written: Number,
+    Thinking: Number,
+    Learn: Number,
+    Effective: Number,
+    Initiatives: Number,
+    Flexible: Number,
+    Active: Number,
+    Attitude: Number,
+    Team: Number,
+    Deligence: Number,
+    Responsibility: Number,
+    Positive: String,
+    Personal: String,
+    Needs: String,
+    Suggest: String,
+    Appropriateness: String,
+    Other: String,
+    Overall : Number,
+    External: String,
+    Date: String  
+});
+
 let formI1Model = mongoose.model('FormI1', formI1Schema);
 let formI3Model = mongoose.model('FormI3', formI3Schema);
 let formI3DiaryModel = mongoose.model('FormI3Diary', formI3DiarySchema);
+let formI5Model = mongoose.model('FormI5', formI5Schema);
 
-module.exports = { formI1Model, formI3Model, formI3DiaryModel };
+module.exports = { formI1Model, formI3Model, formI3DiaryModel, formI5Model };

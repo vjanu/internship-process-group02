@@ -10,6 +10,7 @@ const studentRouter = require('./routes/student');
 const supervisorRouter = require('./routes/supervisor');
 const loginRouter = require('./routes/login');
 const form3Router = require('./routes/form3');
+const form5Router = require('./routes/form5');
 const form3DiaryRouter = require('./routes/form3');
 const registerRouter = require('./routes/register');
 const cors = require('cors');
@@ -30,6 +31,7 @@ app.use('/student', studentRouter);
 app.use('/supervisor', supervisorRouter);
 app.use('/login', loginRouter);
 app.use('/form3', form3Router);
+app.use('/form5', form5Router);
 app.use('/daily', form3DiaryRouter);
 app.use('/register', registerRouter);
 
