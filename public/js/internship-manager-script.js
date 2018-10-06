@@ -28,8 +28,43 @@ $('#btn-logout').on('click', function (e) {
 
 
 if (CURRENT_URL.includes('internship-manager')) {
-	getAllInternships();
+    getAllInternships();
 }
+
+/**
+ * When we come to internship-manager-form-i-1.html 
+ * this condition satisty and get form i-1  submitted student
+ * @author Tharindu
+ */
+if (CURRENT_URL.includes('internship-manager-form-i-1')) {
+    getFormI1SubmittedStudentList();
+}
+
+
+/**
+ * When we come to internship-manager-form-i-3.html 
+ * this condition satisty and get form i-3  submitted student
+ * @author Tharindu
+ */
+if (CURRENT_URL.includes('internship-manager-form-i-3')) {
+    getFormI3SubmittedStudentList();
+}
+
+
+/**
+ * This is for internship-manager-form-i-5.html 
+ * this condition satisty and get form i-5  submitted student
+ * @author Tharindu
+ */
+if (CURRENT_URL.includes('internship-manager-form-i-5')) {
+    getFormI5SubmittedStudentList();
+}
+
+
+if (CURRENT_URL.includes('internship-manager-view-form-i-1')) {
+    viewFormI1Details();
+}
+
 
 
 /* * * * * * * Dashboards * * * * * * */
@@ -94,4 +129,169 @@ function renderInternshipsTable(jsonData) {
     table += '</tbody></table>';
 
     return table;
+}
+
+
+
+/**
+ * Form Loading functions
+ * @author Tharindu
+ */
+function getFormI1SubmittedStudentList() {
+    axios.get(baseUrl + '/forms/form-i-1')
+        .then(response => {
+            if (response.data.success) {
+                let form_details = response.data.data;
+                console.log(form_details);
+
+                $("#form-i-1-submitted-students-list tbody").empty();
+                form_details.forEach(item => {
+                    var html = '<tr>';
+                    html += '<td class="text-center">' + item.StudentId + '</td>';
+                    html += '<td class="text-center">' + item.StudentName + '</td>';
+                    html += '<td class="text-center">' + item.StudentAddress + '</td>';
+                    html += '<td class="text-center">' + item.StudentMobilePhone + '</td>';
+                    html += '<td class="text-center">' + generateFormI1UpdatedStatus(item.hasOwnProperty('EmployerName')) + '</td>';
+                    html += '<td class="text-center">';
+                    html += '<a href="internship-manager-view-form-i-1.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
+                    html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
+                    html += '        <span><strong>View</strong></span></a>';
+                    html += '</td>';
+                    html += '</tr>';
+
+
+                    $('#form-i-1-submitted-students-list tbody').append(html);
+
+
+                });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(JSON.stringify(error));
+            }
+        });
+}
+
+function getFormI3SubmittedStudentList() {
+    axios.get(baseUrl + '/form3/form-i-3')
+    .then(response => {
+        if (response.data.success) {
+            let form_details = response.data.data;
+            console.log(form_details);
+
+            $("#form-i-3-submitted-students-list tbody").empty();
+            form_details.forEach(item => {
+                var html = '<tr>';
+                html += '<td class="text-center">' + item.StudentId + '</td>';
+                html += '<td class="text-center">' + item.StudentName + '</td>';
+                html += '<td class="text-center">' + item.StudentAddress + '</td>';
+                html += '<td class="text-center">' + item.StudentPhone + '</td>';
+                html += '<td class="text-center">';
+                html += '<a href="internship-manager-view-form-i-3.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
+                html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
+                html += '        <span><strong>View</strong></span></a>';
+                html += '</td>';
+                html += '</tr>';
+
+
+                $('#form-i-3-submitted-students-list tbody').append(html);
+
+
+            });
+        }
+    }).catch(function (error) {
+        if (error.response) {
+            console.log(JSON.stringify(error));
+        }
+    });
+}
+
+function getFormI5SubmittedStudentList() {
+
+}
+
+
+
+
+function viewFormI1Details() {
+    if (CURRENT_URL.includes('#')) {
+        let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+
+        axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let form_details = response.data.data;
+                    console.log(form_details);
+                    console.log(form_details['StudentName']);
+
+                    $('#name-student').val(form_details['StudentName']);
+                    $('#id-student').val(form_details['StudentId']);
+                    $('#address-student').val(form_details['StudentAddress']);
+                    $('#home-phone-student').val(form_details['StudentHomePhone']);
+                    $('#mobile-phone-student').val(form_details['StudentMobilePhone']);
+                    $('#cgpa-student').val(form_details['CGPA']);
+                    $('#emails-student').val(form_details['StudentEmails'].join(', ').replace('[').replace(']'));
+                    $('#year-student').val(form_details['Year']);
+                    $('#semester-student').val(form_details['Semester']);
+
+                    $("#header-studentId").text(form_details['StudentId']);
+
+                    // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
+                    let elems = $('#form-i-1-student').find(':input');
+                    for (let i = 0; i < elems.length; i++) {
+                        elems[i].innerHTML
+                        elems[i].disabled = true;
+                    }
+
+                    if (form_details.hasOwnProperty('EmployerName')) {
+                        $('#name-employer').val(form_details['EmployerName']);
+                        $('#address-employer').val(form_details['EmployerAddress']);
+                        $('#name-supervisor').val(form_details['SupervisorName']);
+                        $('#title-supervisor').val(form_details['SupervisorTitle']);
+                        $('#phone-supervisor').val(form_details['SupervisorPhone']);
+                        $('#email-supervisor').val(form_details['SupervisorEmail']);
+                        $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
+                        $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
+                        $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
+
+                        let inputElems = $('#form-i-1-supervisor').find(':input');
+                    
+                        for (let j = 0; j < inputElems.length; j++) {
+                            inputElems[j].innerHTML
+                            inputElems[j].disabled = true;
+                        }
+                    }else{
+                        $("#supervisor-card-view").hide();
+                    }
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(JSON.stringify(error));
+                }
+            });
+    }
+}
+
+
+
+/*** REUSABLE FUNCTION ****/
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+
+function generateFormI1UpdatedStatus(isSubmitted) {
+    var badgeClass = (isSubmitted) ? "badge badge-pill badge-success" : "badge badge-pill badge-danger";
+    var badgeText = (isSubmitted) ? "Fully Submitted" : "Supervisor Not Updated";
+
+    return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }

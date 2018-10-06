@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
 
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
     <title>Dashboard | Internship Manager</title>
     <link href="css/custom-style.css" rel="stylesheet">
 
@@ -26,22 +30,22 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                    <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="internship-manager.html">
                         <i class="fa fa-fw fa-info-circle"></i>
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-1">
-                    <a class="nav-link nav-link-collapse" href="supervisor-student-list.html">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-1.html">
                         <i class="fab fa-fw fa-wpforms"></i>
                         <span class="nav-link-text">Form I-1</span>
                     </a>
                 </li>
 
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
-                    <a class="nav-link nav-link-collapse" href="#">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-3.html">
                         <i class="fab fa-fw fa-wpforms"></i>
                         <span class="nav-link-text">Form I-3</span>
                     </a>
@@ -74,21 +78,32 @@
                 <li class="breadcrumb-item">
                     <a href="index.html">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Ongoing Internships</li>
+                <li class="breadcrumb-item active">Form I-3 Submitted List</li>
             </ol>
 
-            <!-- main content: start -->
-            <div class="container">
-                <!-- Ongoing Internships -->
-                <div id="internships-table">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Form I-3 Submitted Students</h4>
+                </div>
+                <div class="card-body">
+
+                    <table class="table table-bordered table-hover" id="form-i-3-submitted-students-list">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="text-center">Registration No</th>
+                                <th scope="col" class="text-center">Name</th>
+                                <th scope="col" class="text-center">Address</th>
+                                <th scope="col" class="text-center">Mobile Phone</th>
+                                <!-- <th scope="col" class="text-center">Status</th> -->
+                                <th scope="col" class="text-center">View Form</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
 
                 </div>
-
-                <!-- footer: start -->
-
-                <!-- footer: end -->
             </div>
-            <!-- main content: end -->
 
         </div>
         <footer class="sticky-footer">
