@@ -2,7 +2,8 @@
 
 let BASE_URL_LOCAL = 'http://localhost:3000';
 let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
-
+let USER_INFO = 'user-info';
+let CURRENT_URL = window.location.href;
 
 // change this to baseUrl = baseUrlLocal if you are developing.
 let baseUrl = BASE_URL_LOCAL;
@@ -47,7 +48,7 @@ $('#btn-login-supervisor').on('click', function () {
 
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
-    localStorage.removeItem('user_info');
+    localStorage.removeItem(USER_INFO);
     window.location.href = "index.html";
 });
 
@@ -224,7 +225,8 @@ function validateUserSignedIn() {
                     userData: response.data.info[0]
                 }
 
-                localStorage.setItem(USER_INFO, JSON.stringify(USER_INFO));                if(user_info.UserType == 'Student'){
+                localStorage.setItem(USER_INFO, JSON.stringify(USER_INFO));                
+                if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
                     window.location.href = "supervisor_dashboard.html";
@@ -523,7 +525,8 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    console.log(userInfo.userData.SupervisorEmail)
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    
+    console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
             // we render the table here.
@@ -846,7 +849,7 @@ function getLabels(status){
 //student view of form-I-5
 
 function populateFormI5() {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
     let studentId = userInfo.userData.RegistrationNo;
 
     axios.get(baseUrl+'/form5/data/'+studentId)
