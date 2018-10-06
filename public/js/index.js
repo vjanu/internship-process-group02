@@ -515,7 +515,8 @@ function getRegisterDetails() {
         
     }   
 
-
+    if(registerData.firstName !="" && registerData.lastName !="" && registerData.nic !="" && 
+    registerData.regno !="" && registerData.email !="" && registerData.password !=""){
 
     axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
             headers: headers
@@ -523,15 +524,15 @@ function getRegisterDetails() {
     .then(response => {
         console.log(response);
         if(response.data.success){
+         
             alert("Successfully Registered!");
             document.getElementById('firstName').value = "";
             document.getElementById('lastName').value = "";
             document.getElementById('nic').value = "";
             document.getElementById('regno').value = "";
-            document.getElementById('dept').value = "";
-            document.getElementById('year').value = "";
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
+           
         }else{
             alert("User Not Registered!")
         }
@@ -539,6 +540,10 @@ function getRegisterDetails() {
     .catch(error => {
         console.log(error);
     })
+}
+else{
+    alert("One More more fields are empty!")
+}
 }
 
 
@@ -865,32 +870,26 @@ function generateRatingStarts(rateValue) {
 }
 
 function getLabels(status){
-    var btnClass='';
-    var btnText = '';
-    var isDisabled = '';
+    var badgeClass =''
+    var badgeText =''
+
     if(status==3){
-        btnClass = "badge badge-pill badge-primary";
-        btnText = "Above Average";
-        isDisabled = "disabled";
+        badgeClass = "badge badge-pill badge-success"
+        badgeText = "Above Average"
     }
     else if(status==2){
-        btnClass = "badge badge-pill badge-warning";
-        btnText = "Average";
-        isDisabled = "disabled";
+        badgeClass = "badge badge-pill badge-secondary"
+        badgeText = "Average"
     }
     else{
-        btnClass = "badge badge-pill badge-danger" ;
-        btnText = "Below Average";
-        isDisabled = "disabled";
+        badgeClass = "badge badge-pill badge-danger"
+        badgeText = "Below Average"
     }
 
+   
 
-	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
-		    '        <span class="" aria-hidden="true"></span>' +
-		    '        <span><strong>'+btnText+'</strong></span></a>'+
-            '</button>';
-
-	return html;
+    return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
+  
 }
 //student view of form-I-5
 
@@ -902,21 +901,35 @@ function populateFormI5() {
     .then(response => {
         if (response.data) {
             console.log(response);
-                // var html = '<tr>';
-                // html += '<td class="text-center">' + response.data.data["0"].StudentId + '</td>';
-                // html += '<td class="text-center">' + response.data.data["0"].StudentName + '</td>';
-                // html += '<td class="text-center">' + response.data.data["0"].EmployerName + '</td>';
-                // html += '<td class="text-center">' + response.data.data["0"].SupervisorName + '</td>';
-                // html += '</tr>';
-                // $('#view-form5 tbody').append(html);
+                var html = '<tr>';
+                html += '<td class="text-center">' + response.data.data["0"].StudentId + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].StudentName + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].EmployerName + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].SupervisorName + '</td>';
+                html += '</tr>';
+                $('#view-form5 tbody').append(html);
 
-                var html1 = '<tr>';
-                html1 += '<td class="text-center">' + getLabels(3) + '</td>';
-                html1 += '<td class="text-center">' + getLabels(response.data.data["0"].Accuracy) + '</td>';
-                html1 += '<td class="text-center">' + getLabels(response.data.data["0"].Learn) + '</td>';
-
-                html1 += '</tr>';
+                var html1 = '';
+                html1 += '<tr><th>Volume of Work</th><td class="text-center">' + getLabels(response.data.data["0"].VolumeOfWork) + '</td></tr>';
+                html1 += '<tr><th>Quality of Work</th><td class="text-center">' + getLabels(response.data.data["0"].AnalyticalAbility) + '</td></tr>';
+                html1 += '<tr><th>Analytical Ability</th><td class="text-center">' + getLabels(response.data.data["0"].AbilityToResolve) + '</td></tr>';
+                html1 += '<tr><th>Ability to resolve problems</th><td class="text-center">' + getLabels(response.data.data["0"].Accuracy) + '</td></tr>';
+                html1 += '<tr><th>Accuracy and Thoroughness</th><td class="text-center">' + getLabels(response.data.data["0"].Pressure) + '</td></tr>';
+                html1 += '<tr><th>Ability to work under pressure</th><td class="text-center">' + getLabels(response.data.data["0"].Oral) + '</td></tr>';
+                html1 += '<tr><th>Oral Communication</th><td class="text-center">' + getLabels(response.data.data["0"].Written) + '</td></tr>';
+                html1 += '<tr><th>Written Communication</th><td class="text-center">' + getLabels(response.data.data["0"].Thinking) + '</td></tr>';
+                html1 += '<tr><th>Original and Critical thinking</th><td class="text-center">' + getLabels(response.data.data["0"].Learn) + '</td></tr>';
+                html1 += '<tr><th>Ability to Learn</th><td class="text-center">' + getLabels(response.data.data["0"].Effective) + '</td></tr>';
+                html1 += '<tr><th>Effective in organizing work</th><td class="text-center">' + getLabels(response.data.data["0"].Initiatives) + '</td></tr>';
+                html1 += '<tr><th>Takes Initiative</th><td class="text-center">' + getLabels(response.data.data["0"].Flexible) + '</td></tr>';
+                html1 += '<tr><th>Flexible to non-routinf work</th><td class="text-center">' + getLabels(response.data.data["0"].Active) + '</td></tr>';
+                html1 += '<tr><th>Active and Alert</th><td class="text-center">' + getLabels(response.data.data["0"].Attitude) + '</td></tr>';
+                html1 += '<tr><th>Attitude atowards Organization</th><td class="text-center">' + getLabels(response.data.data["0"].Team) + '</td></tr>';
+                html1 += '<tr><th>Team Player</th><td class="text-center">' + getLabels(response.data.data["0"].Deligence) + '</td></tr>';
+                html1 += '<tr><th>Diligence and Preserverance</th><td class="text-center">' + getLabels(response.data.data["0"].Responsibility) + '</td></tr>';
+                html1 += '';
                 $('#ratings tbody').append(html1);
+
            
 
 
