@@ -409,6 +409,32 @@ function viewFormI5Details() {
                     // $('#diff').val(form_details.StudentId);
 
                     $('#volume-of-work').append(getPerformance(form_details.VolumeOfWork));
+                    $('#analytical-ability').append(getPerformance(form_details.AnalyticalAbility));
+                    $('#resolve-problem').append(getPerformance(form_details.AbilityToResolve));
+
+                    $('#accuracy').append(getPerformance(form_details.Accuracy));
+                    $('#pressure').append(getPerformance(form_details.Pressure));
+                    $('#oral-communication').append(getPerformance(form_details.Oral));
+
+                    $('#Written-communication').append(getPerformance(form_details.Written));
+                    $('#critical-thinking').append(getPerformance(form_details.Thinking));
+                    $('#ability-to-learn').append(getPerformance(form_details.Learn));
+
+
+                    $('#tt').val(form_details.Positive);
+                    $('#rr').val(form_details.Personal);
+                    $('#ee').val(form_details.Needs);
+                    $('#ww').val(form_details.Suggest);
+                    $('#qq').val(form_details.Appropriateness);
+                    $('#aa1').val(form_details.Other);
+
+                    $('#overall-performance').append(getOverallPerformance(form_details.Overall));
+
+                    $('#sup-name').val(form_details.External);
+                    $('#date1').val(formatDate(form_details.Date));
+                    
+                    
+                    
 
                 }
             }).catch(function (error) {
@@ -457,5 +483,29 @@ function getPerformance(value) {
         badgeClass = 'badge badge-pill badge-danger';
     }
 
-    return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
+    return '<h5><span class="' + badgeClass + '"><h6>' + badgeText + '</h6></span></h5>';
+}
+
+
+function getOverallPerformance(value){
+    let badgeText;
+    let badgeClass;
+    if (value == 5) {
+        badgeText = 'Outstanding';
+        badgeClass = 'badge badge-pill badge-success';
+    }else if (value == 4) {
+        badgeText = 'Very Good';
+        badgeClass = 'badge badge-pill badge-success';
+    }else if (value == 3) {
+        badgeText = 'Good';
+        badgeClass = 'badge badge-pill badge-primary';
+    } else if (value == 2) {
+        badgeText = 'Marginal';
+        badgeClass = 'badge badge-pill badge-primary';
+    } else if (value == 1) {
+        badgeText = 'Unsatisfactory';
+        badgeClass = 'badge badge-pill badge-danger';
+    }
+
+    return '<h5><span class="' + badgeClass + '"><h4>' + badgeText + '</h4></span></h5>';
 }
