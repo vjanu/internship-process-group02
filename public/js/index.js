@@ -1,9 +1,8 @@
 /* * * * *     Global Variables     * * * * */
 
 let BASE_URL_LOCAL = 'http://localhost:3000';
-// let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
-let USER_INFO = 'user-info';
-let CURRENT_URL = window.location.href;
+let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+
 
 // change this to baseUrl = baseUrlLocal if you are developing.
 let baseUrl = BASE_URL_LOCAL;
@@ -47,7 +46,7 @@ $('#btn-login-supervisor').on('click', function () {
 
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
-    localStorage.removeItem(USER_INFO);
+    localStorage.removeItem('user_info');
     window.location.href = "index.html";
 });
 
@@ -219,8 +218,8 @@ function validateUserSignedIn() {
                     UserType: response.data.userType,
                     userData: response.data.info[0]
                 }
-                localStorage.setItem(USER_INFO, window.btoa(JSON.stringify(user_info)));
-                // localStorage.setItem(USER_INFO, (JSON.stringify(user_info)));
+                localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
+                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
                 if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
@@ -262,6 +261,8 @@ function getAllInternships() {
             $('#internships-table').append(table);
         }
     })
+ 
+
 }
 
 /*
@@ -296,7 +297,7 @@ function renderInternshipsTable(jsonData) {
                     // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
                     '<td>' +
                         '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
-                        '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+                        '<a href="form-i-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
                         '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
                     '</td>' +
                 '<tr>';
@@ -305,8 +306,9 @@ function renderInternshipsTable(jsonData) {
 
     return table;
 }
+
 $(document).ready(function () {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
@@ -446,7 +448,7 @@ function getUpload() {
 
 
 function populateFormI3() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
     axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
@@ -557,7 +559,7 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
@@ -667,9 +669,10 @@ function isFormAvailable(studentId, formName) {
 let pageUrl = window.location.href;
 
 if (pageUrl.includes('student-dashboard')) {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
+
     axios.get(baseUrl + '/student/form-i-1/' + studentId)
         .then(response => {
             if (response.data.success) {
@@ -677,29 +680,41 @@ if (pageUrl.includes('student-dashboard')) {
                 if (response.data.data != undefined) {
                     if(response.data.data[0].EmployerName != undefined) {
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
-                            '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
-                            '                        100% Complete (success)</div>');
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '  100% Complete (success)</div>');
 
-                    }else{
+                    }
+                    else{
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
-                            '                    aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
-                            '                        50% Complete (Half)</div>');
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '  s 50% Complete (Half)</div>');
                     }
 
                     if(response.data.data[0].EmployerName != undefined) {
                         $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
                         $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
                         $('#internship-company-name').text(response.data.data[0].EmployerName);
+                        $('#form1-suc').text("Completed");
+                      
+
                     }else{
                         $('#internship-start-date').text("Not Submitted");
                         $('#internship-end-date').text("Not Submitted");
                         $('#internship-company-name').text("Not Submitted");
+                        $('#form1-suc').text("Not completed");
                     }
                     console.log(response.data.data);
                 }
             }
         })
-        .catch(error => {
+
+    
+            
+    
+
+    
+
+       .catch(error => {
             console.log(error);
             $('#internship-start-date').text("Not Submitted");
             $('#internship-end-date').text("Not Submitted");
