@@ -502,7 +502,15 @@ function populateStudentProfile() {
 }
 
 // had to make this a promise since this involves an API call.
-function isFormAvailable(studentId, formName) {
+/**
+ * This will check a form of a specific student and validate the presence of a certain
+ * attribute in the form to indicate if there's an acceptable form for the given student.
+ * 
+ * @param {String} studentId student id of the student to whom this form belongs.
+ * @param {String} formName name of the form as specified in Industrial Training Module. [form-i-1 | form-i-3 | form-i-5 | form-i-7]
+ * @param {String} attributeToCheck an attribute in the specified form, which we check whether empty or not.
+ */
+function isFormAvailable(studentId, formName, attributeToCheck) {
     // send a request to backend and see if any data returns.
 
     return new Promise((resolve, reject) => {
@@ -510,9 +518,9 @@ function isFormAvailable(studentId, formName) {
             axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
                 .then(response => {
                     if (response.data.success) {
-                        let supervisorEmail = response.data.data.SupervisorEmail;
-                        if (EmployerName != '') {
-                            console.log(supervisorEmail);
+                        let attributeToCheck = response.data.data[attributeToCheck];
+                        if (attributeToCheck != '') {
+                            console.log(attributeToCheck);
                             resolve(true);
                         }
                         else {
@@ -522,7 +530,18 @@ function isFormAvailable(studentId, formName) {
                 })
         }
         else if (formName.toLowerCase() === 'form-i-3') {
-
+            axios.get(baseUrl + '/form3/data/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let attributeToCheck = response.data.data[0][attributeToCheck];
+                    if (attributeToCheck != undefined || attributeToCheck != '') {
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                }
+            })
 
         }
         else if (formName.toLowerCase() === 'form-i-5') {
