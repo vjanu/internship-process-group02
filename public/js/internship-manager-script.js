@@ -327,7 +327,7 @@ function viewFormI3Details() {
         /**
          * Dispaly daily diary details about student
          */
-        axios.get(baseUrl + '/form3/form-i-3-diaries/' + studentId)
+        axios.get(baseUrl + '/form3/data/' + studentId)
             .then(response => {
                 if (response.data.success) {
                     let form_details = response.data.data;
