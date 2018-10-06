@@ -439,6 +439,8 @@ function makeSupervisorDashboard() {
                 '<th scope="col">Student Id number</th>' +
                 '<th scope="col">Name</th>' +
                 '<th scope="col">Job title</th>' +
+                '<th scope="col">Job start date</th>' +
+                '<th scope="col">Job end date</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>';
@@ -453,6 +455,8 @@ function makeSupervisorDashboard() {
                     '</td>' +
                     '<td>' + form.StudentName + '</td>' +
                     '<td>' + 'Intern' + '</td>' +
+                    '<td>' + form.InternshipStart+ '</td>' +
+                    '<td>' + form.InternshipEnd+ '</td>' +
                     '</tr>'
             });
 
@@ -507,7 +511,7 @@ function isFormAvailable(studentId, formName) {
                 .then(response => {
                     if (response.data.success) {
                         let supervisorEmail = response.data.data.SupervisorEmail;
-                        if (supervisorEmail != '') {
+                        if (EmployerName != '') {
                             console.log(supervisorEmail);
                             resolve(true);
                         }
