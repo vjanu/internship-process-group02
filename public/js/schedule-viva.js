@@ -41,8 +41,8 @@ function renderScheduleTable() {
                     '<td>' + session.StudentId + '</td>' +
                     '<td>' + session.StudentEmails + '</td>' +
                     '<td>' + session.VivaDate + '</td>' +
-                    '<td><input type="text" class="form-control" value="' + session.Location + '"/></td>' +
-                    '<td><button id="update-session->' + session.StudentId + '" class="btn btn-primary">Update</button></td>' +
+                    '<td><input id="session-location-' + session.StudentId + '" type="text" class="form-control" value="' + session.Location + '"/></td>' +
+                    '<td><button id="update-session-' + session.StudentId + '" class="btn btn-primary" onclick=updateSession(this);>Update</button></td>' +
                     '</tr>';
                 });
 
@@ -54,4 +54,13 @@ function renderScheduleTable() {
             }
         })
         .catch(err => { console.log(err); });
+}
+
+function updateSession(button) {
+    // student's id is embedded in the button's id to easily recognize to whom the entyr belongs.
+    let studentId = button.id.replace('update-session-', '');
+    
+    // get the new data for location and/or date time.
+    let location = $('#session-location-'+studentId).val();
+    console.log(location);
 }
