@@ -13,6 +13,7 @@ let headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
+let CURRENT_URL = window.location.href;
 
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
@@ -54,6 +55,10 @@ $('#btn-form-submit-f5').on('click', function () {
     getFormI5StudentInternshipDetails()
 });
 
+
+if (CURRENT_URL.includes('view-form5-student')) {
+	populateFormI5()
+}
 
 
 
@@ -859,4 +864,69 @@ function generateRatingStarts(rateValue) {
 	return html;
 }
 
+function getLabels(status){
+    var btnClass='';
+    var btnText = '';
+    var isDisabled = '';
+    if(status==3){
+        btnClass = "badge badge-pill badge-primary";
+        btnText = "Above Average";
+        isDisabled = "disabled";
+    }
+    else if(status==2){
+        btnClass = "badge badge-pill badge-warning";
+        btnText = "Average";
+        isDisabled = "disabled";
+    }
+    else{
+        btnClass = "badge badge-pill badge-danger" ;
+        btnText = "Below Average";
+        isDisabled = "disabled";
+    }
+
+
+	var html = '<button type="button" title="" class="'+btnClass+'" '+isDisabled+'>' +
+		    '        <span class="" aria-hidden="true"></span>' +
+		    '        <span><strong>'+btnText+'</strong></span></a>'+
+            '</button>';
+
+	return html;
+}
 //student view of form-I-5
+
+function populateFormI5() {
+    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let studentId = userInfo.userData.RegistrationNo;
+
+    axios.get(baseUrl+'/form5/data/'+studentId)
+    .then(response => {
+        if (response.data) {
+            console.log(response);
+                // var html = '<tr>';
+                // html += '<td class="text-center">' + response.data.data["0"].StudentId + '</td>';
+                // html += '<td class="text-center">' + response.data.data["0"].StudentName + '</td>';
+                // html += '<td class="text-center">' + response.data.data["0"].EmployerName + '</td>';
+                // html += '<td class="text-center">' + response.data.data["0"].SupervisorName + '</td>';
+                // html += '</tr>';
+                // $('#view-form5 tbody').append(html);
+
+                var html1 = '<tr>';
+                html1 += '<td class="text-center">' + getLabels(3) + '</td>';
+                html1 += '<td class="text-center">' + getLabels(response.data.data["0"].Accuracy) + '</td>';
+                html1 += '<td class="text-center">' + getLabels(response.data.data["0"].Learn) + '</td>';
+
+                html1 += '</tr>';
+                $('#ratings tbody').append(html1);
+           
+
+
+        }
+    })
+    .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(JSON.stringify(error));
+          console.log(error.response.headers);
+        }
+    });
+}
