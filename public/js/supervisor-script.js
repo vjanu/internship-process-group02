@@ -31,14 +31,12 @@ if (CURRENT_URL.includes('supervisor-student-list')) {
     loadSupervisorStudentList();
 }
 
-/*
-*  @author Tharushi
-*/
+
 function loadSupervisorStudentList() {
     if (!(USER_INFO in localStorage)) {
         window.location.href = "index.html";
     } else {
-        let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+        let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
 
         axios.get(baseUrl + '/supervisor/form-i-1/' + userInfo.userData.SupervisorEmail)
             .then(function (response) {
