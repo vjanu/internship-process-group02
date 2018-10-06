@@ -258,6 +258,8 @@ function getAllInternships() {
             $('#internships-table').append(table);
         }
     })
+ 
+
 }
 
 /*
@@ -292,7 +294,7 @@ function renderInternshipsTable(jsonData) {
                     // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
                     '<td>' +
                         '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
-                        '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+                        '<a href="form-i-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
                         '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
                     '</td>' +
                 '<tr>';
@@ -301,6 +303,7 @@ function renderInternshipsTable(jsonData) {
 
     return table;
 }
+
 $(document).ready(function () {
     let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
     console.log(userInfo);
@@ -695,6 +698,66 @@ if (pageUrl.includes('student-dashboard')) {
                 }
             }
         })
+
+
+
+        axios.get(baseUrl + '/student/form-i-3/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                console.log(response);
+                if (response.data.data != undefined) {
+                    if(response.data.data[0].EmployerName != undefined) {
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '                        100% Complete (success)</div>');
+
+                    }else{
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '                        50% Complete (Half)</div>');
+                    }
+
+                    if(response.data.data[0].EmployerName != undefined) {
+                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-company-name').text(response.data.data[0].EmployerName);
+                    }else{
+                        $('#internship-start-date').text("Not Submitted");
+                        $('#internship-end-date').text("Not Submitted");
+                        $('#internship-company-name').text("Not Submitted");
+                    }
+                    console.log(response.data.data);
+                }
+            }
+        })
+
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         .catch(error => {
             console.log(error);
             $('#internship-start-date').text("Not Submitted");
@@ -705,4 +768,23 @@ if (pageUrl.includes('student-dashboard')) {
                 '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
                 '                        0% Not Submitted</div>');
         })
+
+
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
