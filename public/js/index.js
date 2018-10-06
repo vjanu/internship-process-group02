@@ -1,8 +1,9 @@
 /* * * * *     Global Variables     * * * * */
 
 let BASE_URL_LOCAL = 'http://localhost:3000';
-let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
-
+// let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let USER_INFO = 'user-info';
+let CURRENT_URL = window.location.href;
 
 // change this to baseUrl = baseUrlLocal if you are developing.
 let baseUrl = BASE_URL_LOCAL;
@@ -46,7 +47,7 @@ $('#btn-login-supervisor').on('click', function () {
 
 $('#btn-logout').on('click', function (e) {
     e.preventDefault();
-    localStorage.removeItem('user_info');
+    localStorage.removeItem(USER_INFO);
     window.location.href = "index.html";
 });
 
@@ -215,8 +216,8 @@ function validateUserSignedIn() {
                     UserType: response.data.userType,
                     userData: response.data.info[0]
                 }
-                localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
-                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
+                localStorage.setItem(USER_INFO, window.btoa(JSON.stringify(user_info)));
+                // localStorage.setItem(USER_INFO, (JSON.stringify(user_info)));
                 if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
@@ -305,7 +306,7 @@ function renderInternshipsTable(jsonData) {
 }
 
 $(document).ready(function () {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
     console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
@@ -445,7 +446,7 @@ function getUpload() {
 
 
 function populateFormI3() {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
     axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
@@ -556,7 +557,7 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
     console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
@@ -666,7 +667,7 @@ function isFormAvailable(studentId, formName) {
 let pageUrl = window.location.href;
 
 if (pageUrl.includes('student-dashboard')) {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
     // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
     axios.get(baseUrl + '/student/form-i-1/' + studentId)
