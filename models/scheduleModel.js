@@ -4,6 +4,7 @@ const mongoose = require('./mongodb').mongoose;   // connection is already estab
 let scheduleSchema = mongoose.Schema({
     // following are filled by student.
     StudentId: String,
+    StudentEmails: Array,
     VivaDate: Date,
     Location: String
 });
