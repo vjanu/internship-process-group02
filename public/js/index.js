@@ -223,7 +223,7 @@ function validateUserSignedIn() {
                     userData: response.data.info[0]
                 }
 
-                localStorage.setItem(USER_INFO, JSON.stringify(USER_INFO));                
+                localStorage.setItem(USER_INFO, JSON.stringify(user_info));                
                 if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
