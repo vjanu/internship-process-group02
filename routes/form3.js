@@ -91,7 +91,7 @@ router.get('/data/:studentId', function(req, res, next) {
  * @author Tharindu
  */
 
-router.get('/form-i-3/', function(req, res, next) {
+router.get('/all', function(req, res, next) {
     forms.formI3Model.find({}, { _id: 0, __v: 0 }, (err, data) => {
         if (err) {
             res.status(500).send({ success: false, message: 'error.'  });

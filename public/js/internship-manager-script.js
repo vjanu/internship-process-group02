@@ -176,7 +176,7 @@ function getFormI1SubmittedStudentList() {
  * @author Tharindu 
  */
 function getFormI3SubmittedStudentList() {
-    axios.get(baseUrl + '/form3/form-i-3')
+    axios.get(baseUrl + '/form3/all')
         .then(response => {
             if (response.data.success) {
                 let form_details = response.data.data;
@@ -212,7 +212,34 @@ function getFormI3SubmittedStudentList() {
  * @author Tharindu
  */
 function getFormI5SubmittedStudentList() {
+    axios.get(baseUrl + '/form5/all')
+        .then(response => {
+            if (response.data.success) {
+                let form_details = response.data.data;
+                console.log(form_details);
 
+                $("#form-i-5-submitted-students-list tbody").empty();
+                form_details.forEach(item => {
+                    var html = '<tr>';
+                    html += '<td class="text-center">' + item.StudentId + '</td>';
+                    html += '<td class="text-center">' + item.StudentName + '</td>';
+                    html += '<td class="text-center">' + item.EmployerName + '</td>';
+                    html += '<td class="text-center">' + item.SupervisorName + '</td>';
+                    html += '<td class="text-center">';
+                    html += '<a href="internship-manager-view-form-i-5.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
+                    html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
+                    html += '        <span><strong>View</strong></span></a>';
+                    html += '</td>';
+                    html += '</tr>';
+
+                    $('#form-i-5-submitted-students-list tbody').append(html);
+                });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(JSON.stringify(error));
+            }
+        });
 }
 
 
@@ -356,6 +383,44 @@ function viewFormI3Details() {
 
 
 
+
+
+function viewFormI5Details() {
+    if (CURRENT_URL.includes('#')) {
+        let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+        axios.get(baseUrl + '/form5/data/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let form_details = response.data.data[0];
+                    console.log(form_details);
+
+                    let inputElems = $('#form-i5-body').find(':input');
+
+                    for (let j = 0; j < inputElems.length; j++) {
+                        inputElems[j].innerHTML
+                        inputElems[j].disabled = true;
+                    }
+
+
+                    $('#id-student').val(form_details.StudentId);
+                    $('#name-student').val(form_details.StudentName);
+                    $('#employee-name').val(form_details.EmployerName);
+                    $('#supervisor-name').val(form_details.SupervisorName);
+                    // $('#diff').val(form_details.StudentId);
+
+                    $('#volume-of-work').append(getPerformance(form_details.VolumeOfWork));
+
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(JSON.stringify(error));
+                }
+            });
+    }
+}
+
+
+
 /*** REUSABLE FUNCTION ****/
 
 function formatDate(date) {
@@ -376,4 +441,21 @@ function generateFormI1UpdatedStatus(isSubmitted) {
     var badgeText = (isSubmitted) ? "Fully Submitted" : "Supervisor Not Updated";
 
     return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
+}
+
+function getPerformance(value) {
+    let badgeText;
+    let badgeClass;
+    if (value == 3) {
+        badgeText = 'Above Average';
+        badgeClass = 'badge badge-pill badge-success';
+    } else if (value == 2) {
+        badgeText = 'Average';
+        badgeClass = 'badge badge-pill badge-primary';
+    } else if (value == 1) {
+        badgeText = 'Below Average';
+        badgeClass = 'badge badge-pill badge-danger';
+    }
+
+    return '<h5><span class="' + badgeClass + '">' + badgeText + '</span></h5>';
 }

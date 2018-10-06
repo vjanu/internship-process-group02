@@ -87,66 +87,441 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="my-0 font-weight-normal text-center">Student - <span id="header-studentId">ITXXXXXXXX</span></h4>
+                        <h4 class="my-0 font-weight-normal text-center">Form I-5 Details</h4>
                     </div>
 
                     <!-- main content: start -->
 
-                    <div class="card-body mr-md-5 ml-md-5">
-                        <table class="table" id="form-i3-student-details">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">Student Id</th>
-                                    <th scope="col" class="text-center">Student Name</th>
-                                    <th scope="col" class="text-center">Student Address</th>
-                                    <th scope="col" class="text-center">Student Phone</th>
-                                    <th scope="col" class="text-center">Student Emails</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+                    <div class="card-body mr-md-5 ml-md-5" id="form-i5-body">
 
-                        <table class="table" id="form-i3-intern-details">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">Specialization</th>
-                                    <th scope="col" class="text-center">Internship Title</th>
-                                    <th scope="col" class="text-center">From</th>
-                                    <th scope="col" class="text-center">To</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+
+                        <form>
+                            <!-- Name and Reg number -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name-student">Student ID : </label>
+                                    <input type="text" class="form-control" id="id-student" placeholder="IT 12 3456 79">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="id-student">Student's Name : </label>
+                                    <input type="text" class="form-control" id="name-student" placeholder="Sunil Perera">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="home-phone-student">Employer's Name : </label>
+                                    <input type="text" class="form-control" id="employee-name" placeholder="DirectFN">
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    <label for="address-student">Supervisor's Name</label>
+                                    <input type="text" class="form-control" id="supervisor-name" placeholder="Chaminda Fernando">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Describe the differences, if any,
+                                            between student's
+                                            initial contract and actual assignment which developed</label>
+                                        <textarea class="form-control" id="diff" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                        <!-- body -->
+
+                        <div class="card-deck mb-3">
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-header  text-center">
+                                    <h5 class="my-0 font-weight-normal">Performance of the Student</h5>
+                                </div>
+                                <small align="center" class="text-danger">Note: Please make sure to fill all the
+                                    categories given below</small>
+
+                                <div class="card-body">
+                                    <form>
+                                        <!-- 1 -->
+                                        <label for="home-phone-student">Volume of work</label>
+                                        <span id="volume-of-work"></span>
+                                        <input type="text" class="form-control" id="v4" placeholder="Comments, Examples, Observations">
+                                        <!-- 1 -->
+                                        </br>
+
+                                        <!-- 2 -->
+                                        <label for="home-phone-student">Analytical Ability</label>
+                                        <span id="analytical-ability"></span>
+                                        <input type="text" class="form-control" id="a4" placeholder="Comments, Examples, Observations">
+                                        <!-- 2 -->
+                                        </br>
+                                        <!-- 3 -->
+                                        <label for="home-phone-student">Ability to resolve problems</label>
+                                        <span id="resolve-problem"></span>
+                                        <input type="text" class="form-control" id="p4" placeholder="Comments, Examples, Observations">
+                                        <!-- 3 -->
+                                        </br>
+                                        <!-- 4 -->
+                                        <label for="home-phone-student">Accuracy and thoroughness</label>
+                                        <span id="accuracy"></span>
+                                        <input type="text" class="form-control" id="t4" placeholder="Comments, Examples, Observations">
+                                        <!-- 4 -->
+                                        </br>
+                                        <!-- 5 -->
+                                        <label for="home-phone-student">Ability to work under pressure</label>
+                                        <span id="pressure"></span>
+
+                                        <input type="text" class="form-control" id="w4" placeholder="Comments, Examples, Observations">
+                                        <!-- 5 -->
+                                        </br>
+                                        <!-- 6 -->
+                                        <label for="home-phone-student">Oral Communications</label>
+                                        <span id="oral-communication"></span>
+
+                                        <input type="text" class="form-control" id="o4" placeholder="Comments, Examples, Observations">
+                                        <!-- 6 -->
+                                        </br>
+                                        <!-- 7 -->
+                                        <label for="home-phone-student">Written Communications</label>
+                                        <span id="Written-communication"></span>
+
+                                        <input type="text" class="form-control" id="i4" placeholder="Comments, Examples, Observations">
+                                        <!-- 7 -->
+                                        </br>
+                                        <!-- 8 -->
+                                        <label for="home-phone-student">Original and critical thinking</label>
+                                        <span id="critical-thinking"></span>
+
+                                        <input type="text" class="form-control" id="c4" placeholder="Comments, Examples, Observations">
+                                        <!-- 8 -->
+                                        </br>
+                                        <!-- 9 -->
+                                        <label for="home-phone-student">Ability to learn</label>
+                                        <span id="ability-to-learn"></span>
+
+                                        <input type="text" class="form-control" id="l4" placeholder="Comments, Examples, Observations">
+                                        <!-- 9 -->
+                                        </br>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <!-- next body -->
+                        <div class="card-deck mb-3 text-center">
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-header">
+                                    <h5 class="my-0 font-weight-normal">Working Habits of the Student</h5>
+                                </div>
+                                <small align="center" class="text-danger">Please Fill this at the very first day of
+                                    your internship and
+                                    submit.</small>
+
+                                <div class="card-body text-left">
+                                    <form>
+                                        <!-- 1 -->
+                                        <label for="home-phone-student">Effective in organizing work</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="12" id="a13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="12" id="a12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="12" id="a11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="a14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 1 -->
+                                        </br>
+                                        <!-- 2 -->
+                                        <label for="home-phone-student">Takes the initiatives</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="13" id="b13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="13" id="b12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="13" id="b11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="b14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 2 -->
+                                        </br>
+                                        <!-- 3 -->
+                                        <label for="home-phone-student">Flexible to non-routine work</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="14" id="c13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="14" id="c12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="14" id="c11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="c14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 3 -->
+                                        </br>
+                                        <!-- 4 -->
+                                        <label for="home-phone-student">Active and alert</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="15" id="d13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="15" id="d12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="15" id="d11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="d14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 4 -->
+                                        </br>
+                                        <!-- 5 -->
+                                        <label for="home-phone-student">Attitude towards organization</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="16" id="q13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="16" id="q12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="16" id="q11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="q14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 5 -->
+                                        </br>
+                                        <!-- 6 -->
+                                        <label for="home-phone-student">Team Player</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="17" id="r13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="17" id="r12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="17" id="r11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="r14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 6 -->
+                                        </br>
+                                        <!-- 7 -->
+                                        <label for="home-phone-student">Deligence and preserverance</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="10" id="s13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="10" id="s12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="10" id="s11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="s14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 7 -->
+                                        </br>
+                                        <!-- 8 -->
+                                        <label for="home-phone-student">Accepts responsibility</label>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="18" id="x13" value="3">
+                                            <label class="form-check-label" for="inlineRadio1">Above Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="18" id="x12" value="2">
+                                            <label class="form-check-label" for="inlineRadio2">Average</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="18" id="x11" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Below Average</label>
+                                        </div>
+                                        <div>
+                                            <input type="text" class="form-control" id="x14" placeholder="Comments, Examples, Observations">
+                                        </div>
+                                        <!-- 8 -->
+
+
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- body next -->
+
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">List positive personal characteristics
+                                            (Business
+                                            Acumen, Vigor, Adaptability, Teamwork, Leadership, Confidence, etc.)</label>
+                                        <textarea class="form-control" id="tt" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">List personal characteristics that
+                                            will help the
+                                            student in his/her professional development</label>
+                                        <textarea class="form-control" id="rr" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">How effective has the Internship
+                                            Program been in
+                                            meeting the needs of your organization?</label>
+                                        <textarea class="form-control" id="ee" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Please suggest ways you feel we could
+                                            make our program
+                                            more meaningful to the student and you, the employer</label>
+                                        <textarea class="form-control" id="ww" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Please comment on the appropriateness
+                                            of the student's
+                                            academic training as it related to a position in your organization.</label>
+                                        <textarea class="form-control" id="qq" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlTextarea1">Any other comments about the student
+                                            or on the Faculty
+                                            Advisor:</label>
+                                        <textarea class="form-control" id="aa1" rows="3"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                        <!-- 3rd body -->
+
+                        <div class="card-deck mb-3 text-center">
+                            <div class="card mb-4 box-shadow">
+                                <div class="card-header">
+                                    <h5 class="my-0 font-weight-normal">Overall Student Performance </h5>
+                                </div>
+                                <small align="center" class="text-danger">Please Fill this at the very first day of
+                                    your internship and
+                                    submit.</small>
+
+                                <div class="card-body text-left">
+                                    <form>
+                                        <!-- 1 -->
+
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="7" id="qw5" value="5">
+                                            <label class="form-check-label" for="inlineRadio1">Outstanding</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="7" id="qw4" value="4">
+                                            <label class="form-check-label" for="inlineRadio2">Very Good</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="7" id="qw3" value="3">
+                                            <label class="form-check-label" for="inlineRadio3">Good</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="7" id="qw2" value="2">
+                                            <label class="form-check-label" for="inlineRadio3">Marginal</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="7" id="qw1" value="1">
+                                            <label class="form-check-label" for="inlineRadio3">Unsatisfactory</label>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- last body -->
+                        <small align="center" class="text-danger">This report has been discussed with the student.</small>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">External Supervisor's Name </label>
+                                    <input type="text" class="form-control" id="sup-name" placeholder="Supervisor's Name">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Date</label>
+                                    <input type="date" id="date1" class="form-control" id="address-student">
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                     </div>
                     <!-- main content: end -->
-                </div>
-
-
-
-
-
-                <div class="card mt-2">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal text-center">Daily Diary Details</h4>
-                    </div>
-
-                    <!-- main content: start -->
-                    <div class="card-body mr-md-5 ml-md-5">
-                        <table class="table table-bordered table-hover" id="daily-diary-details">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="text-center">Training Party</th>
-                                    <th scope="col" class="text-center">Training Description</th>
-                                    <th scope="col" class="text-center">From</th>
-                                    <th scope="col" class="text-center">To</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
 

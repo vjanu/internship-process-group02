@@ -80,6 +80,25 @@ const express = require('express');
  });
 
 
+router.get('/all', function(req, res, next) {
+    forms.formI5Model.find({}, { _id: 0, __v: 0 }, (err, data) => {
+        if (err) {
+            res.status(500).send({ success: false, message: 'error.'  });
+        }
+        else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Student not found.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
+        }
+    });
+});
+
 
 
 
