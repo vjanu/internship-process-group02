@@ -5,7 +5,7 @@
  * scheduling viva sessions.
  */
 
-const schedule = require('../models/scheduleModel');
+const schedule = require('../models/scheduleModel').scheduleModel;
 const formI3 = require('../models/formsModel').formI3Model;
 const nodemailer = require('nodemailer');
 
@@ -17,9 +17,10 @@ const nodemailer = require('nodemailer');
 let findAllScheduledVivaSessions = () => {
     // resolve if we get data, reject if not.
     return new Promise((resolve, reject) => {
-        schedule.find((err, data) => {
+        schedule.find({}, (err, data) => {
             if (data) { resolve(data); }
-            else { reject(err); }
+            else if (err) { reject(err); } 
+            else { reject('Unknown error.'); }
         });
 
     });
@@ -45,26 +46,73 @@ let findAllScheduledAndUnscheduledSessions = () => {
         // our approach to this is go through all the students who are,
         // eligible for a viva session and filter out those who have already been,
         // assigned to a viva session.
-        formI3.find((err, data => {
-            if (err) { reject(err); }
-            else {
-                // go through each student and add him/her to scheduled section,
-                // if a session is already scheduled.
-                data.forEach(formI3 => {
-                    schedule.find({StudentId: formI3.StudentId}, (err_, data_) => {
-                        if (data_ && data_.length == 1) {
-                            groupedData.scheduled.push(data_);
-                        }
-                        else {
-                            groupedData.pending.push(data_);
-                        }
-                    })
-                });
-                resolve(groupedData);
-            }
-        }));
+        getAllFormI3Submissions()
+        .then(data => {
+            // we iterate over each form to see if the student associated with that form,
+            // has a scheduled viva session in the database.
+            console.log(data);
+            resolve(data);
+        })
+        .catch(err => {
+            reject(err);
+        })
     });
 }
+
+/**
+ * This will return all the entries in the database for the form-i-3
+ */
+let getAllFormI3Submissions = () => {
+    return new Promise((resolve, reject) => {
+        formI3.find({}, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            else {
+                resolve(data);
+            }
+        });
+    });
+}
+
+/**
+ * This will return the schedule of a specific student if available in the db.
+ * 
+ * @param {String} studentId 
+ */
+let getScheduleOfSpecificStudent = (studentId) => {
+    return new Promise((resolve, reject) => {
+        schedule.find({ StudentId: studentId }, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            else if (data) {
+                console.log(data);
+                resolve(data);
+            }
+            else {
+                reject('No data');
+            }
+        })
+    })
+}
+
+let sessionScheduledForStudent = (studentId) => {
+    return new Promise((resolve, reject) => {
+        schedule.find({ StudentId: studentId }, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            else if (data) {
+                resolve(data);
+            }
+            else {
+                reject(false);
+            }
+        })
+    })
+}
+
 
 /**
  *@Author Tharushi De Silva
@@ -98,5 +146,5 @@ let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
     
 }
 
-module.exports = { findAllScheduledVivaSessions, findAllScheduledAndUnscheduledSessions, notifyVivaScheduleViaEmail };
+module.exports = { findAllScheduledVivaSessions, findAllScheduledAndUnscheduledSessions, notifyVivaScheduleViaEmail, getAllFormI3Submissions, getScheduleOfSpecificStudent, sessionScheduledForStudent };
 
