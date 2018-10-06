@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- bootstrap v4.1.1 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <!-- lato font(from google fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+
+    <title>Internship Hub</title>
+</head>
+
+<body class="fixed-nav" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="supervisor_dashboard.html">Internship Hub</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                        <i class="fa fa-fw fa-info-circle"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item " data-toggle="tooltip" data-placement="right" title="Form I-1">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-1.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-1</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-3.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Form I-5">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-5.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-5</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="supervisor_dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="internship-manager-form-i-1.html">Student Details</a>
+                    </li>
+                    <li class="breadcrumb-item active">Form I-3</li>
+                </ol>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Student - <span id="header-studentId">ITXXXXXXXX</span></h4>
+                    </div>
+
+                    <!-- main content: start -->
+
+                    <div class="card-body mr-md-5 ml-md-5">
+                        <table class="table" id="form-i3-student-details">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Student Id</th>
+                                    <th scope="col" class="text-center">Student Name</th>
+                                    <th scope="col" class="text-center">Student Address</th>
+                                    <th scope="col" class="text-center">Student Phone</th>
+                                    <th scope="col" class="text-center">Student Emails</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                        <table class="table" id="form-i3-intern-details">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Specialization</th>
+                                    <th scope="col" class="text-center">Internship Title</th>
+                                    <th scope="col" class="text-center">From</th>
+                                    <th scope="col" class="text-center">To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- main content: end -->
+                </div>
+
+
+
+
+
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Daily Diary Details</h4>
+                    </div>
+
+                    <!-- main content: start -->
+                    <div class="card-body mr-md-5 ml-md-5">
+                        <table class="table table-bordered table-hover" id="daily-diary-details">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="text-center">Training Party</th>
+                                    <th scope="col" class="text-center">Training Description</th>
+                                    <th scope="col" class="text-center">From</th>
+                                    <th scope="col" class="text-center">To</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form I-1 Supervisor section -->
+
+        </div>
+
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Internship Hub 2018</small>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="btn-logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/internship-manager-script.js"></script>
+
+</body>
+
+</html>
