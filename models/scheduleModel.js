@@ -10,7 +10,6 @@ let scheduleSchema = mongoose.Schema({
 });
 
 
-
 let scheduleModel = mongoose.model('schedule', scheduleSchema);
 
 module.exports = { scheduleModel };
