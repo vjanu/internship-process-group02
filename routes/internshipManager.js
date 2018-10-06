@@ -29,7 +29,7 @@ router.post('/add-internship-manager', function (req, res) {
 
     if (allParamsPresent) {
         let sp = internshipManager.InternshipManagerModel({
-            InternshipManagerId: randomize('A0', 5),
+            InternshipManagerId: "IM"+randomize('0', 5),
             InternshipManagerName: req.body.InternshipManagerName,
             InternshipManagerEmail: req.body.InternshipManagerEmail,
             InternshipManagerPassword: req.body.InternshipManagerPassword,
