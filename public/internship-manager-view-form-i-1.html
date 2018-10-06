@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- bootstrap v4.1.1 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+    <!-- font awesome(for icons) -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
+
+    <!-- lato font(from google fonts) -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+    <link href="css/custom-style.css" rel="stylesheet">
+
+    <title>Internship Hub</title>
+</head>
+
+<body class="fixed-nav" id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+        <a class="navbar-brand" href="supervisor_dashboard.html">Internship Hub</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                        <i class="fa fa-fw fa-info-circle"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Form I-1">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-1.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-1</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-3.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-5">
+                    <a class="nav-link nav-link-collapse" href="internship-manager-form-i-5.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-5</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="content-wrapper">
+        <div class="container-fluid">
+
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="supervisor_dashboard.html">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="internship-manager-form-i-1.html">Student Details</a>
+                    </li>
+                    <li class="breadcrumb-item active">Form I-1</li>
+                </ol>
+
+
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Student - <span id="header-studentId">IT16058862</span></h4>
+                    </div>
+
+                    <!-- main content: start -->
+
+                    <div class="card-body mr-md-5 ml-md-5">
+                        <form id="form-i-1-student">
+                            <!-- Name and Reg number -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name-student">Name</label>
+                                    <input type="text" class="form-control" id="name-student" placeholder="Perera A.L.K.">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="id-student">Registration Number</label>
+                                    <input type="text" class="form-control" id="id-student" placeholder="IT 12 3456 79">
+                                </div>
+                            </div>
+                            <!-- Name and Reg number -->
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="address-student">Address</label>
+                                <input type="text" class="form-control" id="address-student" placeholder="Valivita Rd, Malabe">
+                            </div>
+                            <!-- Address -->
+
+                            <!-- Phone numbers -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="home-phone-student">Home Phone</label>
+                                    <input type="number" class="form-control" id="home-phone-student" placeholder="011 123 45 67">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="mobile-phone-student">Mobile Phone</label>
+                                    <input type="number" class="form-control" id="mobile-phone-student" placeholder="071 123 45 67">
+                                </div>
+                            </div>
+                            <!-- Phone numbers -->
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="emails-student">Email Address(s)</label>
+                                <input type="email" class="form-control" id="emails-student" placeholder="amal.perera@my.sliit.lk, amal445@gmail.com">
+                                <small class="text-danger">Use comma( , ) to separate multiple emails.</small>
+
+                            </div>
+                            <!-- Email -->
+
+                            <!-- Semester and grades -->
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="year-student">Year</label>
+                                    <select id="year-student" class="form-control">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="semester-student">Semester</label>
+                                    <select id="semester-student" class="form-control">
+                                        <option selected>1</option>
+                                        <option>2</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="cgpa-student">CGPA</label>
+                                    <input type="number" class="form-control" id="cgpa-student" placeholder="3.7">
+                                </div>
+                            </div>
+                            <!-- Semester and grades -->
+
+                        </form>
+                    </div>
+                    <!-- main content: end -->
+
+
+
+                </div>
+
+
+
+
+
+                <div class="card mt-2" id="supervisor-card-view">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal text-center">Supervisor Details</h4>
+                    </div>
+
+                    <!-- main content: start -->
+
+                    <div class="card-body mr-md-5 ml-md-5">
+
+
+                        <!-- Form I-1 Supervisor section -->
+
+                        <form id="form-i-1-supervisor">
+                            <!-- Name of employer -->
+                            <div class="form-group">
+                                <label for="name-employer">Employer's Name</label>
+                                <input type="text" class="form-control" id="name-employer" placeholder="ABC IT Company.Ltd">
+                            </div>
+                            <!-- Name of employer -->
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label for="address-employer">Employer's Address</label>
+                                <input type="text" class="form-control" id="address-employer" placeholder="Union Place, Borella.">
+                            </div>
+                            <!-- Address -->
+                            <!-- Supervisor name and desgination -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="name-supervisor">Supervisor's Name</label>
+                                    <input type="text" class="form-control" id="name-supervisor" placeholder="Collinwood A.">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="title-supervisor">Supervisor's Title</label>
+                                    <input type="text" class="form-control" id="title-supervisor" placeholder="Senior Software Engineer.">
+                                </div>
+                            </div>
+                            <!-- Supervisor name and designation -->
+                            <!-- Supervisor contact details -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone-supervisor">Supervisor's Phone</label>
+                                    <input type="number" class="form-control" id="phone-supervisor" placeholder="0713453456">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email-supervisor">Supervisor's Email</label>
+                                    <input type="email" class="form-control" id="email-supervisor" placeholder="collinwood.adam@abc.com">
+                                </div>
+                            </div>
+                            <!-- Supervisor contact details -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone-supervisor">Internship Start Date</label>
+                                    <input type="date" class="form-control" id="internship-start-date" placeholder="2014-01-06">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email-supervisor">Internship End Date</label>
+                                    <input type="date" class="form-control" id="internship-end-date" placeholder="2014-06-06">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="phone-supervisor">No of Hours/Week</label>
+                                    <input type="number" class="form-control" id="no-of-hours" placeholder="20">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form I-1 Supervisor section -->
+
+        </div>
+
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Internship Hub 2018</small>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="btn-logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="js/internship-manager-script.js"></script>
+
+</body>
+
+</html>

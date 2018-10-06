@@ -223,9 +223,8 @@ function validateUserSignedIn() {
                     UserType: response.data.userType,
                     userData: response.data.info[0]
                 }
-                localStorage.setItem('user_info', window.btoa(JSON.stringify(user_info)));
-                // localStorage.setItem('user_info', (JSON.stringify(user_info)));
-                if(user_info.UserType == 'Student'){
+
+                localStorage.setItem(USER_INFO, JSON.stringify(USER_INFO));                if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
                     window.location.href = "supervisor_dashboard.html";
@@ -313,65 +312,19 @@ function renderInternshipsTable(jsonData) {
 }
 
 $(document).ready(function () {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    console.log(userInfo);
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];    console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
-        if (!("user_info" in localStorage)) {
+        if (!(USER_INFO in localStorage)) {
             window.location.href = "index.html";
         } else {
             $(document).ready(function () {
 
+                
             });
         }
     } else if ($("#supervisor-student-list-page").length > 0) {
-        if (!("user_info" in localStorage)) {
-            window.location.href = "index.html";
-        } else {
-            $(document).ready(function () {
-                axios.get(baseUrl + '/supervisor/form-i-1/'+userInfo.userData.SupervisorEmail)
-                    .then(function (response) {
-                        // handle success
-                        // console.log(response.data);
-
-                        $("#form-i-1-submitted-students tbody").empty();
-
-                        response.data.data.forEach(item => {
-                            if(item.hasOwnProperty('EmployerName')){
-                                var btnClassName = "btn btn-success btn-sm"
-                                var iconClassName = "fas fa-check"
-                                var altText = "Supervisor details submitted"
-
-
-                            }else{
-                                var btnClassName = "btn btn-danger btn-sm"
-                                var iconClassName = "fas fa-times"
-                                var altText = "Supervisor details not submitted"
-                            }
-
-                            $('#form-i-1-submitted-students tbody').append('<tr>' +
-
-                            '<td><center><a class="'+btnClassName+'" title="'+altText+'"><span class="'+iconClassName+'" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
-
-                            '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                            '<td >' + item.StudentName + '</td>' +
-                            '<td >' + item.StudentAddress + '</td>' +
-                            '<td>' + item.StudentMobilePhone + '</td>' +
-                            '<td><center>' +
-                            '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View '+item.StudentId+'\'s Form I-1" class="btn btn-primary btn-sm">\n' +
-                            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-                            '        <span><strong>View</strong></span></a>'+
-                            '</a></center>' +
-                            '</td>' +
-                            '</tr>');
-                        });
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    });
-            });
-        }
+        
     }
 });
 
@@ -453,9 +406,10 @@ function getUpload() {
 
 
 function populateFormI3() {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
+
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
-    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
+    axios.get(baseUrl+'/daily/form-i-3-diaries/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
@@ -569,8 +523,7 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    console.log(userInfo.userData.SupervisorEmail)
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
             // we render the table here.
@@ -679,8 +632,7 @@ function isFormAvailable(studentId, formName) {
 let pageUrl = window.location.href;
 
 if (pageUrl.includes('student-dashboard')) {
-    let userInfo = localStorage.getItem('user_info') ? JSON.parse(window.atob(localStorage.getItem('user_info'))) : [];
-    // let studentId = "IT16000000";
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
 
     //load form1 progress bar
@@ -691,13 +643,13 @@ if (pageUrl.includes('student-dashboard')) {
                 if (response.data.data != undefined) {
                     if(response.data.data[0].EmployerName != undefined) {
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
-                            '  aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
-                            '  100% Complete (success)</div>');
-                        
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '                        100% Complete (success)</div>');
+
                     }
                     else{
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
-                            '  aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '                    aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
                             '  s 50% Complete (Half)</div>');
                     }
 
@@ -762,7 +714,7 @@ if (pageUrl.includes('student-dashboard')) {
 
 
 
-       .catch(error => {
+        .catch(error => {
             console.log(error);
             $('#internship-start-date').text("Not Submitted");
             $('#internship-end-date').text("Not Submitted");
