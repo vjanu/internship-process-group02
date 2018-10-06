@@ -47,12 +47,12 @@ function loadSupervisorStudentList() {
 
                 response.data.data.forEach(item => {
                     var html = '<tr>';
-                    html += '<td class="nr-fid" scope="row">' + item.StudentId + '</td>';
-                    html += '<td >' + item.StudentName + '</td>';
-                    html += '<td >' + item.StudentAddress + '</td>';
-                    html += '<td>' + item.StudentMobilePhone + '</td>';
-                    html += '<td>' + generateFormI1UpdatedStatus(item.hasOwnProperty('EmployerName')) + '</td>';
-                    html += '<td>';
+                    html += '<td class="text-center">' + item.StudentId + '</td>';
+                    html += '<td class="text-center">' + item.StudentName + '</td>';
+                    html += '<td class="text-center">' + item.StudentAddress + '</td>';
+                    html += '<td class="text-center">' + item.StudentMobilePhone + '</td>';
+                    html += '<td class="text-center">' + generateFormI1UpdatedStatus(item.hasOwnProperty('EmployerName')) + '</td>';
+                    html += '<td class="text-center">';
                     html += '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
                     html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
                     html += '        <span><strong>View</strong></span></a>';
