@@ -53,8 +53,6 @@ $('#btn-logout').on('click', function (e) {
 
 
 
-
-
 /* * * * * * * Forms * * * * * * */
 
 /**** Liyanage A.Y.K. *****/
@@ -315,53 +313,7 @@ $(document).ready(function () {
             });
         }
     } else if ($("#supervisor-student-list-page").length > 0) {
-        if (!("user_info" in localStorage)) {
-            window.location.href = "index.html";
-        } else {
-            $(document).ready(function () {
-                axios.get(baseUrl + '/supervisor/form-i-1/'+userInfo.userData.SupervisorEmail)
-                    .then(function (response) {
-                        // handle success
-                        // console.log(response.data);
-
-                        $("#form-i-1-submitted-students tbody").empty();
-
-                        response.data.data.forEach(item => {
-                            if(item.hasOwnProperty('EmployerName')){
-                                var btnClassName = "btn btn-success btn-sm"
-                                var iconClassName = "fas fa-check"
-                                var altText = "Supervisor details submitted"
-
-
-                            }else{
-                                var btnClassName = "btn btn-danger btn-sm"
-                                var iconClassName = "fas fa-times"
-                                var altText = "Supervisor details not submitted"
-                            }
-
-                            $('#form-i-1-submitted-students tbody').append('<tr>' +
-
-                            '<td><center><a class="'+btnClassName+'" title="'+altText+'"><span class="'+iconClassName+'" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
-
-                            '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                            '<td >' + item.StudentName + '</td>' +
-                            '<td >' + item.StudentAddress + '</td>' +
-                            '<td>' + item.StudentMobilePhone + '</td>' +
-                            '<td><center>' +
-                            '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View '+item.StudentId+'\'s Form I-1" class="btn btn-primary btn-sm">\n' +
-                            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-                            '        <span><strong>View</strong></span></a>'+
-                            '</a></center>' +
-                            '</td>' +
-                            '</tr>');
-                        });
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    });
-            });
-        }
+        
     }
 });
 
