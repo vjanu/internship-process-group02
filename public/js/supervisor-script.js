@@ -31,7 +31,9 @@ if (CURRENT_URL.includes('supervisor-student-list')) {
     loadSupervisorStudentList();
 }
 
-
+/*
+*  @author Tharushi
+*/
 function loadSupervisorStudentList() {
     if (!(USER_INFO in localStorage)) {
         window.location.href = "index.html";
