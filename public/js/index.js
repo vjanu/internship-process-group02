@@ -14,8 +14,6 @@ let headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
-let CURRENT_URL = window.location.href;
-
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
 $('#btn-form-i-1-student').on('click', function () {
