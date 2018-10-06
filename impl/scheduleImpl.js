@@ -82,12 +82,11 @@ let getAllFormI3Submissions = () => {
  */
 let getScheduleOfSpecificStudent = (studentId) => {
     return new Promise((resolve, reject) => {
-        schedule.find({ StudentId: studentId }, (err, data) => {
+        schedule.findOne({ StudentId: studentId }, (err, data) => {
             if (err) {
                 reject(err);
             }
             else if (data) {
-                console.log(data);
                 resolve(data);
             }
             else {
