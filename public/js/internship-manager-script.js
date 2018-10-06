@@ -432,9 +432,9 @@ function viewFormI5Details() {
 
                     $('#sup-name').val(form_details.External);
                     $('#date1').val(formatDate(form_details.Date));
-                    
-                    
-                    
+
+
+
 
                 }
             }).catch(function (error) {
@@ -487,16 +487,16 @@ function getPerformance(value) {
 }
 
 
-function getOverallPerformance(value){
+function getOverallPerformance(value) {
     let badgeText;
     let badgeClass;
     if (value == 5) {
         badgeText = 'Outstanding';
         badgeClass = 'badge badge-pill badge-success';
-    }else if (value == 4) {
+    } else if (value == 4) {
         badgeText = 'Very Good';
         badgeClass = 'badge badge-pill badge-success';
-    }else if (value == 3) {
+    } else if (value == 3) {
         badgeText = 'Good';
         badgeClass = 'badge badge-pill badge-primary';
     } else if (value == 2) {
@@ -506,6 +506,5 @@ function getOverallPerformance(value){
         badgeText = 'Unsatisfactory';
         badgeClass = 'badge badge-pill badge-danger';
     }
-
     return '<h5><span class="' + badgeClass + '"><h4>' + badgeText + '</h4></span></h5>';
 }
