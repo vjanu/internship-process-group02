@@ -32,40 +32,35 @@ if (CURRENT_URL.includes('internship-manager')) {
 }
 
 /**
- * When we come to internship-manager-form-i-1.html 
- * this condition satisty and get form i-1  submitted student
+ * When we come to 
+ *          internship-manager-form-i-1.html 
+ *          internship-manager-form-i-3.html 
+ *          internship-manager-form-i-5.html 
+ * following condition satisty and get forms  submitted student
  * @author Tharindu
  */
 if (CURRENT_URL.includes('internship-manager-form-i-1')) {
     getFormI1SubmittedStudentList();
 }
-
-
-/**
- * When we come to internship-manager-form-i-3.html 
- * this condition satisty and get form i-3  submitted student
- * @author Tharindu
- */
 if (CURRENT_URL.includes('internship-manager-form-i-3')) {
     getFormI3SubmittedStudentList();
 }
-
-
-/**
- * This is for internship-manager-form-i-5.html 
- * this condition satisty and get form i-5  submitted student
- * @author Tharindu
- */
 if (CURRENT_URL.includes('internship-manager-form-i-5')) {
     getFormI5SubmittedStudentList();
 }
 
 
+/**
+ * View full detail about student
+ */
 if (CURRENT_URL.includes('internship-manager-view-form-i-1')) {
     viewFormI1Details();
 }
 if (CURRENT_URL.includes('internship-manager-view-form-i-3')) {
     viewFormI3Details();
+}
+if (CURRENT_URL.includes('internship-manager-view-form-i-5')) {
+    viewFormI5Details();
 }
 
 
@@ -222,7 +217,12 @@ function getFormI5SubmittedStudentList() {
 
 
 
-
+/**
+ * Display form I-3 Basic details and
+ * Internship details
+ * And also you can see daily diary details
+ * @author Tharindu 
+ */
 function viewFormI1Details() {
     if (CURRENT_URL.includes('#')) {
         let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
