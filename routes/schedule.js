@@ -9,5 +9,16 @@ router.get('/', (req, res) => {
    })
 });
 
+// testing the method.
+router.get('/:email/send', (req, res) => {
+    const mailer = require('../impl/scheduleImpl').notifyVivaScheduleViaEmail;
+
+    if (mailer(req.params.email, '', '')) {
+        res.status(200).send('Email sent');
+    }
+    else {
+        res.status(400).send('Email not sent');
+    }
+})
 
 module.exports = router;
