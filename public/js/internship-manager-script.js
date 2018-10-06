@@ -64,6 +64,9 @@ if (CURRENT_URL.includes('internship-manager-form-i-5')) {
 if (CURRENT_URL.includes('internship-manager-view-form-i-1')) {
     viewFormI1Details();
 }
+if (CURRENT_URL.includes('internship-manager-view-form-i-3')) {
+    viewFormI3Details();
+}
 
 
 
@@ -172,40 +175,47 @@ function getFormI1SubmittedStudentList() {
         });
 }
 
+/**
+ * This function get the details about form i 3
+ * submitted student details
+ * @author Tharindu 
+ */
 function getFormI3SubmittedStudentList() {
     axios.get(baseUrl + '/form3/form-i-3')
-    .then(response => {
-        if (response.data.success) {
-            let form_details = response.data.data;
-            console.log(form_details);
+        .then(response => {
+            if (response.data.success) {
+                let form_details = response.data.data;
+                console.log(form_details);
 
-            $("#form-i-3-submitted-students-list tbody").empty();
-            form_details.forEach(item => {
-                var html = '<tr>';
-                html += '<td class="text-center">' + item.StudentId + '</td>';
-                html += '<td class="text-center">' + item.StudentName + '</td>';
-                html += '<td class="text-center">' + item.StudentAddress + '</td>';
-                html += '<td class="text-center">' + item.StudentPhone + '</td>';
-                html += '<td class="text-center">';
-                html += '<a href="internship-manager-view-form-i-3.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
-                html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
-                html += '        <span><strong>View</strong></span></a>';
-                html += '</td>';
-                html += '</tr>';
+                $("#form-i-3-submitted-students-list tbody").empty();
+                form_details.forEach(item => {
+                    var html = '<tr>';
+                    html += '<td class="text-center">' + item.StudentId + '</td>';
+                    html += '<td class="text-center">' + item.StudentName + '</td>';
+                    html += '<td class="text-center">' + item.StudentAddress + '</td>';
+                    html += '<td class="text-center">' + item.StudentPhone + '</td>';
+                    html += '<td class="text-center">';
+                    html += '<a href="internship-manager-view-form-i-3.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
+                    html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
+                    html += '        <span><strong>View</strong></span></a>';
+                    html += '</td>';
+                    html += '</tr>';
 
-
-                $('#form-i-3-submitted-students-list tbody').append(html);
-
-
-            });
-        }
-    }).catch(function (error) {
-        if (error.response) {
-            console.log(JSON.stringify(error));
-        }
-    });
+                    $('#form-i-3-submitted-students-list tbody').append(html);
+                });
+            }
+        }).catch(function (error) {
+            if (error.response) {
+                console.log(JSON.stringify(error));
+            }
+        });
 }
 
+
+/**
+ * Here we get form i-5 sumbitted student details
+ * @author Tharindu
+ */
 function getFormI5SubmittedStudentList() {
 
 }
@@ -255,14 +265,86 @@ function viewFormI1Details() {
                         $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
 
                         let inputElems = $('#form-i-1-supervisor').find(':input');
-                    
+
                         for (let j = 0; j < inputElems.length; j++) {
                             inputElems[j].innerHTML
                             inputElems[j].disabled = true;
                         }
-                    }else{
+                    } else {
                         $("#supervisor-card-view").hide();
                     }
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(JSON.stringify(error));
+                }
+            });
+    }
+}
+
+
+
+function viewFormI3Details() {
+    if (CURRENT_URL.includes('#')) {
+        let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
+
+        /**
+         * Display basic details of form i-3
+         */
+        axios.get(baseUrl + '/form3/form-i-3/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let form_details = response.data.data[0];
+                    console.log(form_details);
+                    $("#form-i3-student-details tbody").empty();
+                    $("#form-i3-intern-details tbody").empty();
+                    $("#header-studentId").text(form_details.StudentId);
+
+                    var html = '<tr class="table-info">';
+                    html += '<td class="text-center">' + form_details.StudentId + '</td>';
+                    html += '<td class="text-center">' + form_details.StudentName + '</td>';
+                    html += '<td class="text-center">' + form_details.StudentAddress + '</td>';
+                    html += '<td class="text-center">' + form_details.StudentPhone + '</td>';
+                    html += '<td class="text-center">' + form_details.StudentEmails.join(', ').replace('[').replace(']') + '</td>';
+                    html += '</tr>';
+
+                    var internHtml = '<tr class="table-info">';
+                    internHtml += '<td class="text-center">' + form_details.Specialization + '</td>';
+                    internHtml += '<td class="text-center">' + form_details.InternshipTitle + '</td>';
+                    internHtml += '<td class="text-center">' + form_details.From + '</td>';
+                    internHtml += '<td class="text-center">' + form_details.To + '</td>';
+                    internHtml += '</tr>';
+
+                    $('#form-i3-student-details tbody').append(html);
+                    $('#form-i3-intern-details tbody').append(internHtml);
+                }
+            }).catch(function (error) {
+                if (error.response) {
+                    console.log(JSON.stringify(error));
+                }
+            });
+
+        /**
+         * Dispaly daily diary details about student
+         */
+        axios.get(baseUrl + '/form3/form-i-3-diaries/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let form_details = response.data.data;
+                    console.log(form_details);
+                    $("#daily-diary-details tbody").empty();
+                    form_details.forEach(item => {
+                        var html = '<tr>';
+                        html += '<td class="text-center">' + item.TrainingParty + '</td>';
+                        html += '<td class="text-center">' + item.TrainingDescription + '</td>';
+                        html += '<td class="text-center">' + item.From + '</td>';
+                        html += '<td class="text-center">' + item.To + '</td>';
+                        html += '</tr>';
+
+                        $('#daily-diary-details tbody').append(html);
+                    });
+
+
                 }
             }).catch(function (error) {
                 if (error.response) {
