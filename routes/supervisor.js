@@ -3,9 +3,10 @@ const router = express.Router();
 const supervisor = require('../models/supervisorModel');
 const randomize = require('randomatic');
 const forms = require('../models/formsModel');
+const scheduleImpl = require('../impl/scheduleImpl');
 
 
-router.get('/', function (req, res, next) {
+router.get('/a', function (req, res, next) {
     supervisor.supervisorModel.find().exec().then((data) => {
         res.send(data);
     }).catch((err) => {
@@ -102,5 +103,8 @@ router.post('/add-supervisor', function (req, res) {
     });
 });
 
+router.get('/aio', (req, res) => {
+    res.status(200).send('hi');
+});
 
 module.exports = router;
