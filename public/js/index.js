@@ -670,6 +670,7 @@ if (pageUrl.includes('student-dashboard')) {
     // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
 
+    //load form1 progress bar
     axios.get(baseUrl + '/student/form-i-1/' + studentId)
         .then(response => {
             if (response.data.success) {
@@ -679,7 +680,7 @@ if (pageUrl.includes('student-dashboard')) {
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
                             '  aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
                             '  100% Complete (success)</div>');
-
+                        
                     }
                     else{
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
@@ -705,11 +706,48 @@ if (pageUrl.includes('student-dashboard')) {
             }
         })
 
-    
-            
-    
 
-    
+
+//load form3 progress bar
+        axios.get(baseUrl + '/student/form-i-3/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                console.log(response);
+                if (response.data.data != undefined) {
+                    if(response.data.data[0].StudentId != undefined) {
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '  100% Complete (success)</div>');
+                          
+                    }
+                    else{
+                        
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '  s 50% Complete (Half)</div>');
+                    }
+
+                    if(response.data.data[0].StudentId != undefined) {
+                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-company-name').text(response.data.data[0].EmployerName);
+                      
+                        $('#form3-suc').text("Completed");
+                      
+
+                    }else{
+                        $('#internship-start-date').text("Not Submitted");
+                        $('#internship-end-date').text("Not Submitted");
+                        $('#internship-company-name').text("Not Submitted");
+                        $('#form1-suc').text("Not completed");
+                    }
+                    
+                    console.log(response.data.data);
+                }
+            }
+        })
+
+
 
        .catch(error => {
             console.log(error);
@@ -718,6 +756,16 @@ if (pageUrl.includes('student-dashboard')) {
             $('#internship-company-name').text("Not Submitted");
 
             $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"' +
+                '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
+                '                        0% Not Submitted</div>');
+        })
+        .catch(error => {
+            console.log(error);
+            $('#internship-start-date').text("Not Submitted");
+            $('#internship-end-date').text("Not Submitted");
+            $('#internship-company-name').text("Not Submitted");
+
+            $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"' +
                 '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
                 '                        0% Not Submitted</div>');
         })
