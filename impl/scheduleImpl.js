@@ -134,7 +134,7 @@ let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
         text: 'Dear Student'
       };
       
-      transporter.sendMail(mailOptions, function(error, info){
+      return transporter.sendMail(mailOptions, function(error, info){
         if (error) {
           console.log(error);
           return false;
