@@ -6,6 +6,7 @@
  */
 
 const schedule = require('../models/scheduleModel');
+const formI3 = require('../models/formsModel').formI3Model;
 
 /**
  * This method will find all the records for scheduled viva sessions from the database.
@@ -35,9 +36,33 @@ let findAllScheduledVivaSessions = () => {
  */
 let findAllScheduledAndUnscheduledSessions = () => {
     return new Promise((resolve, reject) => {
+        let groupedData = {
+            scheduled: [],
+            pending: []
+        };
+
         // our approach to this is go through all the students who are,
         // eligible for a viva session and filter out those who have already been,
         // assigned to a viva session.
-
+        formI3.find((err, data => {
+            if (err) { reject(err); }
+            else {
+                // go through each student and add him/her to scheduled section,
+                // if a session is already scheduled.
+                data.forEach(formI3 => {
+                    schedule.find({StudentId: formI3.StudentId}, (err_, data_) => {
+                        if (data_ && data_.length == 1) {
+                            groupedData.scheduled.push(data_);
+                        }
+                        else {
+                            groupedData.pending.push(data_);
+                        }
+                    })
+                });
+                resolve(groupedData);
+            }
+        }));
     });
 }
+
+module.exports = { findAllScheduledVivaSessions, findAllScheduledAndUnscheduledSessions };
