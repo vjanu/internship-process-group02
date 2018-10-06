@@ -515,7 +515,8 @@ function getRegisterDetails() {
         
     }   
 
-
+    if(registerData.firstName !="" && registerData.lastName !="" && registerData.nic !="" && 
+    registerData.regno !="" && registerData.email !="" && registerData.password !=""){
 
     axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
             headers: headers
@@ -523,15 +524,15 @@ function getRegisterDetails() {
     .then(response => {
         console.log(response);
         if(response.data.success){
+         
             alert("Successfully Registered!");
             document.getElementById('firstName').value = "";
             document.getElementById('lastName').value = "";
             document.getElementById('nic').value = "";
             document.getElementById('regno').value = "";
-            document.getElementById('dept').value = "";
-            document.getElementById('year').value = "";
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
+           
         }else{
             alert("User Not Registered!")
         }
@@ -539,6 +540,10 @@ function getRegisterDetails() {
     .catch(error => {
         console.log(error);
     })
+}
+else{
+    alert("One More more fields are empty!")
+}
 }
 
 
