@@ -11,66 +11,118 @@
         crossorigin="anonymous">
 
     <title>Dashboard | Internship Manager</title>
+    <link href="css/custom-style.css" rel="stylesheet">
+
 </head>
 
-<body onload="getAllInternships();">
+<body class="fixed-nav">
 
-    <!-- navbar: start -->
+    <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="supervisor_dashboard.html">Internship Hub</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
-                <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
-                    <i class="fa fa-fw fa-info-circle"></i>
-                    <span class="nav-link-text">Dashboard</span>
-                </a>
-            </li>
+        <i class="fab fa-hubspot"></i><a class="navbar-brand" href="index.html">Internship Hub</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+                <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+                    <a class="nav-link nav-link-collapse" href="supervisor_dashboard.html">
+                        <i class="fa fa-fw fa-info-circle"></i>
+                        <span class="nav-link-text">Dashboard</span>
+                    </a>
+                </li>
 
-            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Form I-1">
-                <a class="nav-link nav-link-collapse" href="viewForm3.html">
-                    <i class="fab fa-fw fa-wpforms"></i>
-                    <span class="nav-link-text">View Form I-3</span>
-                </a>
-            </li>
-            
-            
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-1">
+                    <a class="nav-link nav-link-collapse" href="supervisor-student-list.html">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-1</span>
+                    </a>
+                </li>
 
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-                    <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-3">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-3</span>
+                    </a>
+                </li>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Form I-5">
+                    <a class="nav-link nav-link-collapse" href="#">
+                        <i class="fab fa-fw fa-wpforms"></i>
+                        <span class="nav-link-text">Form I-5</span>
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+                        <i class="fa fa-fw fa-sign-out-alt"></i>Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
     <!-- navbar: end -->
 
-    <!-- main heading: start -->
-    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">
-            Ongoing Internships
-        </h1>
-        <p class="lead">As of <span id="date"></span></p>
-    </div>
-    <!-- main heading: end -->
 
-    <!-- main content: start -->
-    <div class="container">
-        <!-- Ongoing Internships -->
-        <div id="internships-table">
+    <div class="content-wrapper">
+        <div class="container-fluid">
+            <!-- everything we make goes inside this div -->
+            <!-- Supervisor dashboard breadcrumb-->
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="index.html">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Ongoing Internships</li>
+            </ol>
+
+            <!-- main content: start -->
+            <div class="container">
+                <!-- Ongoing Internships -->
+                <div id="internships-table">
+
+                </div>
+
+                <!-- footer: start -->
+
+                <!-- footer: end -->
+            </div>
+            <!-- main content: end -->
 
         </div>
+        <footer class="sticky-footer">
+            <div class="container">
+                <div class="text-center">
+                    <small>Copyright © Internship Hub 2018</small>
+                </div>
+            </div>
+        </footer>
 
-        <!-- footer: start -->
-
-        <!-- footer: end -->
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fa fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-primary" id="btn-logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- main content: end -->
 
 
     <!-- Bootstrap core JavaScript
@@ -83,7 +135,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/internship-manager-script.js"></script>
 
     <body>
 

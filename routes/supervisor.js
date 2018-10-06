@@ -42,7 +42,7 @@ router.get('/get-student/:id', function (req, res) {
 
 /* GET all assigned Form I-1 for specific supervisor */
 router.get('/form-i-1/:supervisorEmail', (req, res) => {
-    forms.formI1Model.find({AssignedSupervisor: req.params.supervisorEmail}, { _id: 0, __v: 0 }, (err, data) => {
+    forms.formI1Model.find({AssignedSupervisor: req.params.supervisorEmail}, {_id: 0, __v: 0}, (err, data) => {
         if (err) {
             res.status(500).send({
                 success: false,
@@ -82,7 +82,7 @@ router.post('/add-supervisor', function (req, res) {
 
     if (allParamsPresent) {
         let sp = supervisor.supervisorModel({
-            SupervisorId: randomize('A0', 5),
+            SupervisorId: "SP" + randomize('0', 5),
             SupervisorName: req.body.SupervisorName,
             SupervisorEmail: req.body.SupervisorEmail,
             SupervisorPassword: req.body.SupervisorPassword,
