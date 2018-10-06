@@ -62,6 +62,10 @@ router.get('/form-i-1/:supervisorEmail', (req, res) => {
     });
 });
 
+/*
+* @author : Tharindu TCJ
+*
+*/
 /* Add new supervisor. */
 router.post('/add-supervisor', function (req, res) {
     // checking if all parameters are present since all of them are needed,

@@ -48,8 +48,6 @@ $('#btn-logout').on('click', function (e) {
 
 
 
-
-
 /* * * * * * * Forms * * * * * * */
 /**** Tharindu TCJ *****/
 
@@ -136,8 +134,7 @@ function validateUserSignedIn() {
                     UserType: response.data.userType,
                     userData: response.data.info[0]
                 }
-                localStorage.setItem(USER_INFO, window.btoa(JSON.stringify(user_info)));
-                // localStorage.setItem(USER_INFO, (JSON.stringify(user_info)));
+                localStorage.setItem(USER_INFO, JSON.stringify(user_info));
                 if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
@@ -223,65 +220,20 @@ function renderInternshipsTable(jsonData) {
     return table;
 }
 $(document).ready(function () {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
-        if (!("user_info" in localStorage)) {
+        if (!(USER_INFO in localStorage)) {
             window.location.href = "index.html";
         } else {
             $(document).ready(function () {
 
+                
             });
         }
     } else if ($("#supervisor-student-list-page").length > 0) {
-        if (!("user_info" in localStorage)) {
-            window.location.href = "index.html";
-        } else {
-            $(document).ready(function () {
-                axios.get(baseUrl + '/supervisor/form-i-1/'+userInfo.userData.SupervisorEmail)
-                    .then(function (response) {
-                        // handle success
-                        // console.log(response.data);
-
-                        $("#form-i-1-submitted-students tbody").empty();
-
-                        response.data.data.forEach(item => {
-                            if(item.hasOwnProperty('EmployerName')){
-                                var btnClassName = "btn btn-success btn-sm"
-                                var iconClassName = "fas fa-check"
-                                var altText = "Supervisor details submitted"
-
-
-                            }else{
-                                var btnClassName = "btn btn-danger btn-sm"
-                                var iconClassName = "fas fa-times"
-                                var altText = "Supervisor details not submitted"
-                            }
-
-                            $('#form-i-1-submitted-students tbody').append('<tr>' +
-
-                            '<td><center><a class="'+btnClassName+'" title="'+altText+'"><span class="'+iconClassName+'" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
-
-                            '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                            '<td >' + item.StudentName + '</td>' +
-                            '<td >' + item.StudentAddress + '</td>' +
-                            '<td>' + item.StudentMobilePhone + '</td>' +
-                            '<td><center>' +
-                            '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View '+item.StudentId+'\'s Form I-1" class="btn btn-primary btn-sm">\n' +
-                            '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-                            '        <span><strong>View</strong></span></a>'+
-                            '</a></center>' +
-                            '</td>' +
-                            '</tr>');
-                        });
-                    })
-                    .catch(function (error) {
-                        // handle error
-                        console.log(error);
-                    });
-            });
-        }
+        
     }
 });
 
@@ -363,7 +315,7 @@ function getUpload() {
 
 
 function populateFormI3() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
     axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
@@ -458,8 +410,9 @@ function getRegisterDetails() {
  */
 function getFormI1sUnderSupervisor(supervisorEmail) {
     return new Promise((resolve, reject) => {
-        axios.get(baseUrl + '/forms/form-i-1/supervisor/' + supervisorEmail)
+        axios.get(baseUrl + '/supervisor/form-i-1/' + supervisorEmail)
             .then(response => {
+                console.log(response);
                 if (response.data.success) {
                     if (response.data.data != undefined) {
                         resolve(response.data.data);
@@ -474,10 +427,11 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
+            console.log(resolve);
             // we render the table here.
             let table = '<table class="table table-striped table-bordered" style="width:100%">' +
                 '<thead>' +
@@ -584,7 +538,7 @@ function isFormAvailable(studentId, formName) {
 let pageUrl = window.location.href;
 
 if (pageUrl.includes('student-dashboard')) {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
     axios.get(baseUrl + '/student/form-i-1/' + studentId)

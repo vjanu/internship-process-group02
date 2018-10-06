@@ -6,7 +6,11 @@
  */
 
 const schedule = require('../models/scheduleModel');
+<<<<<<< HEAD
 const formI3 = require('../models/formsModel').formI3Model;
+=======
+const nodemailer = require('nodemailer');
+>>>>>>> 2c2bb104fed426fb1e408f24acffd72a1949cf87
 
 /**
  * This method will find all the records for scheduled viva sessions from the database.
@@ -65,4 +69,34 @@ let findAllScheduledAndUnscheduledSessions = () => {
     });
 }
 
-module.exports = { findAllScheduledVivaSessions, findAllScheduledAndUnscheduledSessions };
+/**
+ *@Author Tharushi De Silva
+ */
+let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'spm.g02.internship@gmail.com',
+          pass: 'Asdf123$'
+        }
+      });
+      
+    let mailOptions = {
+        from: 'spm.g02.internship@gmail.com',
+        to: recepient,
+        subject: 'Internship process evaluation - viva',
+        text: 'Dear Student'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
+    
+}
+
+module.exports = { findAllScheduledVivaSessions, findAllScheduledAndUnscheduledSessions, notifyVivaScheduleViaEmail };
+
