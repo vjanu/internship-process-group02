@@ -40,7 +40,7 @@ function renderScheduleTable() {
                     '<tr>' +
                     '<td>' + session.StudentId + '</td>' +
                     '<td>' + session.StudentEmails + '</td>' +
-                    '<td>' + session.VivaDate + '</td>' +
+                    '<td><input id="viva-date-' + session.StudentId + '" type="date" value="' + session.VivaDate.toString("yyyy'-'MM'-'ddTHH:mm:ss") + '"/></td>' +
                     '<td><input id="session-location-' + session.StudentId + '" type="text" class="form-control" value="' + session.Location + '"/></td>' +
                     '<td><button id="update-session-' + session.StudentId + '" class="btn btn-primary" onclick=updateSession(this);>Update</button></td>' +
                     '</tr>';
