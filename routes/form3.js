@@ -86,6 +86,54 @@ router.get('/data/:studentId', function(req, res, next) {
 });
 
 
+/**
+ * Get All form i-3 submitted student list
+ * @author Tharindu
+ */
+
+router.get('/all', function(req, res, next) {
+    forms.formI3Model.find({}, { _id: 0, __v: 0 }, (err, data) => {
+        if (err) {
+            res.status(500).send({ success: false, message: 'error.'  });
+        }
+        else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Student data not found.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
+        }
+    });
+});
+
+/**
+ * Get basic details of form i-3
+ * @author Tharindu
+ */
+router.get('/form-i-3/:studentId', function(req, res, next) {
+    forms.formI3Model.find({StudentId:req.params.studentId}, { _id: 0, __v: 0 }, (err, data) => {
+        if (err) {
+            res.status(500).send({ success: false, message: 'error.'  });
+        }
+        else if (data.length === 0) {
+            res.status(404).send({
+                success: false,
+                message: 'Student data not found.'
+            });
+        } else {
+            res.status(200).send({
+                success: true,
+                data: data
+            });
+        }
+    });
+});
+
+
 
 
 
