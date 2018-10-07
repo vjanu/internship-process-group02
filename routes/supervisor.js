@@ -3,6 +3,7 @@ const router = express.Router();
 const supervisor = require('../models/supervisorModel');
 const randomize = require('randomatic');
 const forms = require('../models/formsModel');
+const scheduleImpl = require('../impl/scheduleImpl');
 
 
 router.get('/', function (req, res, next) {
@@ -62,6 +63,10 @@ router.get('/form-i-1/:supervisorEmail', (req, res) => {
     });
 });
 
+/*
+* @author : Tharindu TCJ
+*
+*/
 /* Add new supervisor. */
 router.post('/add-supervisor', function (req, res) {
     // checking if all parameters are present since all of them are needed,
