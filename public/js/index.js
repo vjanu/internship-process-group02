@@ -506,6 +506,9 @@ function populateStudentProfile() {
                 document.getElementById('job-title').value = 'Intern';
                 document.getElementById('start').value = form.InternshipStart.split('T')[0];
                 document.getElementById('end').value = form.InternshipEnd.split('T')[0];
+                document.getElementById('status-of-form-i-1').value = isFormAvailable(form.studentId,'form-i-1',form.EmployerName);
+                document.getElementById('status-of-form-i-3').value = isFormAvailable(form.studentId,'form-i-3',form.TrainingParty);
+                document.getElementById('status-of-form-i-5').value = isFormAvailable(form.studentId,'form-i-5',form.EmployerName);
             }
         })
         .catch(error => {
@@ -515,12 +518,16 @@ function populateStudentProfile() {
     // check if form i-1, form i-3 and form i-5 are present or not.
     // if present, hyperlink it!
     // form i 1.
-    isFormAvailable(studentId, 'form-i-1')
+    
+   isFormAvailable(studentId, 'form-i-1')
     .then(resolve => {
-        document.getElementById('status-of-form-i-1').innerHTML =  'Done';
+        if (resolve) {
+            document.getElementById('status-of-form-i-1').innerHTML =  'Done';
+        }
     });
     document.getElementById('link-to-form-i-1').href = 'supervisor-submission-form.html#' + studentId;
 
+  
 }
 
 // had to make this a promise since this involves an API call.
@@ -540,9 +547,9 @@ function isFormAvailable(studentId, formName, attributeToCheck) {
             axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
                 .then(response => {
                     if (response.data.success) {
-                        let attributeToCheck = response.data.data[attributeToCheck];
-                        if (attributeToCheck != '') {
-                            console.log(attributeToCheck);
+                        let attributeToCheckVal = response.data.data[attributeToCheck];
+                        if (attributeToCheckVal != '') {
+                            console.log(attributeToCheckVal);
                             resolve(true);
                         }
                         else {
@@ -555,8 +562,8 @@ function isFormAvailable(studentId, formName, attributeToCheck) {
             axios.get(baseUrl + '/form3/data/' + studentId)
             .then(response => {
                 if (response.data.success) {
-                    let attributeToCheck = response.data.data[0][attributeToCheck];
-                    if (attributeToCheck != undefined || attributeToCheck != '') {
+                    let attributeToCheckVal = response.data.data[0][attributeToCheck];
+                    if (attributeToCheckVal != undefined || attributeToCheckVal != '') {
                         resolve(true);
                     }
                     else {
@@ -644,8 +651,8 @@ if (pageUrl.includes('student-dashboard')) {
                     }
 
                     if(response.data.data[0].StudentId != undefined) {
-                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
-                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-start-date').text(formatDate(response.data.data[0].From));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].To));
                         $('#internship-company-name').text(response.data.data[0].EmployerName);
                       
                         $('#form3-suc').text("Completed");
