@@ -644,8 +644,8 @@ if (pageUrl.includes('student-dashboard')) {
                     }
 
                     if(response.data.data[0].StudentId != undefined) {
-                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
-                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-start-date').text(formatDate(response.data.data[0].From));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].To));
                         $('#internship-company-name').text(response.data.data[0].EmployerName);
                       
                         $('#form3-suc').text("Completed");
