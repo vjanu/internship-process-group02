@@ -118,9 +118,9 @@ function renderInternshipsTable(jsonData) {
             '<td>' + (form.InternshipEnd == undefined ? '<span class="badge badge-danger">Pending Form I-1 | Supervisor</span>' : form.InternshipEnd.split('T')[0]) + '</td>' +
             // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
             '<td>' +
-            '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
-            '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
-            '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
+            '<a href="internship-manager-view-form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
+            '<a href="internship-manager-view-form-i-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+            '<a href="internship-manager-view-form-i-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
             '</td>' +
             '<tr>';
     });
@@ -310,7 +310,9 @@ function viewFormI1Details() {
 }
 
 
-
+/**
+ * Display form I3 details
+ */
 function viewFormI3Details() {
     if (CURRENT_URL.includes('#')) {
         let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
@@ -384,7 +386,10 @@ function viewFormI3Details() {
 
 
 
-
+/**
+ * Fetch form i5 details from server 
+ * and display it using following method
+ */
 function viewFormI5Details() {
     if (CURRENT_URL.includes('#')) {
         let studentId = CURRENT_URL.substr(CURRENT_URL.indexOf('#') + 1, CURRENT_URL.length);
@@ -461,7 +466,12 @@ function formatDate(date) {
     return [year, month, day].join('-');
 }
 
-
+/**
+ * generate status of form I1
+ *  Fully Submitted -> Student and supervisor completely filled
+ *  Supervisor Not Updated -> student submitted but supervisor not updated
+ * @param {*} isSubmitted 
+ */
 function generateFormI1UpdatedStatus(isSubmitted) {
     var badgeClass = (isSubmitted) ? "badge badge-pill badge-success" : "badge badge-pill badge-danger";
     var badgeText = (isSubmitted) ? "Fully Submitted" : "Supervisor Not Updated";
@@ -469,6 +479,10 @@ function generateFormI1UpdatedStatus(isSubmitted) {
     return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }
 
+/**
+ * This function generate the badge for performance
+ * @param {*} value 
+ */
 function getPerformance(value) {
     let badgeText;
     let badgeClass;
@@ -487,6 +501,10 @@ function getPerformance(value) {
 }
 
 
+/**
+ * This function generate the badge of overall performance
+ * @param {*} value 
+ */
 function getOverallPerformance(value) {
     let badgeText;
     let badgeClass;
