@@ -14,15 +14,11 @@ let headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
-<<<<<<< HEAD
-
-=======
 /* * * * *     Event Triggers     * * * * */
 // form submit for form I-1, student perspective.
 $('#btn-form-i-1-student').on('click', function () {
     getFormI1StudentDetails();
 });
->>>>>>> 656381f74f782cf0ce769d1359aaf19d52da9312
 // form submit for form I-1, supervisor perspective.
 $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
