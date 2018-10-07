@@ -504,7 +504,7 @@ function populateStudentProfile() {
                 document.getElementById('student-id').value = form.StudentId;
                 document.getElementById('student-name').value = form.StudentName;
                 document.getElementById('job-title').value = 'Intern';
-                document.getElementById('start').value = form.InternshipStart.split('T')[0];
+                document.getElementById('start').value =  formatDate(form.InternshipStart);
                 document.getElementById('end').value = form.InternshipEnd.split('T')[0];
                 document.getElementById('status-of-form-i-1').value = isFormAvailable(form.studentId,'form-i-1',form.EmployerName);
                 document.getElementById('status-of-form-i-3').value = isFormAvailable(form.studentId,'form-i-3',form.TrainingParty);
