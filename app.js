@@ -35,5 +35,6 @@ app.use('/form3', form3Router);
 app.use('/daily', form3DiaryRouter);
 app.use('/register', registerRouter);
 app.use('/schedule', scheduleRouter);
+app.use('/form5', form5Router);
 
 module.exports = app;
