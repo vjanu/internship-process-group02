@@ -130,7 +130,7 @@ let notifyVivaScheduleViaEmail = (recepient,vivaDate, venue) => {
         from: 'spm.g02.internship@gmail.com',
         to: recepient,
         subject: 'Internship process evaluation - viva',
-        text: 'Dear Student'
+        text: 'Dear Student, \n your VIVA session for Industrial Training has been schduled on ' + vivaDate + ' at ' + venue + ' location \n\n Regards.' 
       };
       
       return transporter.sendMail(mailOptions, function(error, info){

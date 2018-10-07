@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const scheduleImpl = require('../impl/scheduleImpl');
 const Schedule = require('../models/scheduleModel').scheduleModel;
+const notifyVivaScheduleViaEmail = require('../impl/scheduleImpl').notifyVivaScheduleViaEmail;
 
 /** GET scheduled viva sessions. */
 router.get('/both', (req, res) => {
@@ -39,24 +40,29 @@ router.get('/', (req, res) => {
 })
 
 /** UPDATE a scheduled session */
-router.put('/:studentId/session', (req, res) => {
+router.put('/:studentId', (req, res) => {
     // get the existing entry from database.
+    console.log(req.body);
     scheduleImpl.getScheduleOfSpecificStudent(req.params.studentId)
         .then(session => {
+            console.log(session);
             // we only let the location and/or date to be modified.
-            if (req.body.date != undefined) {
-                session.VivaDate = req.body.date;
-            }
-            if (req.body.location != undefined) {
-                session.Location = req.body.location;
-            }
+            session.VivaDate = req.body.date;
+            session.Location = req.body.location;
             // updating done, save to database in next step.
             return session
         })
         .then(updatedSession => {
+            console.log(updatedSession);
             updatedSession.save(err => {
                 if (err) { res.status(400).send(err); }
-                else { res.status(200).send(true);}
+                else { 
+                    res.status(200).send(true);
+                    // send email to the student.(send to all emails if any)
+                    updatedSession.StudentEmails.forEach(email => {
+                        notifyVivaScheduleViaEmail(email, updatedSession.VivaDate, updatedSession.Location);
+                    })
+                }
             })
         })
         .catch(err => {
