@@ -1,7 +1,7 @@
 /* * * * *     Global Variables     * * * * */
 
 let BASE_URL_LOCAL = 'http://localhost:3000';
-// let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
+let BASE_URL_PROD = 'http://ec2-18-209-163-192.compute-1.amazonaws.com:3000';
 let USER_INFO = 'user-info';
 let CURRENT_URL = window.location.href;
 
@@ -14,7 +14,15 @@ let headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
+<<<<<<< HEAD
 
+=======
+/* * * * *     Event Triggers     * * * * */
+// form submit for form I-1, student perspective.
+$('#btn-form-i-1-student').on('click', function () {
+    getFormI1StudentDetails();
+});
+>>>>>>> 656381f74f782cf0ce769d1359aaf19d52da9312
 // form submit for form I-1, supervisor perspective.
 $('#btn-form-i-1-supervisor').on('click', function () {
     getFormI1SupervisorDetails();
@@ -45,6 +53,15 @@ $('#btn-logout').on('click', function (e) {
     localStorage.removeItem(USER_INFO);
     window.location.href = "index.html";
 });
+
+$('#btn-form-submit-f5').on('click', function () {
+    getFormI5StudentInternshipDetails()
+});
+
+
+if (CURRENT_URL.includes('view-form5-student')) {
+	populateFormI5()
+}
 
 
 
@@ -134,7 +151,8 @@ function validateUserSignedIn() {
                     UserType: response.data.userType,
                     userData: response.data.info[0]
                 }
-                localStorage.setItem(USER_INFO, JSON.stringify(user_info));
+
+                localStorage.setItem(USER_INFO, JSON.stringify(user_info));                
                 if(user_info.UserType == 'Student'){
                     window.location.href = "student-dashboard.html";
                 }else if(user_info.UserType == 'Supervisor'){
@@ -176,6 +194,8 @@ function getAllInternships() {
             $('#internships-table').append(table);
         }
     })
+ 
+
 }
 
 /*
@@ -210,7 +230,7 @@ function renderInternshipsTable(jsonData) {
                     // the reason dates are split by 'T' is that the full date we get looks like 2018-09-10T00:00:00 but we only need the date and not the time.
                     '<td>' +
                         '<a href="form-i-1.html#' + form.StudentId + '">Form I-1</a> <br>' +
-                        '<a href="form-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
+                        '<a href="form-i-3.html#' + form.StudentId + '">Form I-3</a> <br>' +
                         '<a href="form-5.html#' + form.StudentId + '">Form I-5</a> <br>' +
                     '</td>' +
                 '<tr>';
@@ -219,9 +239,9 @@ function renderInternshipsTable(jsonData) {
 
     return table;
 }
+
 $(document).ready(function () {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
-    console.log(userInfo);
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];    console.log(userInfo);
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!(USER_INFO in localStorage)) {
@@ -315,9 +335,10 @@ function getUpload() {
 
 
 function populateFormI3() {
+
     let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
-    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
+    axios.get(baseUrl+'/daily/form-i-3-diaries/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
@@ -377,7 +398,8 @@ function getRegisterDetails() {
         
     }   
 
-
+    if(registerData.firstName !="" && registerData.lastName !="" && registerData.nic !="" && 
+    registerData.regno !="" && registerData.email !="" && registerData.password !=""){
 
     axios.post(baseUrl + '/register/info/student/' + registerData.nic, registerData, {
             headers: headers
@@ -385,15 +407,15 @@ function getRegisterDetails() {
     .then(response => {
         console.log(response);
         if(response.data.success){
+         
             alert("Successfully Registered!");
             document.getElementById('firstName').value = "";
             document.getElementById('lastName').value = "";
             document.getElementById('nic').value = "";
             document.getElementById('regno').value = "";
-            document.getElementById('dept').value = "";
-            document.getElementById('year').value = "";
             document.getElementById('email').value = "";
             document.getElementById('password').value = "";
+           
         }else{
             alert("User Not Registered!")
         }
@@ -401,6 +423,10 @@ function getRegisterDetails() {
     .catch(error => {
         console.log(error);
     })
+}
+else{
+    alert("One More more fields are empty!")
+}
 }
 
 
@@ -427,7 +453,7 @@ function getFormI1sUnderSupervisor(supervisorEmail) {
 
 
 function makeSupervisorDashboard() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    
     console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
@@ -439,6 +465,8 @@ function makeSupervisorDashboard() {
                 '<th scope="col">Student Id number</th>' +
                 '<th scope="col">Name</th>' +
                 '<th scope="col">Job title</th>' +
+                '<th scope="col">Job start date</th>' +
+                '<th scope="col">Job end date</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>';
@@ -453,6 +481,8 @@ function makeSupervisorDashboard() {
                     '</td>' +
                     '<td>' + form.StudentName + '</td>' +
                     '<td>' + 'Intern' + '</td>' +
+                    '<td>' + form.InternshipStart+ '</td>' +
+                    '<td>' + form.InternshipEnd+ '</td>' +
                     '</tr>'
             });
 
@@ -498,7 +528,15 @@ function populateStudentProfile() {
 }
 
 // had to make this a promise since this involves an API call.
-function isFormAvailable(studentId, formName) {
+/**
+ * This will check a form of a specific student and validate the presence of a certain
+ * attribute in the form to indicate if there's an acceptable form for the given student.
+ * 
+ * @param {String} studentId student id of the student to whom this form belongs.
+ * @param {String} formName name of the form as specified in Industrial Training Module. [form-i-1 | form-i-3 | form-i-5 | form-i-7]
+ * @param {String} attributeToCheck an attribute in the specified form, which we check whether empty or not.
+ */
+function isFormAvailable(studentId, formName, attributeToCheck) {
     // send a request to backend and see if any data returns.
 
     return new Promise((resolve, reject) => {
@@ -506,9 +544,9 @@ function isFormAvailable(studentId, formName) {
             axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
                 .then(response => {
                     if (response.data.success) {
-                        let supervisorEmail = response.data.data.SupervisorEmail;
-                        if (supervisorEmail != '') {
-                            console.log(supervisorEmail);
+                        let attributeToCheck = response.data.data[attributeToCheck];
+                        if (attributeToCheck != '') {
+                            console.log(attributeToCheck);
                             resolve(true);
                         }
                         else {
@@ -518,7 +556,18 @@ function isFormAvailable(studentId, formName) {
                 })
         }
         else if (formName.toLowerCase() === 'form-i-3') {
-
+            axios.get(baseUrl + '/form3/data/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let attributeToCheck = response.data.data[0][attributeToCheck];
+                    if (attributeToCheck != undefined || attributeToCheck != '') {
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                }
+            })
 
         }
         else if (formName.toLowerCase() === 'form-i-5') {
@@ -538,9 +587,10 @@ function isFormAvailable(studentId, formName) {
 let pageUrl = window.location.href;
 
 if (pageUrl.includes('student-dashboard')) {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
-    // let studentId = "IT16000000";
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    // let studentId = "IT16000000";
     let studentId = userInfo.userData.RegistrationNo;
+
+    //load form1 progress bar
     axios.get(baseUrl + '/student/form-i-1/' + studentId)
         .then(response => {
             if (response.data.success) {
@@ -551,25 +601,74 @@ if (pageUrl.includes('student-dashboard')) {
                             '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
                             '                        100% Complete (success)</div>');
 
-                    }else{
+                    }
+                    else{
                         $("#form-i-1-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
                             '                    aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
-                            '                        50% Complete (Half)</div>');
+                            '  s 50% Complete (Half)</div>');
                     }
 
                     if(response.data.data[0].EmployerName != undefined) {
                         $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
                         $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
                         $('#internship-company-name').text(response.data.data[0].EmployerName);
+                        $('#form1-suc').text("Completed");
+                      
+
                     }else{
                         $('#internship-start-date').text("Not Submitted");
                         $('#internship-end-date').text("Not Submitted");
                         $('#internship-company-name').text("Not Submitted");
+                        $('#form1-suc').text("Not completed");
                     }
                     console.log(response.data.data);
                 }
             }
         })
+
+
+
+//load form3 progress bar
+        axios.get(baseUrl + '/student/form-i-3/' + studentId)
+        .then(response => {
+            if (response.data.success) {
+                console.log(response);
+                if (response.data.data != undefined) {
+                    if(response.data.data[0].StudentId != undefined) {
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="100"' +
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:#0db329 !important;">' +
+                            '  100% Complete (success)</div>');
+                          
+                    }
+                    else{
+                        
+                        $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50"\n' +
+                            '  aria-valuemin="0" aria-valuemax="100" style="width:50%; background-color:#d9ce1d !important;">' +
+                            '  s 50% Complete (Half)</div>');
+                    }
+
+                    if(response.data.data[0].StudentId != undefined) {
+                        $('#internship-start-date').text(formatDate(response.data.data[0].InternshipStart));
+                        $('#internship-end-date').text(formatDate(response.data.data[0].InternshipEnd));
+                        $('#internship-company-name').text(response.data.data[0].EmployerName);
+                      
+                        $('#form3-suc').text("Completed");
+                      
+
+                    }else{
+                        $('#internship-start-date').text("Not Submitted");
+                        $('#internship-end-date').text("Not Submitted");
+                        $('#internship-company-name').text("Not Submitted");
+                        $('#form1-suc').text("Not completed");
+                    }
+                    
+                    console.log(response.data.data);
+                }
+            }
+        })
+
+
+
         .catch(error => {
             console.log(error);
             $('#internship-start-date').text("Not Submitted");
@@ -580,4 +679,174 @@ if (pageUrl.includes('student-dashboard')) {
                 '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
                 '                        0% Not Submitted</div>');
         })
+
+        .catch(error => {
+            console.log(error);
+            $('#internship-start-date').text("Not Submitted");
+            $('#internship-end-date').text("Not Submitted");
+            $('#internship-company-name').text("Not Submitted");
+
+            $("#form-i-3-status").append('<div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"' +
+                '                    aria-valuemin="0" aria-valuemax="100" style="width:100%; background-color:red !important;">' +
+                '                        0% Not Submitted</div>');
+        })
+    
+    
+}
+
+
+// formi-5
+
+
+function getFormI5StudentInternshipDetails() {
+    let data = {
+        studentId : $('#id-student').val(),
+        sname : $('#name-student').val(),
+        ename : $('#ename').val(),
+        supname : $('#sname').val(),
+        contract : $('#diff').val(),
+
+        vow : $("[name='cv']:checked").val(),
+        ability : $("[name='aa']:checked").val(),
+        resolve : $("[name='nn']:checked").val(),
+        acc : $("[name='yy']:checked").val(),
+        press : $("[name='uu']:checked").val(),
+        oral : $("[name='oo']:checked").val(),
+        write : $("[name='mm']:checked").val(),
+        think : $("[name='xx']:checked").val(),
+        learn : $("[name='ll']:checked").val(),
+
+        effect : $("[name='12']:checked").val(),
+        init : $("[name='13']:checked").val(),
+        flex : $("[name='14']:checked").val(),
+        act : $("[name='15']:checked").val(),
+        att : $("[name='16']:checked").val(),
+        team : $("[name='17']:checked").val(),
+        deli : $("[name='10']:checked").val(),
+        resp : $("[name='18']:checked").val(),
+
+        posit : $('#tt').val(),
+        persona : $('#rr').val(),
+        need : $('#ee').val(),
+        sug : $('#ww').val(),
+        appro : $('#qq').val(),
+        oth : $('#aa1').val(),
+
+        ver : $("[name='7']:checked").val(),
+
+        extto : $('#sup-name').val(),
+        date : $('#date1').val(),
+    }
+
+    // replacing spaces of IT number since some students may type IT 16 1111 11 instead of IT16111111
+    // splitting by spaces and joining without a space will replace all the spaces since .replace() function only replace one occurrence
+    data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
+
+if(data.studentId !="" && data.sname !="" && data.ename !="" && data.supname !="" &&
+ data.contract !=""  && data.extto !=""){
+    axios.post(baseUrl + '/form5/form-i-5/student/' + data.studentId, data)
+        .then(response => {
+            console.log(response.data);
+            if (response.data.success) {
+                $.notify("Form I-5 Submitted Successfully", "success");
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            $.notify("Form I-5 Submission Failed", "error");
+        })
+    }
+    else{
+        $.notify("Fields cannot be empty", "warn");   
+    }
+}
+
+
+// rating
+
+function generateRatingStarts(rateValue) {
+	var html = '<div>';
+	for (i = 0; i < 5; i++) {
+		let isChecked = (rateValue < 1) ? "" : "checked";
+		console.log(isChecked + " | " + rateValue);
+		html += '<span class="fa fa-star ' + isChecked + '"></span>';
+		rateValue--;
+	}
+	html += '</div>';
+	return html;
+}
+
+function getLabels(status){
+    var badgeClass =''
+    var badgeText =''
+
+    if(status==3){
+        badgeClass = "badge badge-pill badge-success"
+        badgeText = "Above Average"
+    }
+    else if(status==2){
+        badgeClass = "badge badge-pill badge-secondary"
+        badgeText = "Average"
+    }
+    else{
+        badgeClass = "badge badge-pill badge-danger"
+        badgeText = "Below Average"
+    }
+
+   
+
+    return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
+  
+}
+//student view of form-I-5
+
+function populateFormI5() {
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let studentId = userInfo.userData.RegistrationNo;
+
+    axios.get(baseUrl+'/form5/data/'+studentId)
+    .then(response => {
+        if (response.data) {
+            console.log(response);
+                var html = '<tr>';
+                html += '<td class="text-center">' + response.data.data["0"].StudentId + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].StudentName + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].EmployerName + '</td>';
+                html += '<td class="text-center">' + response.data.data["0"].SupervisorName + '</td>';
+                html += '</tr>';
+                $('#view-form5 tbody').append(html);
+
+                var html1 = '';
+                html1 += '<tr><th>Volume of Work</th><td class="text-center">' + getLabels(response.data.data["0"].VolumeOfWork) + '</td></tr>';
+                html1 += '<tr><th>Quality of Work</th><td class="text-center">' + getLabels(response.data.data["0"].AnalyticalAbility) + '</td></tr>';
+                html1 += '<tr><th>Analytical Ability</th><td class="text-center">' + getLabels(response.data.data["0"].AbilityToResolve) + '</td></tr>';
+                html1 += '<tr><th>Ability to resolve problems</th><td class="text-center">' + getLabels(response.data.data["0"].Accuracy) + '</td></tr>';
+                html1 += '<tr><th>Accuracy and Thoroughness</th><td class="text-center">' + getLabels(response.data.data["0"].Pressure) + '</td></tr>';
+                html1 += '<tr><th>Ability to work under pressure</th><td class="text-center">' + getLabels(response.data.data["0"].Oral) + '</td></tr>';
+                html1 += '<tr><th>Oral Communication</th><td class="text-center">' + getLabels(response.data.data["0"].Written) + '</td></tr>';
+                html1 += '<tr><th>Written Communication</th><td class="text-center">' + getLabels(response.data.data["0"].Thinking) + '</td></tr>';
+                html1 += '<tr><th>Original and Critical thinking</th><td class="text-center">' + getLabels(response.data.data["0"].Learn) + '</td></tr>';
+                html1 += '<tr><th>Ability to Learn</th><td class="text-center">' + getLabels(response.data.data["0"].Effective) + '</td></tr>';
+                html1 += '<tr><th>Effective in organizing work</th><td class="text-center">' + getLabels(response.data.data["0"].Initiatives) + '</td></tr>';
+                html1 += '<tr><th>Takes Initiative</th><td class="text-center">' + getLabels(response.data.data["0"].Flexible) + '</td></tr>';
+                html1 += '<tr><th>Flexible to non-routinf work</th><td class="text-center">' + getLabels(response.data.data["0"].Active) + '</td></tr>';
+                html1 += '<tr><th>Active and Alert</th><td class="text-center">' + getLabels(response.data.data["0"].Attitude) + '</td></tr>';
+                html1 += '<tr><th>Attitude atowards Organization</th><td class="text-center">' + getLabels(response.data.data["0"].Team) + '</td></tr>';
+                html1 += '<tr><th>Team Player</th><td class="text-center">' + getLabels(response.data.data["0"].Deligence) + '</td></tr>';
+                html1 += '<tr><th>Diligence and Preserverance</th><td class="text-center">' + getLabels(response.data.data["0"].Responsibility) + '</td></tr>';
+                html1 += '';
+                $('#ratings tbody').append(html1);
+
+           
+
+
+        }
+    })
+    .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(JSON.stringify(error));
+          console.log(error.response.headers);
+        }
+    });
 }

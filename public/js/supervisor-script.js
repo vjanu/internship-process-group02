@@ -46,33 +46,20 @@ function loadSupervisorStudentList() {
                 $("#form-i-1-submitted-students tbody").empty();
 
                 response.data.data.forEach(item => {
-                    if (item.hasOwnProperty('EmployerName')) {
-                        var btnClassName = "btn btn-success btn-sm"
-                        var iconClassName = "fas fa-check"
-                        var altText = "Supervisor details submitted"
+                    var html = '<tr>';
+                    html += '<td class="text-center">' + item.StudentId + '</td>';
+                    html += '<td class="text-center">' + item.StudentName + '</td>';
+                    html += '<td class="text-center">' + item.StudentAddress + '</td>';
+                    html += '<td class="text-center">' + item.StudentMobilePhone + '</td>';
+                    html += '<td class="text-center">' + generateFormI1UpdatedStatus(item.hasOwnProperty('EmployerName')) + '</td>';
+                    html += '<td class="text-center">';
+                    html += '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n';
+                    html += '        <span class="far fa-eye" aria-hidden="true"></span>\n';
+                    html += '        <span><strong>View</strong></span></a>';
+                    html += '</td>';
+                    html += '</tr>';
 
-
-                    } else {
-                        var btnClassName = "btn btn-danger btn-sm"
-                        var iconClassName = "fas fa-times"
-                        var altText = "Supervisor details not submitted"
-                    }
-
-                    $('#form-i-1-submitted-students tbody').append('<tr>' +
-
-                        '<td><center><a class="' + btnClassName + '" title="' + altText + '"><span class="' + iconClassName + '" style="color: #ffffff" aria-hidden="true"></span></center></td>' +
-
-                        '<td class="nr-fid" scope="row">' + item.StudentId + '</td>' +
-                        '<td >' + item.StudentName + '</td>' +
-                        '<td >' + item.StudentAddress + '</td>' +
-                        '<td>' + item.StudentMobilePhone + '</td>' +
-                        '<td><center>' +
-                        '<a href="supervisor-submission-form.html#' + item.StudentId + '" title="View ' + item.StudentId + '\'s Form I-1" class="btn btn-primary btn-sm">\n' +
-                        '        <span class="far fa-eye" aria-hidden="true"></span>\n' +
-                        '        <span><strong>View</strong></span></a>' +
-                        '</a></center>' +
-                        '</td>' +
-                        '</tr>');
+                    $('#form-i-1-submitted-students tbody').append(html);
                 });
             })
             .catch(function (error) {
@@ -80,4 +67,14 @@ function loadSupervisorStudentList() {
                 console.log(error);
             });
     }
+}
+
+
+/* * * * *     COMMON FUNCTION     * * * * */
+
+function generateFormI1UpdatedStatus(isSubmitted) {
+    var badgeClass = (isSubmitted) ? "badge badge-pill badge-success" : "badge badge-pill badge-danger";
+    var badgeText = (isSubmitted) ? "Submitted" : "Pending";
+
+    return '<h5><span class="' + badgeClass + '"><span style="color:white">' + badgeText + '</span></span></h5>';
 }
