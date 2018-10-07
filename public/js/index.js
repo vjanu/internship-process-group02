@@ -139,59 +139,59 @@ function getFormI1SupervisorDetails() {
 
 /**** Tharindu TCJ *****/
 
-function populateFormI1() {
-    // get student id from the url.
-let current_url = window.location.href;
-    console.log(current_url);
-    if (current_url.includes('#')) {
-        let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
+// function populateFormI1() {
+//     // get student id from the url.
+// let current_url = window.location.href;
+//     console.log(current_url);
+//     if (current_url.includes('#')) {
+//         let studentId = current_url.substr(current_url.indexOf('#') + 1, current_url.length);
 
-    console.log('Fetching student details of ' + studentId + ' for form I-1');
+//     console.log('Fetching student details of ' + studentId + ' for form I-1');
 
-    axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
-        .then(response => {
-            if (response.data.success) {
-                let form_details = response.data.data;
-                console.log(form_details);
+//     axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
+//         .then(response => {
+//             if (response.data.success) {
+//                 let form_details = response.data.data;
+//                 console.log(form_details);
 
-                document.getElementById('name-student').value = form_details['StudentName'];
-                document.getElementById('id-student').value = form_details['StudentId'];
-                document.getElementById('address-student').value = form_details['StudentAddress'];
-                document.getElementById('home-phone-student').value = form_details['StudentHomePhone'];
-                document.getElementById('mobile-phone-student').value = form_details['StudentMobilePhone'];
-                document.getElementById('cgpa-student').value = form_details['CGPA'];
-                document.getElementById('emails-student').value = form_details['StudentEmails'].join(', ').replace('[').replace(']');
-                document.getElementById('year-student').value = form_details['Year'];
-                document.getElementById('semester-student').value = form_details['Semester'];
+//                 document.getElementById('name-student').value = form_details['StudentName'];
+//                 document.getElementById('id-student').value = form_details['StudentId'];
+//                 document.getElementById('address-student').value = form_details['StudentAddress'];
+//                 document.getElementById('home-phone-student').value = form_details['StudentHomePhone'];
+//                 document.getElementById('mobile-phone-student').value = form_details['StudentMobilePhone'];
+//                 document.getElementById('cgpa-student').value = form_details['CGPA'];
+//                 document.getElementById('emails-student').value = form_details['StudentEmails'].join(', ').replace('[').replace(']');
+//                 document.getElementById('year-student').value = form_details['Year'];
+//                 document.getElementById('semester-student').value = form_details['Semester'];
 
-                $("#header-studentId").text(form_details['StudentId']);
+//                 $("#header-studentId").text(form_details['StudentId']);
 
-                // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
-                let elems = $('#form-i-1-student').find(':input');
-                for (let i = 0; i < elems.length; i++) {
-                    elems[i].innerHTML
-                    elems[i].disabled = true;
-                }
+//                 // iterate through each input element and feed the above data, but keep the text boxes disabled.let elems = $('#form-i-1-student').find(':input');
+//                 let elems = $('#form-i-1-student').find(':input');
+//                 for (let i = 0; i < elems.length; i++) {
+//                     elems[i].innerHTML
+//                     elems[i].disabled = true;
+//                 }
 
-                if(form_details.hasOwnProperty('EmployerName')){
-                    $('#name-employer').val(form_details['EmployerName']);
-                    $('#address-employer').val(form_details['EmployerAddress']);
-                    $('#name-supervisor').val(form_details['SupervisorName']);
-                    $('#title-supervisor').val(form_details['SupervisorTitle']);
-                    $('#phone-supervisor').val(form_details['SupervisorPhone']);
-                    $('#email-supervisor').val(form_details['SupervisorEmail']);
-                    $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
-                    $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
-                    $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
-                }
+//                 if(form_details.hasOwnProperty('EmployerName')){
+//                     $('#name-employer').val(form_details['EmployerName']);
+//                     $('#address-employer').val(form_details['EmployerAddress']);
+//                     $('#name-supervisor').val(form_details['SupervisorName']);
+//                     $('#title-supervisor').val(form_details['SupervisorTitle']);
+//                     $('#phone-supervisor').val(form_details['SupervisorPhone']);
+//                     $('#email-supervisor').val(form_details['SupervisorEmail']);
+//                     $('#internship-start-date').val(formatDate(form_details['InternshipStart']));
+//                     $('#internship-end-date').val(formatDate(form_details['InternshipEnd']));
+//                     $('#no-of-hours').val(form_details['WorkHoursPerWeek']);
+//                 }
 
-            }
-        })
-        .catch(reject => {
-            console.log(reject);
-        })
-    }
-}
+//             }
+//         })
+//         .catch(reject => {
+//             console.log(reject);
+//         })
+//     }
+// }
 
 function formatDate(date) {
     var d = new Date(date),
@@ -312,7 +312,7 @@ function renderInternshipsTable(jsonData) {
 }
 
 $(document).ready(function () {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];    console.log(userInfo);
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];    
 
     if ($("#supervisor-dashboard-page").length > 0) {
         if (!(USER_INFO in localStorage)) {
@@ -409,7 +409,7 @@ function populateFormI3() {
 
     let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
-    axios.get(baseUrl+'/daily/form-i-3-diaries/'+studentIdDiary)
+    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
@@ -847,7 +847,7 @@ function getLabels(status){
 //student view of form-I-5
 
 function populateFormI5() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentId = userInfo.userData.RegistrationNo;
 
     axios.get(baseUrl+'/form5/data/'+studentId)
