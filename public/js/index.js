@@ -62,81 +62,6 @@ if (CURRENT_URL.includes('view-form5-student')) {
 
 
 /* * * * * * * Forms * * * * * * */
-
-/**** Liyanage A.Y.K. *****/
-/*
- * this will get the information filled by the student,
- * on Form I-1 and validate and prepare in order to be sent,
- * to the backend.
- */
-function getFormI1StudentDetails() {
-    let data = {
-        name: document.getElementById('name-student').value,
-        studentId: document.getElementById('id-student').value,
-        address: document.getElementById('address-student').value,
-        homePhone: document.getElementById('home-phone-student').value,
-        mobilePhone: document.getElementById('mobile-phone-student').value,
-        emailAddresses: document.getElementById('emails-student').value, // may contain multiple values separated by comma ( , )
-        year: document.getElementById('year-student').value,
-        semester: document.getElementById('semester-student').value,
-        cgpa: document.getElementById('cgpa-student').value,
-        assignedSupervisor: document.getElementById('assigned-supervisor').value
-    }
-
-
-    /* formatting input parameters. */
-    // getting the multiple emails in an array.
-    data.emailAddresses = data.emailAddresses.includes(',') ? data.emailAddresses.replace(' ', '').split(',') : data.emailAddresses;
-
-    // replacing spaces of IT number since some students may type IT 16 1111 11 instead of IT16111111
-    // splitting by spaces and joining without a space will replace all the spaces since .replace() function only replace one occurrence
-    data.studentId = data.studentId.includes(' ') ? data.studentId.split(' ').join('') : data.studentId;
-
-
-    axios.post(baseUrl + '/forms/form-i-1/student/' + data.studentId, data)
-        .then(response => {
-            console.log(response.data);
-            if (response.data.success) {
-                alert('Data enter to Form I-1 successfully.');
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            alert('Unsuccessful! Please check your data.');
-        })
-}
-
-
-/*
- * this will get the information filled by the supervisor,
- * on Form I-1 and validate and prepare in order to be sent,
- * to the backend.
- */
-function getFormI1SupervisorDetails() {
-    let data = {
-        studentId: document.getElementById('id-student').value, // because supervisor data is stored within the student's record.
-        employerName: document.getElementById('name-employer').value,
-        employerAddress: document.getElementById('address-employer').value,
-        supervisorName: document.getElementById('name-supervisor').value,
-        supervisorTitle: document.getElementById('title-supervisor').value,
-        supervisorPhone: document.getElementById('phone-supervisor').value,
-        supervisorEmail: document.getElementById('email-supervisor').value,
-        internshipStart: document.getElementById('internship-start-date').value,
-        internshipEnd: document.getElementById('internship-end-date').value,
-        workHoursPerWeek: document.getElementById('no-of-hours').value
-    };
-
-    axios.post(baseUrl + '/forms/form-i-1/supervisor/' + data.studentId, data)
-        .then(response => {
-            console.log(response.data);
-            alert(response.data.message)
-        })
-        .catch(error => {
-            console.log(error);
-        })
-}
-
-
 /**** Tharindu TCJ *****/
 
 // function populateFormI1() {
@@ -507,8 +432,9 @@ else{
  */
 function getFormI1sUnderSupervisor(supervisorEmail) {
     return new Promise((resolve, reject) => {
-        axios.get(baseUrl + '/forms/form-i-1/supervisor/' + supervisorEmail)
+        axios.get(baseUrl + '/supervisor/form-i-1/' + supervisorEmail)
             .then(response => {
+                console.log(response);
                 if (response.data.success) {
                     if (response.data.data != undefined) {
                         resolve(response.data.data);
@@ -527,6 +453,7 @@ function makeSupervisorDashboard() {
     console.log(userInfo.userData.SupervisorEmail)
     getFormI1sUnderSupervisor(userInfo.userData.SupervisorEmail)
         .then(resolve => {
+            console.log(resolve);
             // we render the table here.
             let table = '<table class="table table-striped table-bordered" style="width:100%">' +
                 '<thead>' +
@@ -534,6 +461,8 @@ function makeSupervisorDashboard() {
                 '<th scope="col">Student Id number</th>' +
                 '<th scope="col">Name</th>' +
                 '<th scope="col">Job title</th>' +
+                '<th scope="col">Job start date</th>' +
+                '<th scope="col">Job end date</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody>';
@@ -548,6 +477,8 @@ function makeSupervisorDashboard() {
                     '</td>' +
                     '<td>' + form.StudentName + '</td>' +
                     '<td>' + 'Intern' + '</td>' +
+                    '<td>' + form.InternshipStart+ '</td>' +
+                    '<td>' + form.InternshipEnd+ '</td>' +
                     '</tr>'
             });
 
@@ -593,7 +524,15 @@ function populateStudentProfile() {
 }
 
 // had to make this a promise since this involves an API call.
-function isFormAvailable(studentId, formName) {
+/**
+ * This will check a form of a specific student and validate the presence of a certain
+ * attribute in the form to indicate if there's an acceptable form for the given student.
+ * 
+ * @param {String} studentId student id of the student to whom this form belongs.
+ * @param {String} formName name of the form as specified in Industrial Training Module. [form-i-1 | form-i-3 | form-i-5 | form-i-7]
+ * @param {String} attributeToCheck an attribute in the specified form, which we check whether empty or not.
+ */
+function isFormAvailable(studentId, formName, attributeToCheck) {
     // send a request to backend and see if any data returns.
 
     return new Promise((resolve, reject) => {
@@ -601,9 +540,9 @@ function isFormAvailable(studentId, formName) {
             axios.get(baseUrl + '/forms/form-i-1/student/' + studentId)
                 .then(response => {
                     if (response.data.success) {
-                        let supervisorEmail = response.data.data.SupervisorEmail;
-                        if (supervisorEmail != '') {
-                            console.log(supervisorEmail);
+                        let attributeToCheck = response.data.data[attributeToCheck];
+                        if (attributeToCheck != '') {
+                            console.log(attributeToCheck);
                             resolve(true);
                         }
                         else {
@@ -613,7 +552,18 @@ function isFormAvailable(studentId, formName) {
                 })
         }
         else if (formName.toLowerCase() === 'form-i-3') {
-
+            axios.get(baseUrl + '/form3/data/' + studentId)
+            .then(response => {
+                if (response.data.success) {
+                    let attributeToCheck = response.data.data[0][attributeToCheck];
+                    if (attributeToCheck != undefined || attributeToCheck != '') {
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                }
+            })
 
         }
         else if (formName.toLowerCase() === 'form-i-5') {
