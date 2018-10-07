@@ -409,7 +409,7 @@ function populateFormI3() {
 
     let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentIdDiary = userInfo.userData.RegistrationNo;
-    axios.get(baseUrl+'/daily/form-i-3-diaries/'+studentIdDiary)
+    axios.get(baseUrl+'/daily/data/'+studentIdDiary)
     .then(response => {
         if (response.data.success) {
             let form_details = response.data.data;
@@ -847,7 +847,7 @@ function getLabels(status){
 //student view of form-I-5
 
 function populateFormI5() {
-    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(window.atob(localStorage.getItem(USER_INFO))) : [];
+    let userInfo = localStorage.getItem(USER_INFO) ? JSON.parse(localStorage.getItem(USER_INFO)) : [];
     let studentId = userInfo.userData.RegistrationNo;
 
     axios.get(baseUrl+'/form5/data/'+studentId)
